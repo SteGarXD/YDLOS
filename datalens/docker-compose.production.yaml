@@ -20,6 +20,7 @@ services:
     volumes:
       # Edge proxy only (not the ui-in-container nginx.conf). Сертификаты сюда не монтируем — не требуются.
       - ./nginx/nginx-edge-proxy.conf:/etc/nginx/nginx.conf:ro
+      - ./assets:/opt/ydl-os-assets:ro
     depends_on:
       - ui
     networks:
