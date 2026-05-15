@@ -19,16 +19,16 @@ RELEASE_VERSION="${RELEASE_VERSION:-2.9.0}"
 
 export PATH="/home/g.stepanov/.local/bin:$PATH"
 
+log() {
+  echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] $*"
+}
+
 mkdir -p "$REPORT_DIR"
 
 log "sync dev-ui compose/nginx into $COMPOSE_DIR"
 install -d "$COMPOSE_DIR/nginx"
 install -m 0644 "$REPO_ROOT/datalens/docker-compose.dev-ui.yaml" "$COMPOSE_DIR/docker-compose.dev-ui.yaml"
 install -m 0644 "$REPO_ROOT/datalens/nginx/nginx-edge-proxy-dev.conf" "$COMPOSE_DIR/nginx/nginx-edge-proxy-dev.conf"
-
-log() {
-  echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] $*"
-}
 
 if [[ ! -f "$COMPOSE_DIR/.env" ]]; then
   echo "ERROR: $COMPOSE_DIR/.env not found"
