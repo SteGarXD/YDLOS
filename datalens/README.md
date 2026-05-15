@@ -1,116 +1,116 @@
-# YDL OS Runtime and Operations Guide
+# YDL OS: runtime и эксплуатация
 
-This directory contains deployment runtime for Aeronavigator BI (YDL OS), built on top of `datalens-tech/datalens` with custom UI/auth behavior.
+Этот каталог содержит production-runtime платформы Aeronavigator BI (YDL OS): docker compose, скрипты синхронизации/деплоя, backup-процедуры и runbook-документацию.
 
-## 1. Scope
+## 1) Что здесь находится
 
-- Production compose stack and overrides
-- Build and deployment scripts
-- Security and operations runbooks
-- Backup and recovery tooling
+- production-compose стек и override-файлы
+- скрипты синхронизации с upstream и деплоя
+- регламенты эксплуатации и безопасности
+- процедуры backup/restore
 
-## 2. Core Runtime
+## 2) Базовый runtime
 
-- Compose root: `datalens/docker-compose.yaml`
+- Базовый compose: `datalens/docker-compose.yaml`
 - Production override: `datalens/docker-compose.production.yaml`
-- Edge proxy: `ydl-os-nginx` (host `:80` -> internal UI)
-- Primary persistent data: Docker volume `datalens-volume-prod` (PostgreSQL metadata)
+- Edge proxy: `ydl-os-nginx` (host `:80` -> внутренний UI)
+- Основное постоянное хранилище: Docker volume `datalens-volume-prod`
 
-## 3. Required Operator Documents
+## 3) Обязательные документы оператора
 
-- Upstream sync process: [`PLATFORM_SYNC_UPSTREAM.md`](PLATFORM_SYNC_UPSTREAM.md)
-- Customization map: [`CUSTOMIZATION_MANIFEST.md`](CUSTOMIZATION_MANIFEST.md)
-- Security update model: [`docs/UPSTREAM_UPDATE_AND_SECURITY.md`](docs/UPSTREAM_UPDATE_AND_SECURITY.md)
-- Production security playbook: [`docs/PRODUCTION_SENIOR_PLAYBOOK.md`](docs/PRODUCTION_SENIOR_PLAYBOOK.md)
-- Data persistence and restore: [`docs/DATA-PERSISTENCE.md`](docs/DATA-PERSISTENCE.md)
-- Current platform audit: [`docs/PLATFORM_AUDIT_2026-05-15.md`](docs/PLATFORM_AUDIT_2026-05-15.md)
+- Синхронизация с upstream: [`PLATFORM_SYNC_UPSTREAM.md`](PLATFORM_SYNC_UPSTREAM.md)
+- Карта кастомизаций: [`CUSTOMIZATION_MANIFEST.md`](CUSTOMIZATION_MANIFEST.md)
+- Политика обновлений и безопасности: [`docs/UPSTREAM_UPDATE_AND_SECURITY.md`](docs/UPSTREAM_UPDATE_AND_SECURITY.md)
+- Production playbook: [`docs/PRODUCTION_SENIOR_PLAYBOOK.md`](docs/PRODUCTION_SENIOR_PLAYBOOK.md)
+- Актуальный аудит платформы: [`docs/PLATFORM_AUDIT_2026-05-15.md`](docs/PLATFORM_AUDIT_2026-05-15.md)
 
-## 4. Standard Production Deploy
+Рекомендуемое разбиение runbook-документов:
 
-From server working copy:
+- [`RUNBOOK_PROD.md`](RUNBOOK_PROD.md)
+- [`RUNBOOK_DEV.md`](RUNBOOK_DEV.md)
+- [`AUTH_MODES.md`](AUTH_MODES.md)
+- [`BACKUP_AND_RESTORE.md`](BACKUP_AND_RESTORE.md)
+
+## 4) Стандартный production-деплой
+
+Из серверной рабочей копии:
 
 ```bash
 cd /home/g.stepanov/datalens/datalens
 docker compose -f docker-compose.yaml -f docker-compose.production.yaml up -d --force-recreate
 ```
 
-From GitHub `main` snapshot (`SteGarXD/YDLOS`):
+Из снимка `GitHub main` (`SteGarXD/YDLOS`):
 
 ```bash
 bash scripts/ydl-os/redeploy-from-github-main.sh
 ```
 
-Deployment source is stamped to:
+Источник деплоя фиксируется в:
 
 - `/opt/ydl-os/.ydl-deploy-source`
 
-## 5. Upstream Sync and Commit Divergence
+## 5) Регулярный цикл sync -> build -> smoke -> deploy
 
-Generate sync report:
-
-```bash
-bash scripts/ydl-os/sync-platform-upstream.sh
-```
-
-Generate compact ahead/behind report:
+Ручной запуск:
 
 ```bash
-bash scripts/ydl-os/commit-divergence-report.sh
+bash scripts/ydl-os/autopilot-sync-build-smoke-deploy.sh
 ```
 
-## 6. Nightly Maintenance
+Что делает автопилот:
 
-Includes:
+1. Проверяет дивергенцию `upstream/main` vs `github/main`.
+2. Если есть отставание, обновляет `github/main` snapshot-коммитом на базе `upstream/main`.
+3. Выполняет redeploy из `github/main`.
+4. Прогоняет smoke-checks.
+5. Пишет отчёт в `datalens/reports/autopilot/`.
 
-- divergence report
-- nightly US dump
-- retention rotation
-- smoke checks
+## 6) Ночной регламент
 
-Install cron entry:
+Включает:
+
+- отчёт ahead/behind
+- nightly dump БД US
+- ротацию backup/отчётов
+- smoke-checks
+
+Установка cron:
 
 ```bash
 bash scripts/ydl-os/install-nightly-cron.sh
 ```
 
-Manual run:
+Ручной запуск:
 
 ```bash
 bash scripts/ydl-os/nightly-maintenance.sh
 ```
 
-## 7. Backup Policy (Minimum)
+## 7) Минимальная backup-политика
 
-Before any platform update:
+Перед любым платформенным обновлением:
 
-1. create PostgreSQL dump
-2. preserve known-good SQL backup pair (latest + previous)
-3. verify restore path on staging
+1. создать PostgreSQL dump;
+2. сохранить пару проверенных backup-файлов (latest + previous);
+3. проверить сценарий восстановления.
 
-Working backup locations:
+Рабочие каталоги backup:
 
 - `datalens/backups/`
 - `datalens/backups/preserved-development/`
 - `datalens/backups/nightly/`
 
-## 8. Security Notes for Auth Modes
+## 8) Безопасность при разных auth-режимах
 
-The platform may run with disabled cloud auth flow, but this requires compensating controls:
+При отключённом облачном auth-контуре обязательны компенсирующие меры:
 
-- strict network perimeter (VPN/IP allowlist)
-- secrets rotation
-- central logs and alerts
-- regular restore drills
+- периметр (VPN/IP allowlist);
+- регулярная ротация секретов;
+- централизованные логи и алерты;
+- регулярные учения по восстановлению.
 
-See full details in:
+Подробно:
 
 - [`docs/UPSTREAM_UPDATE_AND_SECURITY.md`](docs/UPSTREAM_UPDATE_AND_SECURITY.md)
 - [`docs/PRODUCTION_SENIOR_PLAYBOOK.md`](docs/PRODUCTION_SENIOR_PLAYBOOK.md)
-
-## 9. Public Sharing Readiness
-
-For external users/developers:
-
-- keep this README concise and operational
-- document every non-obvious custom behavior in dedicated runbooks
-- ship reproducible scripts, smoke checks, and rollback path

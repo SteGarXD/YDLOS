@@ -1,18 +1,20 @@
-# Documentation Index
+# Индекс документации
 
-Operational documentation for YDL OS.
+Операционная документация YDL OS.
 
-## Core Runbooks
+## Основные runbook-документы
 
-- [`UPSTREAM_UPDATE_AND_SECURITY.md`](UPSTREAM_UPDATE_AND_SECURITY.md) - secure update workflow from upstream
-- [`PRODUCTION_SENIOR_PLAYBOOK.md`](PRODUCTION_SENIOR_PLAYBOOK.md) - production operations baseline
-- [`PLATFORM_AUDIT_2026-05-15.md`](PLATFORM_AUDIT_2026-05-15.md) - latest platform state and maturity gaps
+- [`UPSTREAM_UPDATE_AND_SECURITY.md`](UPSTREAM_UPDATE_AND_SECURITY.md) - безопасный процесс обновления от upstream
+- [`PRODUCTION_SENIOR_PLAYBOOK.md`](PRODUCTION_SENIOR_PLAYBOOK.md) - базовый production-playbook
+- [`PLATFORM_AUDIT_2026-05-15.md`](PLATFORM_AUDIT_2026-05-15.md) - текущая оценка платформы и зоны роста
 
-## Data and Backups
+## Данные и резервные копии
 
-- [`DATA-PERSISTENCE.md`](DATA-PERSISTENCE.md) - where metadata lives and how to preserve it
-- [`../DOCKER-BACKUP.md`](../DOCKER-BACKUP.md) - full Docker-level backup and recovery
+- [`DATA-PERSISTENCE.md`](DATA-PERSISTENCE.md) - где лежат метаданные и как их сохранять
+- [`../BACKUP_AND_RESTORE.md`](../BACKUP_AND_RESTORE.md) - регламент backup/restore
+- [`../DOCKER-BACKUP.md`](../DOCKER-BACKUP.md) - полный backup Docker-уровня
 
-## Security and Compliance
+## Безопасность и комплаенс
 
-- [`../CHARTS_AND_LICENSES.md`](../CHARTS_AND_LICENSES.md) - Highcharts policy and technical status
+- [`../AUTH_MODES.md`](../AUTH_MODES.md) - режимы аутентификации и компенсирующие меры
+- [`../CHARTS_AND_LICENSES.md`](../CHARTS_AND_LICENSES.md) - политика Highcharts и технический статус

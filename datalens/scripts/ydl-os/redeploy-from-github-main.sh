@@ -15,6 +15,35 @@ COMPOSE_DIR="${COMPOSE_DIR:-/opt/ydl-os}"
 WORKTREE_DIR="${WORKTREE_DIR:-/home/g.stepanov/ydlos-github-main}"
 export PATH="/home/g.stepanov/.local/bin:$PATH"
 
+wait_for_http_code() {
+  local url="$1"
+  local expected="$2"
+  local method="${3:-GET}"
+  local max_attempts="${4:-25}"
+  local sleep_sec="${5:-2}"
+  local payload="${6:-}"
+
+  local i=1
+  local code=000
+
+  while [[ "$i" -le "$max_attempts" ]]; do
+    if [[ -n "$payload" ]]; then
+      code="$(curl -sS -o /dev/null -w "%{http_code}" -X "$method" "$url" -H 'Content-Type: application/json' -d "$payload" || echo 000)"
+    else
+      code="$(curl -sS -o /dev/null -w "%{http_code}" -X "$method" "$url" || echo 000)"
+    fi
+    if [[ "$code" == "$expected" ]]; then
+      echo "$code"
+      return 0
+    fi
+    sleep "$sleep_sec"
+    i=$((i + 1))
+  done
+
+  echo "$code"
+  return 1
+}
+
 echo "=== Redeploy from GitHub main ==="
 echo "REPO_ROOT=$REPO_ROOT"
 echo "COMPOSE_DIR=$COMPOSE_DIR"
@@ -56,18 +85,15 @@ cd "$COMPOSE_DIR"
 docker compose -f docker-compose.yaml -f docker-compose.production.yaml up -d --force-recreate us-auth ui ui-api nginx
 
 echo "[5/5] Smoke checks..."
-if HTTP_PING="$(curl -sS -o /dev/null -w "%{http_code}" http://127.0.0.1/ping)"; then
-  :
-else
-  HTTP_PING="000"
-fi
-if HTTP_REFRESH="$(curl -sS -o /dev/null -w "%{http_code}" -X POST http://127.0.0.1/gateway/auth/auth/refreshTokens -H 'Content-Type: application/json' -d '{}')"; then
-  :
-else
-  HTTP_REFRESH="000"
-fi
+HTTP_PING="$(wait_for_http_code "http://127.0.0.1/ping" "200" "GET" 30 2 || true)"
+HTTP_REFRESH="$(wait_for_http_code "http://127.0.0.1/gateway/auth/auth/refreshTokens" "401" "POST" 30 2 '{}' || true)"
 echo "GET /ping -> $HTTP_PING (expected 200)"
 echo "POST /gateway/auth/auth/refreshTokens (no cookie) -> $HTTP_REFRESH (expected 401)"
+
+if [[ "$HTTP_PING" != "200" || "$HTTP_REFRESH" != "401" ]]; then
+  echo "ERROR: smoke checks failed"
+  exit 1
+fi
 
 # Stamp deploy source commit for operational audit
 SRC_COMMIT="$(git -C "$REPO_ROOT" rev-parse github/main)"

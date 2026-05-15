@@ -304,6 +304,7 @@ services:
 volumes:
   db-postgres:
     name: datalens-volume-${APP_ENV}
+    external: true
 #
 networks:
   default:

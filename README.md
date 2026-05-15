@@ -1,34 +1,28 @@
 # YDL OS (Aeronavigator BI)
 
-Production-focused fork of [datalens-tech/datalens](https://github.com/datalens-tech/datalens) with enterprise customizations:
+Форк [datalens-tech/datalens](https://github.com/datalens-tech/datalens) для production-эксплуатации BI-платформы с кастомным UI/Auth и операционными скриптами.
 
-- custom UI branding and auth flow
-- operational scripts for safe upstream sync
-- deployment profile for single-host production (`/opt/ydl-os`)
+## Структура репозитория
 
-## Repository Layout
+- `components/` — исходники сервисов (`datalens-ui`, `datalens-auth`, `datalens-us`, backend-библиотеки)
+- `datalens/` — деплой, runbook-документация, операционные скрипты и инфраструктурные файлы
 
-- `components/` — source code of forked services (`datalens-ui`, `datalens-auth`, `datalens-us`, backend libs)
-- `datalens/` — deployment configs, runbooks, scripts, Terraform and operational docs
+## Быстрые ссылки
 
-## Quick Links
+- Главный runtime-runbook: [`datalens/README.md`](datalens/README.md)
+- Карта кастомизаций: [`datalens/CUSTOMIZATION_MANIFEST.md`](datalens/CUSTOMIZATION_MANIFEST.md)
+- Синхронизация с upstream: [`datalens/PLATFORM_SYNC_UPSTREAM.md`](datalens/PLATFORM_SYNC_UPSTREAM.md)
+- Production/безопасность: [`datalens/docs/PRODUCTION_SENIOR_PLAYBOOK.md`](datalens/docs/PRODUCTION_SENIOR_PLAYBOOK.md)
+- Аудит платформы: [`datalens/docs/PLATFORM_AUDIT_2026-05-15.md`](datalens/docs/PLATFORM_AUDIT_2026-05-15.md)
 
-- Platform runbook: [`datalens/README.md`](datalens/README.md)
-- Customization map: [`datalens/CUSTOMIZATION_MANIFEST.md`](datalens/CUSTOMIZATION_MANIFEST.md)
-- Upstream sync process: [`datalens/PLATFORM_SYNC_UPSTREAM.md`](datalens/PLATFORM_SYNC_UPSTREAM.md)
-- Security and prod operations: [`datalens/docs/PRODUCTION_SENIOR_PLAYBOOK.md`](datalens/docs/PRODUCTION_SENIOR_PLAYBOOK.md)
-- Current platform audit: [`datalens/docs/PLATFORM_AUDIT_2026-05-15.md`](datalens/docs/PLATFORM_AUDIT_2026-05-15.md)
+## Публичный контур
 
-## Production Endpoint
+- URL: [https://bi.aeronavigator.ru](https://bi.aeronavigator.ru)
+- Edge-схема: host Nginx -> внутренний `ydl-os-nginx` (`:80`)
 
-- External URL: [https://bi.aeronavigator.ru](https://bi.aeronavigator.ru)
-- Edge reverse proxy: host Nginx -> internal `ydl-os-nginx` (`:80`)
+## Стандарт качества изменений
 
-## Contribution Quality Bar
-
-For changes intended for public sharing:
-
-1. update code and docs in one PR
-2. provide migration notes for operators
-3. include smoke checks and rollback path
-4. avoid ambiguous commit messages
+1. Изменения кода и документации идут вместе.
+2. Для операторов добавляется раздел миграции/обновления.
+3. Для деплоя добавляются smoke-checks и сценарий rollback.
+4. Сообщения коммитов — короткие, фактические, без лишнего текста.
