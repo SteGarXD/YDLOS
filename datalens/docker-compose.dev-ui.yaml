@@ -1,0 +1,41 @@
+# Dev UI: бэкенд в Docker, фронт на хосте (npm run dev).
+# Запуск: bash scripts/ydl-os/dev-ui-start.sh
+# Остановка: bash scripts/ydl-os/dev-ui-stop.sh
+#
+# compose:
+#   -f docker-compose.yaml
+#   -f docker-compose.production.yaml
+#   -f docker-compose.dev-ui.yaml
+
+services:
+  ui:
+    profiles:
+      - docker-bundled-ui
+
+  ui-api:
+    profiles:
+      - docker-bundled-ui
+
+  nginx:
+    volumes:
+      - ./nginx/nginx-edge-proxy-dev.conf:/etc/nginx/nginx.conf:ro
+      - ./assets:/opt/ydl-os-assets:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on: !reset []
+
+  us:
+    ports:
+      - "127.0.0.1:8030:8080"
+
+  control-api:
+    ports:
+      - "127.0.0.1:8010:8080"
+
+  data-api:
+    ports:
+      - "127.0.0.1:8020:8080"
+
+  us-auth:
+    ports:
+      - "127.0.0.1:8088:80"

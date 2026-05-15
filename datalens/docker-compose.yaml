@@ -258,7 +258,7 @@ services:
       #
       US_MASTER_TOKEN: ${US_MASTER_TOKEN:-us-master-token}
       #
-      RELEASE_VERSION: ${RELEASE_VERSION:-2.7.0-night}
+      RELEASE_VERSION: ${RELEASE_VERSION:-2.9.0}
       # Highcharts CDN в opensource-конфиге UI отключён в коде (см. datalens/datalens/CHARTS_AND_LICENSES.md); HC* оставлены для совместимости с .env.
       HC: ${HC:-0}
       #

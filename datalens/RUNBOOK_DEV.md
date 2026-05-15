@@ -2,7 +2,19 @@
 
 Минимальный регламент для разработки и проверки изменений до production.
 
-## 1. Локальная проверка
+## 1. Dev UI на сервере (без пересборки Docker-образа)
+
+Бэкенд в Docker, UI на хосте с hot reload (`npm run dev`). Версия на экране входа = `RELEASE_VERSION` из upstream (`2.9.0`).
+
+```bash
+bash datalens/scripts/ydl-os/dev-ui-start.sh
+# Браузер: http://<IP-сервера>/  (порт 80)
+tail -f datalens/reports/dev-ui/dev-ui.log
+
+bash datalens/scripts/ydl-os/dev-ui-stop.sh   # вернуть prod UI в контейнере
+```
+
+## 2. Локальная проверка
 
 1. Изменить код/скрипты.
 2. Проверить линтеры и базовые smoke-checks.
