@@ -1,7 +1,7 @@
 import {AuthHeader, SET_COOKIE_HEADER} from '../../../constants';
 import {createAction} from '../../gateway-utils';
 
-import type {SigninArgs, SignupArgs} from './types';
+import type {SigninArgs, SigninResponse, SignupArgs} from './types';
 
 export const actions = {
     refreshTokens: createAction<undefined, undefined>({
@@ -11,7 +11,7 @@ export const actions = {
         // us-auth: виртуальный префикс /demo + datalens-auth.js (POST /refresh под vPath)
         path: () => '/demo/refresh',
     }),
-    signin: createAction<undefined, SigninArgs>({
+    signin: createAction<SigninResponse, SigninArgs>({
         method: 'POST',
         proxyResponseHeaders: [SET_COOKIE_HEADER],
         // us-auth native auth contract expects UserName/Password keys.
