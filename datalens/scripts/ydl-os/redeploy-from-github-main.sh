@@ -28,9 +28,9 @@ wait_for_http_code() {
 
   while [[ "$i" -le "$max_attempts" ]]; do
     if [[ -n "$payload" ]]; then
-      code="$(curl -sS -o /dev/null -w "%{http_code}" -X "$method" "$url" -H 'Content-Type: application/json' -d "$payload" || echo 000)"
+      code="$(curl -s -o /dev/null -w "%{http_code}" -X "$method" "$url" -H 'Content-Type: application/json' -d "$payload" 2>/dev/null || echo 000)"
     else
-      code="$(curl -sS -o /dev/null -w "%{http_code}" -X "$method" "$url" || echo 000)"
+      code="$(curl -s -o /dev/null -w "%{http_code}" -X "$method" "$url" 2>/dev/null || echo 000)"
     fi
     if [[ "$code" == "$expected" ]]; then
       echo "$code"
