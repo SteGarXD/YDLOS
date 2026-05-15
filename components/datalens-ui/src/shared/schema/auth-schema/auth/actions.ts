@@ -14,7 +14,8 @@ export const actions = {
     signin: createAction<undefined, SigninArgs>({
         method: 'POST',
         proxyResponseHeaders: [SET_COOKIE_HEADER],
-        path: () => '/demo/auth',
+        // us-auth compatibility route for DataLens UI payload {login, password}
+        path: () => '/demo/signin',
         params: ({login, password}, headers) => ({
             body: {login, password},
             headers,
