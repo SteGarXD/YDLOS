@@ -8,8 +8,8 @@ import {SignInQa} from 'shared/constants';
 import {Feature} from 'shared/types';
 import {DL, LOGO_PNG_URL} from 'ui/constants';
 import type {CustomSigninProps} from 'ui/registry/units/auth/types/components/CustomSignin';
+import {getSdk, isSdkError} from 'ui/libs/schematic-sdk';
 import {showToast} from 'ui/store/actions/toaster';
-import Utils from 'ui/utils';
 import {isEnabledFeature} from 'ui/utils/isEnabledFeature';
 
 import {selectFormData} from '../../store/selectors/signin';
@@ -71,28 +71,35 @@ export const CustomSignin = ({setToken, logoIcon}: CustomSigninProps) => {
             return;
         }
 
-        Utils.getAuthToken({
-            login: encodeURIComponent(formData.login),
-            password: encodeURIComponent(formData.password),
-        })
-            .then((response) => {
-                if (response.data) {
-                    setToken(response.data.token);
-                } else {
-                    dispatch(
-                        showToast({
-                            title: response?.err?.message,
-                            error: new Error(response?.err?.message),
-                            withReport: false,
-                        }),
-                    );
-                }
+        const {sdk} = getSdk();
+        sdk.auth.auth
+            .signin({
+                login: formData.login.trim(),
+                password: formData.password,
             })
-            .catch((error) => {
+            .then((response) => {
+                const token = response?.token;
+                if (typeof token === 'string' && token.length > 0) {
+                    setToken(token);
+                    return;
+                }
                 dispatch(
                     showToast({
                         title: i18n('error_auth_message'),
-                        error: new Error(error.message),
+                        error: new Error('Auth service returned empty token'),
+                        withReport: false,
+                    }),
+                );
+            })
+            .catch((error) => {
+                if (sdk.isCancel(error)) {
+                    return;
+                }
+                const title = isSdkError(error) ? error.message : i18n('error_auth_message');
+                dispatch(
+                    showToast({
+                        title,
+                        error: error instanceof Error ? error : new Error(String(error)),
                         withReport: false,
                     }),
                 );
