@@ -12,11 +12,11 @@
 services:
   # --- Nginx reverse proxy ---
   nginx:
-    image: nginx:1.28-alpine
+    image: quay.io/nginx/nginx-unprivileged:stable-alpine
     container_name: ydl-os-nginx
     restart: always
     ports:
-      - "80:80"
+      - "80:8080"
     volumes:
       # Edge proxy only (not the ui-in-container nginx.conf). Сертификаты сюда не монтируем — не требуются.
       - ./nginx/nginx-edge-proxy.conf:/etc/nginx/nginx.conf:ro
