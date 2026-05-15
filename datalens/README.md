@@ -1,117 +1,53 @@
-# YDL OS: runtime и эксплуатация
+# YDL OS Runtime
 
-Этот каталог содержит production-runtime платформы Aeronavigator BI (YDL OS): docker compose, скрипты синхронизации/деплоя, backup-процедуры и runbook-документацию.
+Операционный entrypoint для production-каталога `datalens/`.
 
-## 1) Что здесь находится
+## Назначение
 
-- production-compose стек и override-файлы
-- скрипты синхронизации с upstream и деплоя
-- регламенты эксплуатации и безопасности
-- процедуры backup/restore
+- запуск и обновление production-стека;
+- контролируемая синхронизация с upstream;
+- backup/restore и security-процедуры;
+- фиксация источника деплоя.
 
-## 2) Базовый runtime
+## Production-контур
 
-- Базовый compose: `datalens/docker-compose.yaml`
-- Production override: `datalens/docker-compose.production.yaml`
-- Edge proxy: `ydl-os-nginx` (host `:80` -> внутренний UI)
-- Основное постоянное хранилище: Docker volume `datalens-volume-prod`
+- compose: `docker-compose.yaml` + `docker-compose.production.yaml`
+- edge proxy: `ydl-os-nginx`
+- persistent storage: volume `datalens-volume-prod`
+- источник релиза: `github/main` (`SteGarXD/YDLOS`)
 
-## 3) Обязательные документы оператора
+## Ключевые документы
 
-- Синхронизация с upstream: [`PLATFORM_SYNC_UPSTREAM.md`](PLATFORM_SYNC_UPSTREAM.md)
-- Карта кастомизаций: [`CUSTOMIZATION_MANIFEST.md`](CUSTOMIZATION_MANIFEST.md)
-- Политика обновлений и безопасности: [`docs/UPSTREAM_UPDATE_AND_SECURITY.md`](docs/UPSTREAM_UPDATE_AND_SECURITY.md)
-- Production playbook: [`docs/PRODUCTION_SENIOR_PLAYBOOK.md`](docs/PRODUCTION_SENIOR_PLAYBOOK.md)
-- Актуальный аудит платформы: [`docs/PLATFORM_AUDIT_2026-05-15.md`](docs/PLATFORM_AUDIT_2026-05-15.md)
+- sync-модель: [`PLATFORM_SYNC_UPSTREAM.md`](PLATFORM_SYNC_UPSTREAM.md)
+- карта кастома: [`CUSTOMIZATION_MANIFEST.md`](CUSTOMIZATION_MANIFEST.md)
+- production runbook: [`RUNBOOK_PROD.md`](RUNBOOK_PROD.md)
+- auth-режимы: [`AUTH_MODES.md`](AUTH_MODES.md)
+- backup/restore: [`BACKUP_AND_RESTORE.md`](BACKUP_AND_RESTORE.md)
+- security-процессы: [`docs/PRODUCTION_SENIOR_PLAYBOOK.md`](docs/PRODUCTION_SENIOR_PLAYBOOK.md)
 
-Рекомендуемое разбиение runbook-документов:
-
-- [`RUNBOOK_PROD.md`](RUNBOOK_PROD.md)
-- [`RUNBOOK_DEV.md`](RUNBOOK_DEV.md)
-- [`AUTH_MODES.md`](AUTH_MODES.md)
-- [`BACKUP_AND_RESTORE.md`](BACKUP_AND_RESTORE.md)
-
-## 4) Стандартный production-деплой
-
-Из серверной рабочей копии:
-
-```bash
-cd /home/g.stepanov/datalens/datalens
-docker compose -f docker-compose.yaml -f docker-compose.production.yaml up -d --force-recreate
-```
-
-Из снимка `GitHub main` (`SteGarXD/YDLOS`):
-
-```bash
-bash scripts/ydl-os/redeploy-from-github-main.sh
-```
-
-Источник деплоя фиксируется в:
-
-- `/opt/ydl-os/.ydl-deploy-source`
-
-## 5) Регулярный цикл sync -> build -> smoke -> deploy
-
-Ручной запуск:
+## Обновление платформы (рекомендуемый путь)
 
 ```bash
 bash scripts/ydl-os/autopilot-sync-build-smoke-deploy.sh
 ```
 
-Что делает автопилот:
+Автопилотный цикл:
 
-1. Проверяет дивергенцию `upstream/main` vs `github/main`.
-2. Если есть отставание, обновляет `github/main` snapshot-коммитом на базе `upstream/main`.
-3. Выполняет redeploy из `github/main`.
-4. Прогоняет smoke-checks.
-5. Пишет отчёт в `datalens/reports/autopilot/`.
-6. Запускает security gate (Trivy) и блокирует цикл при регрессии уязвимостей относительно `datalens/security-baseline.json`.
+1. синхронизация с upstream;
+2. сборка образов с `--pull`;
+3. smoke-check;
+4. redeploy из `github/main`;
+5. security scan и gate по baseline.
 
-## 6) Ночной регламент
+## Фиксация источника деплоя
 
-Включает:
-
-- отчёт ahead/behind
-- nightly dump БД US
-- ротацию backup/отчётов
-- smoke-checks
-
-Установка cron:
+После каждого redeploy:
 
 ```bash
-bash scripts/ydl-os/install-nightly-cron.sh
+sed -n '1,20p' /opt/ydl-os/.ydl-deploy-source
 ```
 
-Ручной запуск:
+Ожидаемо:
 
-```bash
-bash scripts/ydl-os/nightly-maintenance.sh
-```
-
-## 7) Минимальная backup-политика
-
-Перед любым платформенным обновлением:
-
-1. создать PostgreSQL dump;
-2. сохранить пару проверенных backup-файлов (latest + previous);
-3. проверить сценарий восстановления.
-
-Рабочие каталоги backup:
-
-- `datalens/backups/`
-- `datalens/backups/preserved-development/`
-- `datalens/backups/nightly/`
-
-## 8) Безопасность при разных auth-режимах
-
-При отключённом облачном auth-контуре обязательны компенсирующие меры:
-
-- периметр (VPN/IP allowlist);
-- регулярная ротация секретов;
-- централизованные логи и алерты;
-- регулярные учения по восстановлению.
-
-Подробно:
-
-- [`docs/UPSTREAM_UPDATE_AND_SECURITY.md`](docs/UPSTREAM_UPDATE_AND_SECURITY.md)
-- [`docs/PRODUCTION_SENIOR_PLAYBOOK.md`](docs/PRODUCTION_SENIOR_PLAYBOOK.md)
+- `source=github/main`
+- `commit=<sha>`
