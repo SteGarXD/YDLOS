@@ -18,3 +18,4 @@
 
 - [`../AUTH_MODES.md`](../AUTH_MODES.md) - режимы аутентификации и компенсирующие меры
 - [`../CHARTS_AND_LICENSES.md`](../CHARTS_AND_LICENSES.md) - политика Highcharts и технический статус
+- [`../security-baseline.json`](../security-baseline.json) - baseline для security gate (Trivy HIGH/CRITICAL)

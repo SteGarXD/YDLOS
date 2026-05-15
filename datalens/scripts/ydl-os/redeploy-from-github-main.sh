@@ -60,11 +60,11 @@ git worktree add --detach "$WORKTREE_DIR" github/main
 
 echo "[1/5] Build datalens-auth image..."
 cd "$WORKTREE_DIR/components/datalens-auth"
-docker build -f Dockerfile -t akrasnov87/datalens-auth:0.2.6 .
+docker build --pull -f Dockerfile -t akrasnov87/datalens-auth:0.2.6 .
 
 echo "[2/5] Build datalens-ui image..."
 cd "$WORKTREE_DIR/components/datalens-ui"
-docker build -t akrasnov87/datalens-ui:0.3498.0 .
+docker build --pull -t akrasnov87/datalens-ui:0.3498.0 .
 
 echo "[3/5] Sync compose/nginx/docs to $COMPOSE_DIR ..."
 cd "$WORKTREE_DIR/datalens"

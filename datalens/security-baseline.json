@@ -1,0 +1,46 @@
+{
+  "generated_utc": "2026-05-15T02:34:11Z",
+  "source_report": "datalens/reports/security/trivy-images-20260515-023401Z-summary.txt",
+  "images": {
+    "akrasnov87/datalens-auth:0.2.6": {
+      "high": 34,
+      "critical": 3
+    },
+    "akrasnov87/datalens-control-api:0.2396.0": {
+      "high": 19,
+      "critical": 1
+    },
+    "akrasnov87/datalens-data-api:0.2396.0": {
+      "high": 19,
+      "critical": 1
+    },
+    "akrasnov87/datalens-meta-manager:0.50.0": {
+      "high": 44,
+      "critical": 2
+    },
+    "akrasnov87/datalens-postgres:16": {
+      "high": 63,
+      "critical": 4
+    },
+    "akrasnov87/datalens-ui:0.3498.0": {
+      "high": 71,
+      "critical": 5
+    },
+    "akrasnov87/datalens-us:0.413.0": {
+      "high": 41,
+      "critical": 2
+    },
+    "ghcr.io/datalens-tech/datalens-temporal:1.27.2": {
+      "high": 131,
+      "critical": 20
+    },
+    "nginx:1.25-alpine": {
+      "high": 19,
+      "critical": 3
+    },
+    "nginx:1.27-alpine": {
+      "high": 29,
+      "critical": 6
+    }
+  }
+}

@@ -6,6 +6,7 @@ export PATH="/home/g.stepanov/.local/bin:$PATH"
 # 1) sync report against upstream
 # 2) keep github/main at 0 behind (snapshot commit on top of upstream/main)
 # 3) build + smoke + deploy from github/main
+# 4) vulnerability scan with regression gate
 
 REPO_ROOT="${REPO_ROOT:-/home/g.stepanov/datalens}"
 REPORT_DIR="${REPORT_DIR:-$REPO_ROOT/datalens/reports/autopilot}"
@@ -13,6 +14,7 @@ TS="$(date -u +%Y%m%d-%H%M%SZ)"
 REPORT_FILE="$REPORT_DIR/autopilot-${TS}.log"
 AUTO_PUSH="${AUTO_PUSH:-1}"
 FORCE_REDEPLOY="${FORCE_REDEPLOY:-0}"
+SECURITY_GATE="${SECURITY_GATE:-1}"
 
 mkdir -p "$REPORT_DIR"
 cd "$REPO_ROOT"
@@ -56,6 +58,18 @@ if [[ "$UPDATED_GITHUB" -eq 1 || "$FORCE_REDEPLOY" == "1" ]]; then
   bash "$REPO_ROOT/datalens/scripts/ydl-os/redeploy-from-github-main.sh" | tee -a "$REPORT_FILE"
 else
   log "redeploy skipped (no upstream lag and FORCE_REDEPLOY=0)"
+fi
+
+if [[ "$SECURITY_GATE" == "1" ]]; then
+  log "run vulnerability scan with regression gate"
+  if FAIL_ON_REGRESSION=1 ENFORCE_CRITICAL=0 bash "$REPO_ROOT/datalens/scripts/ydl-os/security-image-scan.sh" | tee -a "$REPORT_FILE"; then
+    log "security gate passed"
+  else
+    log "security gate failed"
+    exit 2
+  fi
+else
+  log "security gate skipped (SECURITY_GATE=0)"
 fi
 
 FINAL_DIV="$(git rev-list --left-right --count upstream/main...github/main)"

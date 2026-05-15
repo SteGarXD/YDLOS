@@ -8,7 +8,7 @@ SECURITY_SCAN_SCRIPT="$REPO_ROOT/datalens/scripts/ydl-os/security-image-scan.sh"
 CRON_MARKER="# ydl-os nightly maintenance"
 CRON_LINE="17 2 * * * PATH=/home/g.stepanov/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin bash $SCRIPT >> /home/g.stepanov/datalens/datalens/reports/nightly/cron.log 2>&1"
 AUTOPILOT_MARKER="# ydl-os autopilot sync-build-smoke-deploy"
-AUTOPILOT_LINE="47 3 * * * PATH=/home/g.stepanov/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin AUTO_PUSH=1 FORCE_REDEPLOY=1 bash $AUTOPILOT_SCRIPT >> /home/g.stepanov/datalens/datalens/reports/autopilot/cron.log 2>&1"
+AUTOPILOT_LINE="47 3 * * * PATH=/home/g.stepanov/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin AUTO_PUSH=1 FORCE_REDEPLOY=1 SECURITY_GATE=1 bash $AUTOPILOT_SCRIPT >> /home/g.stepanov/datalens/datalens/reports/autopilot/cron.log 2>&1"
 SECURITY_SCAN_MARKER="# ydl-os weekly security image scan"
 SECURITY_SCAN_LINE="23 4 * * 0 PATH=/home/g.stepanov/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin bash $SECURITY_SCAN_SCRIPT >> /home/g.stepanov/datalens/datalens/reports/security/cron.log 2>&1"
 
@@ -22,26 +22,23 @@ chmod +x "$SECURITY_SCAN_SCRIPT"
 TMP="$(mktemp)"
 crontab -l 2>/dev/null > "$TMP" || true
 
-if ! grep -Fq "$CRON_MARKER" "$TMP"; then
-  {
-    echo "$CRON_MARKER"
-    echo "$CRON_LINE"
-  } >> "$TMP"
-fi
+TMP_CLEAN="$(mktemp)"
+grep -vF "$CRON_MARKER" "$TMP" \
+  | grep -vF "$AUTOPILOT_MARKER" \
+  | grep -vF "$SECURITY_SCAN_MARKER" \
+  | grep -vF "$SCRIPT" \
+  | grep -vF "$AUTOPILOT_SCRIPT" \
+  | grep -vF "$SECURITY_SCAN_SCRIPT" > "$TMP_CLEAN" || true
+mv "$TMP_CLEAN" "$TMP"
 
-if ! grep -Fq "$AUTOPILOT_MARKER" "$TMP"; then
-  {
-    echo "$AUTOPILOT_MARKER"
-    echo "$AUTOPILOT_LINE"
-  } >> "$TMP"
-fi
-
-if ! grep -Fq "$SECURITY_SCAN_MARKER" "$TMP"; then
-  {
-    echo "$SECURITY_SCAN_MARKER"
-    echo "$SECURITY_SCAN_LINE"
-  } >> "$TMP"
-fi
+{
+  echo "$CRON_MARKER"
+  echo "$CRON_LINE"
+  echo "$AUTOPILOT_MARKER"
+  echo "$AUTOPILOT_LINE"
+  echo "$SECURITY_SCAN_MARKER"
+  echo "$SECURITY_SCAN_LINE"
+} >> "$TMP"
 
 if ! crontab "$TMP"; then
   echo "Failed to install cron entries"

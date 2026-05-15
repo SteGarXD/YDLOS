@@ -65,6 +65,7 @@ bash scripts/ydl-os/autopilot-sync-build-smoke-deploy.sh
 3. Выполняет redeploy из `github/main`.
 4. Прогоняет smoke-checks.
 5. Пишет отчёт в `datalens/reports/autopilot/`.
+6. Запускает security gate (Trivy) и блокирует цикл при регрессии уязвимостей относительно `datalens/security-baseline.json`.
 
 ## 6) Ночной регламент
 

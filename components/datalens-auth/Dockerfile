@@ -1,7 +1,8 @@
-# Образ с registry уже содержит node_modules (зависимости с git.mobwal.com).
+# Базовый образ уже содержит node_modules (зависимости с git.mobwal.com).
 # Полная пересборка app из исходников без доступа к git.mobwal.com невозможна — только патч поверх базового слоя.
-# Дайджест привязан к akrasnov87/datalens-auth:0.2.6 на Docker Hub; при смене базового тега обновите digest (`docker inspect ... --format '{{index .RepoDigests 0}}'`).
-FROM akrasnov87/datalens-auth@sha256:2dbea1babcbf4e302e4b921db967d7dd68894020a0a0d4f8a9fac4cba019ccd6
+# Для регулярной актуализации безопасности используем tag + docker build --pull в redeploy-цикле.
+ARG DATALENS_AUTH_BASE_IMAGE=akrasnov87/datalens-auth:0.2.6
+FROM ${DATALENS_AUTH_BASE_IMAGE}
 
 LABEL desc="datalens-auth YDL-OS: /demo/refresh + datalens-auth routes"
 
