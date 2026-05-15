@@ -14,10 +14,10 @@ export const actions = {
     signin: createAction<undefined, SigninArgs>({
         method: 'POST',
         proxyResponseHeaders: [SET_COOKIE_HEADER],
-        // us-auth compatibility route for DataLens UI payload {login, password}
-        path: () => '/demo/signin',
+        // us-auth native auth contract expects UserName/Password keys.
+        path: () => '/demo/auth',
         params: ({login, password}, headers) => ({
-            body: {login, password},
+            body: {UserName: login, Password: password},
             headers,
         }),
     }),
