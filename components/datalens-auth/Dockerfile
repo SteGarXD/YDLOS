@@ -7,6 +7,10 @@ FROM ${DATALENS_AUTH_BASE_IMAGE}
 LABEL desc="datalens-auth YDL-OS: /demo/refresh + datalens-auth routes"
 
 USER root
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y upgrade && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 COPY app/app.js /app/app.js
 COPY app/routes/datalens-auth.js /app/routes/datalens-auth.js
 RUN chown dl:dl /app/app.js /app/routes/datalens-auth.js && chmod 644 /app/app.js /app/routes/datalens-auth.js

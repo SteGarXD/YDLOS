@@ -59,6 +59,8 @@ RUN mkdir -p /etc/apt/keyrings && \
     echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_MAJOR}.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
 
 RUN apt-get update && apt-get -y install nginx supervisor nodejs
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
 
 # remove unnecessary packages
 RUN apt-get -y purge curl gnupg gnupg2 && \
@@ -133,6 +135,7 @@ RUN apt-get update \
       --no-install-recommends \
     && wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
     && dpkg -i google-chrome-stable_current_amd64.deb || apt-get install -fy \
+    && apt-get -y upgrade \
     && rm google-chrome-stable_current_amd64.deb \
     && rm -rf /var/lib/apt/lists/*
 
