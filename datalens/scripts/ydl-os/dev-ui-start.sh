@@ -65,7 +65,9 @@ SERVICE_NAME="${SERVICE_NAME:-Aeronavigator BI}"
 log "install npm deps (if needed) in $UI_DIR"
 cd "$UI_DIR"
 if [[ ! -d node_modules ]]; then
-  npm ci
+  export HUSKY=0
+  npm ci --ignore-scripts
+  npx patch-package
 fi
 
 cat > "$UI_DIR/.env" <<EOF
@@ -90,10 +92,25 @@ cd "$COMPOSE_DIR"
 "${COMPOSE[@]}" stop ui ui-api 2>/dev/null || true
 "${COMPOSE[@]}" up -d --force-recreate nginx us us-auth control-api data-api us postgres temporal meta-manager
 
+if [[ "$(cat /proc/sys/fs/inotify/max_user_watches 2>/dev/null || echo 0)" -lt 524288 ]]; then
+  log "raise fs.inotify.max_user_watches for dev HMR"
+  if command -v sudo >/dev/null 2>&1; then
+    sudo sysctl -w fs.inotify.max_user_watches=524288 fs.inotify.max_user_instances=1024 >/dev/null 2>&1 || true
+  else
+    sysctl -w fs.inotify.max_user_watches=524288 >/dev/null 2>&1 || true
+  fi
+fi
+
 log "start npm run dev (client :$DEV_CLIENT_PORT, api :$DEV_SERVER_PORT)"
 cd "$UI_DIR"
 : >"$LOG_FILE"
-nohup env DEV_CLIENT_PORT="$DEV_CLIENT_PORT" DEV_SERVER_PORT="$DEV_SERVER_PORT" npm run dev >>"$LOG_FILE" 2>&1 &
+# Без root inotify часто упирается в ENOSPC — polling медленнее, но стабильно.
+nohup env \
+  DEV_CLIENT_PORT="$DEV_CLIENT_PORT" \
+  DEV_SERVER_PORT="$DEV_SERVER_PORT" \
+  CHOKIDAR_USEPOLLING=1 \
+  WATCHPACK_POLLING=true \
+  npm run dev >>"$LOG_FILE" 2>&1 &
 echo $! >"$PID_FILE"
 
 log "wait for dev client on 127.0.0.1:$DEV_CLIENT_PORT"

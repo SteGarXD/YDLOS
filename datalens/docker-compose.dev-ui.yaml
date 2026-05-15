@@ -8,11 +8,8 @@
 #   -f docker-compose.dev-ui.yaml
 
 services:
+  # Только контейнер ui отключаем — ui-api нужен meta-manager.
   ui:
-    profiles:
-      - docker-bundled-ui
-
-  ui-api:
     profiles:
       - docker-bundled-ui
 
