@@ -1,0 +1,35 @@
+.action-panel-chart-save-controls {
+    &__save-btn-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+
+    &__pseudosave-btn {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: none;
+
+        &_active {
+            display: block;
+        }
+    }
+
+    &__splitter {
+        display: inline-block;
+        vertical-align: middle;
+        width: 1px;
+        height: 22px;
+        margin-left: 4px;
+
+        // stylelint-disable-next-line declaration-no-important
+        margin-right: 8px !important;
+        background-color: var(--g-color-line-generic);
+    }
+
+    &_mobile {
+        display: flex;
+    }
+}

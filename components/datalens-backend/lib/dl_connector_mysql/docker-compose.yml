@@ -1,0 +1,82 @@
+services:
+  db-mysql-5-7:
+    # the earliest version supported by DL
+    # image: "mysql:5.7"
+    image: "mysql:5.7@sha256:188121394576d05aedb5daf229403bf58d4ee16e04e81828e4d43b72bd227bc2"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "1"
+      MYSQL_DATABASE: "test_data"
+      MYSQL_USER: "datalens"
+      MYSQL_PASSWORD: "qwerty"
+    ports:
+      - "52000:3306"
+  db-mysql-rogue:
+    # build from ./docker-compose/rogue_mysql_server
+    image: "ghcr.io/datalens-tech/datalens-backend/rogue-mysql-server@sha256:df05bed72334ca3b8e04c7fd8b74c2834f59a0e0501a98311a4c29443cfeff9d"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "1"
+      MYSQL_DATABASE: "test_data"
+      MYSQL_USER: "datalens"
+      MYSQL_PASSWORD: "qwerty"
+    ports:
+      - "52003:3306"
+  db-mysql-8-0:
+    # image: "mysql:8.0.40"
+    build:
+      context: docker-compose
+      dockerfile: Dockerfile.db-mysql-8.0.40
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "1"
+      MYSQL_DATABASE: "test_data"
+      MYSQL_USER: "datalens"
+      MYSQL_PASSWORD: "qwerty"
+    ports:
+      - "52001:3306"
+  db-mysql-8-0-ssl:
+    # image: "mysql:8.0.40"
+    build:
+      context: docker-compose
+      dockerfile: Dockerfile.db-mysql-8.0.40-ssl
+    depends_on:
+      - ssl-provider
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "1"
+      MYSQL_DATABASE: "test_data"
+      MYSQL_USER: "datalens"
+      MYSQL_PASSWORD: "qwerty"
+      CERT_SERVER_URL: "http://ssl-provider"
+    ports:
+      - "52002:3306"
+
+  # INFRA
+  ssl-provider:
+    extends:
+      file: ../testenv-common/docker-compose.common.yml
+      service: ssl-provider
+    build:
+      args:
+        CERTIFIED_DOMAIN: "db-mysql-8-0-ssl"
+    ports:
+      - "8080:80"
+
+  pg-us:
+    extends:
+      file: ../testenv-common/docker-compose.common.yml
+      service: pg-us
+    ports:
+     - "52010:5432"
+
+  us:
+    extends:
+      file: ../testenv-common/docker-compose.common.yml
+      service: us
+    ports:
+     - "52011:8080"
+
+  redis-caches:
+    # image: "bitnami/redis:5.0.8"
+    image: "bitnami/redis:5.0.8@sha256:3127620da977815556439a9dc347fff89432a79b6bb6e93a16f20ac4a34ce337"
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+     - "52012:6379"

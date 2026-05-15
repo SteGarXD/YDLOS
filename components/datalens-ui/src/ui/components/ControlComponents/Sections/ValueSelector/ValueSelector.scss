@@ -1,0 +1,21 @@
+.value-selector-wrapper {
+    &__checkbox-option {
+        padding-top: 6px;
+        font-size: 12px;
+    }
+
+    &__granularity-checkboxes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 16px;
+        font-size: 12px;
+
+        .checkbox-option {
+            margin-right: 0;
+        }
+    }
+
+    &__radio-option {
+        padding-top: 4px;
+    }
+}

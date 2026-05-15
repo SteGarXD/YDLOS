@@ -1,0 +1,7 @@
+﻿* development
+  remotes/aeronavigator/HEAD -> aeronavigator/master
+  remotes/aeronavigator/development
+  remotes/aeronavigator/master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/development
+  remotes/origin/master

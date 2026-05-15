@@ -1,0 +1,29 @@
+.ql-pane-table-preview {
+    min-height: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+
+    .dl-table {
+        &__td_type_number {
+            text-align: initial;
+            justify-content: initial;
+        }
+
+        &__header {
+            th {
+                height: 32px;
+                border-bottom: 1px solid var(--g-color-line-generic);
+            }
+        }
+
+        &__td {
+            height: 32px;
+            border-bottom: 1px solid var(--g-color-line-generic);
+        }
+    }
+}

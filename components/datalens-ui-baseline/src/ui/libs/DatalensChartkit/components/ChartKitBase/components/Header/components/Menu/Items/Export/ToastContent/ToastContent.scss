@@ -1,0 +1,49 @@
+@import '~@gravity-ui/uikit/styles/mixins';
+
+.export-loading {
+    @include text-body-2();
+    color: var(--g-color-text-complementary);
+    background-color: var(--g-color-base-background);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        background-color: var(--dl-color-export-loading-toast);
+    }
+
+    &__content {
+        margin-top: 2px;
+        padding-left: 8px;
+    }
+
+    &__success-icon {
+        display: flex;
+        width: 25px;
+        justify-content: center;
+        color: var(--g-color-text-positive);
+    }
+
+    &__text {
+        display: inline;
+    }
+
+    &_success::before {
+        background-color: var(--g-color-base-positive-light);
+    }
+
+    &_reference {
+        width: 312px;
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        white-space: nowrap;
+    }
+}

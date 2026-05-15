@@ -1,0 +1,29 @@
+{
+  "extends": "../../tsconfig",
+  "compilerOptions": {
+    "outDir": "../../dist/public/build",
+    "resolveJsonModule": true,
+    "jsx": "react",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "useUnknownInCatchVariables": false,
+    "paths": {
+      "i18n": ["../i18n"],
+      "shared": ["../shared"],
+      "shared/*": ["../shared/*"],
+      "ui": ["./"],
+      "ui/*": ["./*"],
+      "assets": ["./assets"],
+      "assets/*": ["./assets/*"]
+    }
+  },
+  "include": [
+    "**/*",
+    "../@types",
+    "../i18n",
+    "../shared/**/*",
+    "../../node_modules/@gravity-ui/chartkit/build/plugins/highcharts/types/highcharts-extends.d.ts",
+    "../../../../node_modules/@gravity-ui/chartkit/build/plugins/highcharts/types/highcharts-extends.d.ts"
+  ]
+}

@@ -1,0 +1,29 @@
+# YDL OS: все сервисы на образах aeronavigatorbi (prod). Сборка: .\build-all-images.ps1. Запуск: .\run-own-images.ps1
+
+services:
+  postgres:
+    image: aeronavigatorbi/datalens-postgres:16
+  temporal:
+    image: aeronavigatorbi/datalens-temporal:1.27.2
+  control-api:
+    image: aeronavigatorbi/datalens-control-api:0.2396.0
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  data-api:
+    image: aeronavigatorbi/datalens-data-api:0.2396.0
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  us:
+    image: aeronavigatorbi/datalens-us:0.413.0
+  ui-api:
+    image: aeronavigatorbi/datalens-ui:0.3498.0
+    environment:
+      SERVICE_NAME: ${SERVICE_NAME:-Aeronavigator BI}
+  meta-manager:
+    image: aeronavigatorbi/datalens-meta-manager:0.50.0
+  us-auth:
+    image: aeronavigatorbi/datalens-auth:0.2.6
+  ui:
+    image: aeronavigatorbi/datalens-ui:0.3498.0
+    environment:
+      SERVICE_NAME: ${SERVICE_NAME:-Aeronavigator BI}

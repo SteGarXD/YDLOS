@@ -1,0 +1,53 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.WidgetKind = exports.EditorType = exports.LegacyEditorType = exports.WizardType = void 0;
+var WizardType;
+(function (WizardType) {
+    WizardType["GraphWizardNode"] = "graph_wizard_node";
+    WizardType["TableWizardNode"] = "table_wizard_node";
+    WizardType["YmapWizardNode"] = "ymap_wizard_node";
+    WizardType["MetricWizardNode"] = "metric_wizard_node";
+    WizardType["MarkupWizardNode"] = "markup_wizard_node";
+    WizardType["TimeseriesWizardNode"] = "timeseries_wizard_node";
+    WizardType["GravityChartsWizardNode"] = "d3_wizard_node";
+})(WizardType || (exports.WizardType = WizardType = {}));
+var LegacyEditorType;
+(function (LegacyEditorType) {
+    LegacyEditorType["Graph"] = "graph";
+    LegacyEditorType["Table"] = "table";
+    LegacyEditorType["Map"] = "map";
+    LegacyEditorType["Manager"] = "manager";
+    LegacyEditorType["Text"] = "text";
+    LegacyEditorType["Metric"] = "metric";
+    LegacyEditorType["BlankChart"] = "blank-chart_node";
+})(LegacyEditorType || (exports.LegacyEditorType = LegacyEditorType = {}));
+var EditorType;
+(function (EditorType) {
+    EditorType["Module"] = "module";
+    EditorType["GraphNode"] = "graph_node";
+    EditorType["TableNode"] = "table_node";
+    EditorType["TextNode"] = "text_node";
+    EditorType["MetricNode"] = "metric_node";
+    EditorType["MapNode"] = "map_node";
+    EditorType["YmapNode"] = "ymap_node";
+    EditorType["ControlNode"] = "control_node";
+    EditorType["MarkdownNode"] = "markdown_node";
+    EditorType["MarkupNode"] = "markup_node";
+    EditorType["GravityChartsNode"] = "d3_node";
+    EditorType["AdvancedChartNode"] = "advanced-chart_node";
+})(EditorType || (exports.EditorType = EditorType = {}));
+var WidgetKind;
+(function (WidgetKind) {
+    WidgetKind["Graph"] = "graph";
+    WidgetKind["Table"] = "table";
+    WidgetKind["Map"] = "map";
+    WidgetKind["Manager"] = "manager";
+    WidgetKind["Text"] = "text";
+    WidgetKind["Metric"] = "metric";
+    WidgetKind["Ymap"] = "ymap";
+    WidgetKind["Control"] = "control";
+    WidgetKind["Markdown"] = "markdown";
+    WidgetKind["Markup"] = "markup";
+    WidgetKind["GravityCharts"] = "d3";
+    WidgetKind["AdvancedChart"] = "advanced-chart";
+})(WidgetKind || (exports.WidgetKind = WidgetKind = {}));

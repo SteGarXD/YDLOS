@@ -1,0 +1,25 @@
+{
+  "action_back": "Back",
+  "action_cancel": "Cancel",
+  "action_next": "Next",
+  "action_show-all": "Show all",
+  "label_charts": "Charts",
+  "label_connections": "Connections",
+  "label_current-entry": "Selected object",
+  "label_dashboards": "Dashboards",
+  "label_datasets": "Datasets",
+  "label_entry-already-in-workbook": "Migrated with other objects",
+  "label_linked-objects": "Linked objects",
+  "label_no-linked-objects": "Empty",
+  "label_objects": [
+    "{{count}} object",
+    "{{count}} objects",
+    "{{count}} objects",
+    "0 objects"
+  ],
+  "label_unknown-error": "An error occured during migration. Please try again later.",
+  "md_label_copy-extension-warning": "Objects were detected that do not support copying: connection to Google Sheets or to a file (CSV). Use a transfer",
+  "md_label_copy-warning": "The object and all related objects will be moved from folders to the workbook. It is impossible to return them from the workbook to folders. After the transfer, you will become the administrator of the workbook and will be able to assign access rights to other users and user groups",
+  "title_copy": "Copy to workbook",
+  "title_transfer": "Transfer to workbook"
+}

@@ -1,0 +1,17 @@
+{
+  "button_open": "Flight groups editor",
+  "title_dialog": "Flight group setup",
+  "placeholder_group_name": "Group name",
+  "button_add": "Add",
+  "button_delete": "Delete",
+  "button_replace": "Rename",
+  "label_flights_in": "Flights in group",
+  "label_flights_out": "Flights not in group",
+  "button_clear_filter": "Clear filter",
+  "button_remove_flight": "Remove flight from group",
+  "button_add_flight": "Add flight to group",
+  "label_selected": "Selected group",
+  "button_close": "Close",
+  "toast_load_error": "Failed to load flight groups data",
+  "toast_save_error": "Failed to save changes"
+}

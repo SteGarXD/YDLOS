@@ -1,0 +1,37 @@
+.git
+
+.eslintrc
+.stylelintrc
+jest.config.ts
+README.md
+tsconfig.jest.json
+
+packages
+services
+technotes
+
+.idea
+.DS_Store
+.vscode
+
+node_modules
+
+.env
+
+# В образ from-host нужны server (окраска сводной) и shared. Исключать только при отладке «только фронт».
+# dist/server
+# dist/shared
+dist/i18n
+# dist/public/build — не исключаем при сборке образа from-host
+# dist/public/build
+
+dist/run/*
+!dist/run/.keep
+
+secrets/*
+!secrets/.keep
+
+tests/artifacts
+!export/requirements.txt
+!export/dash2sheets.py
+!export/csv2ods.py

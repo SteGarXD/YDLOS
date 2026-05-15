@@ -1,0 +1,111 @@
+import {batch} from 'react-redux';
+import type {Dispatch} from 'redux';
+import type {AliasClickHandlerArgs} from 'ui/components/DialogRelations/types';
+import type {DatalensGlobalState} from 'ui/index';
+
+import type {DialogRelationsProps} from '../../../../../components/DialogRelations/DialogRelations';
+import {DIALOG_RELATIONS} from '../../../../../components/DialogRelations/DialogRelations';
+import type {DialogAliasesProps} from '../../../../../components/DialogRelations/components/DialogAliases/DialogAliases';
+import {DIALOG_ALIASES} from '../../../../../components/DialogRelations/components/DialogAliases/DialogAliases';
+import {closeDialog, openDialog} from '../../../../../store/actions/dialog';
+import {
+    selectCurrentTabAliases,
+    selectCurrentTabRelationDataItems,
+    selectDashWorkbookId,
+    selectDashkitRef,
+    selectWidgetsCurrentTab,
+} from '../../selectors/dashTypedSelectors';
+import {updateCurrentTabData} from '../dashTyped';
+
+type OpenDialogRelationsProps = Omit<
+    DialogRelationsProps,
+    'dashTabAliases' | 'workbookId' | 'allWidgets' | 'onApply' | 'widgetsCurrentTab'
+> & {
+    onApply?: () => void;
+};
+
+export const openDialogRelations = ({
+    widget,
+    dashKitRef,
+    onApply,
+    onClose,
+}: OpenDialogRelationsProps) => {
+    return function (dispatch: Dispatch, getState: () => DatalensGlobalState) {
+        const state = getState();
+        const dashTabAliases = selectCurrentTabAliases(state);
+        const workbookId = selectDashWorkbookId(state);
+        const allWidgets = selectCurrentTabRelationDataItems(state);
+        const widgetsCurrentTab = selectWidgetsCurrentTab(state);
+
+        const openDialogRelationsParams: DialogRelationsProps = {
+            onClose: () => {
+                onClose();
+                dispatch(closeDialog());
+            },
+            onApply: (newData) => {
+                onApply?.();
+                updateCurrentTabData(newData)(dispatch);
+                onClose();
+                dispatch(closeDialog());
+            },
+            widget,
+            dashKitRef,
+            dashTabAliases,
+            widgetsCurrentTab,
+            workbookId,
+            allWidgets,
+        };
+
+        dispatch(
+            openDialog({
+                id: DIALOG_RELATIONS,
+                props: openDialogRelationsParams,
+            }),
+        );
+    };
+};
+
+export const closeDialogRelations = () => {
+    return function (dispatch: Dispatch) {
+        dispatch(closeDialog());
+    };
+};
+
+export const openDialogAliases = (props: AliasClickHandlerArgs) => {
+    return function (dispatch: Dispatch) {
+        const openDialogAliasesParams: DialogAliasesProps = {
+            ...props,
+            onClose: (args) => {
+                if (typeof props.onCloseCallback === 'function') {
+                    props.onCloseCallback(args);
+                }
+                dispatch(closeDialog());
+            },
+        };
+
+        dispatch(
+            openDialog({
+                id: DIALOG_ALIASES,
+                props: openDialogAliasesParams,
+            }),
+        );
+    };
+};
+
+export const openEmptyDialogRelations = () => {
+    return function (dispatch: Dispatch, getState: () => DatalensGlobalState) {
+        const state = getState();
+        const dashKitRef = selectDashkitRef(state);
+
+        if (dashKitRef === null) {
+            return;
+        }
+
+        batch(() => {
+            openDialogRelations({
+                dashKitRef,
+                onClose: () => {},
+            })(dispatch, getState);
+        });
+    };
+};

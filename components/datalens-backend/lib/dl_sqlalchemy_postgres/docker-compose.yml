@@ -1,0 +1,10 @@
+services:
+  db-postgres:
+    # image: "postgres:13-alpine3.20"
+    image: "postgres:13-alpine3.20"
+    environment:
+      - POSTGRES_DB=test_data
+      - POSTGRES_USER=datalens
+      - POSTGRES_PASSWORD=qwerty
+    ports:
+     - "50319:5432"

@@ -1,0 +1,12 @@
+.title-with-tooltip {
+    display: flex;
+    align-items: center;
+
+    &__title {
+        margin-right: 5px;
+    }
+
+    &__tooltip-content {
+        max-width: 280px;
+    }
+}

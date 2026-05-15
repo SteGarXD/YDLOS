@@ -1,0 +1,197 @@
+import React from 'react';
+
+import {dateTimeUtc} from '@gravity-ui/date-utils';
+import {CaretLeft, CaretRight} from '@gravity-ui/icons';
+import {Icon} from '@gravity-ui/uikit';
+import block from 'bem-cn-lite';
+import get from 'lodash/get';
+import type {
+    BarTableCell,
+    BarViewOptions,
+    DiffTableColumn,
+    NumberViewOptions,
+    TableCommonCell,
+    TableHead,
+    WrappedHTML,
+} from 'shared';
+import {ChartKitTableQa, isMarkupItem} from 'shared';
+import {WRAPPED_HTML_KEY} from 'shared/constants/chartkit-handlers';
+import {isWrappedHTML} from 'shared/utils/ui-sandbox';
+
+import {MarkdownHelpPopover} from '../../../../../../../components/MarkdownHelpPopover/MarkdownHelpPopover';
+import {DEFAULT_DATE_FORMAT} from '../../../../../../../constants/misc';
+import {numberFormatter} from '../../../../components/Widget/components/Table/utils/misc';
+import {BarCell} from '../components/BarCell/BarCell';
+import {DiffCell} from '../components/DiffCell/DiffCell';
+import {HtmlCell} from '../components/HtmlCell/HtmlCell';
+import {MarkupCell} from '../components/MarkupCell/MarkupCell';
+import type {THead} from '../components/Table/types';
+import {getCellVeticalAlignmentStyle} from '../components/Table/utils';
+import {TreeCell} from '../components/TreeCell/TreeCell';
+
+import {calculateNumericProperty} from './math';
+
+const b = block('chartkit-table-widget');
+
+export type HeadCell = THead & {
+    name: string;
+    formattedName?: React.ReactElement | WrappedHTML | string;
+    fieldId?: string;
+    custom?: unknown;
+};
+
+export function mapHeadCell(args: {
+    th: TableHead;
+    tableWidth: number | undefined;
+    onRenderCell?: () => void;
+    disableCellFormatting?: boolean;
+}): HeadCell {
+    const {th, tableWidth, onRenderCell, disableCellFormatting = false} = args;
+    const columnType: TableCommonCell['type'] = get(th, 'type');
+    const hint = get(th, 'hint');
+
+    return {
+        ...th,
+        width: calculateNumericProperty({value: th.width, base: tableWidth}),
+        id: String(th.id),
+        header: () => {
+            const cell = {
+                value: th.markup ?? th.name,
+                formattedValue: th.formattedName ?? th.name,
+                type: th.markup ? 'markup' : columnType,
+            } as TableCommonCell;
+            const verticalAlignmentStyle = getCellVeticalAlignmentStyle(th);
+            const style = verticalAlignmentStyle ? {style: verticalAlignmentStyle} : null;
+            return (
+                <span {...style} data-qa={ChartKitTableQa.HeadCellContent}>
+                    {renderCellContent({cell, column: th, header: true, onRender: onRenderCell})}
+                    {hint && <MarkdownHelpPopover markdown={hint} />}
+                </span>
+            );
+        },
+        enableSorting: get(th, 'sortable', true),
+        enableRowGrouping: get(th, 'group', false),
+        cell: (cellData) => {
+            const cell = (cellData || {}) as TableCommonCell;
+            return (
+                <React.Fragment>
+                    {disableCellFormatting
+                        ? cellData?.value ?? ''
+                        : renderCellContent({cell, column: th, onRender: onRenderCell})}
+                    {cell.sortDirection && (
+                        <Icon
+                            className={b('sort-icon')}
+                            data={cell.sortDirection === 'asc' ? CaretLeft : CaretRight}
+                        />
+                    )}
+                </React.Fragment>
+            );
+        },
+        columns: get(th, 'sub', []).map((subColumn: TableHead) =>
+            mapHeadCell({th: subColumn, tableWidth, onRenderCell}),
+        ),
+        pinned: get(th, 'pinned', false),
+    };
+}
+
+export function getCellContentStyles(args: {
+    cell: TableCommonCell;
+    column: TableHead;
+    columns: TableHead[];
+}) {
+    const {cell, column, columns} = args;
+    const cellType = cell.type ?? get(column, 'type');
+    const contentStyles: React.CSSProperties = {};
+    if (cellType === 'number') {
+        contentStyles.textAlign = 'right';
+    }
+
+    // Width of the table should take 100%, so we cannot use the width settings when they are set for all cells
+    const canUseCellWidth = columns.some((col) => !col.width);
+    if (canUseCellWidth) {
+        const cellWidth = get(cell, 'width', get(column, 'width'));
+        const isPercentWidth = String(cellWidth).slice(-1) === '%';
+        if (!isPercentWidth) {
+            contentStyles.width = cellWidth;
+        }
+    }
+
+    return contentStyles;
+}
+
+// eslint-disable-next-line complexity
+export function renderCellContent(args: {
+    cell: TableCommonCell;
+    column: TableHead;
+    header?: boolean;
+    onRender?: () => void;
+}) {
+    const {cell, column, header, onRender} = args;
+    const cellView = get(cell, 'view', get(column, 'view'));
+    const cellType = cell.type ?? get(column, 'type');
+
+    if (cellType === 'markup' || isMarkupItem(cell.value)) {
+        return <MarkupCell cell={cell} />;
+    }
+
+    if (!header) {
+        if (cellView === 'bar' || cellType === 'bar') {
+            return <BarCell cell={cell as BarTableCell} column={column as BarViewOptions} />;
+        }
+
+        if (cellType === 'diff') {
+            const [value, diff] = (cell.value ?? []) as [number, number];
+            return <DiffCell value={value} diff={diff} column={column as DiffTableColumn} />;
+        }
+
+        if (cellType === 'diff_only') {
+            return (
+                <DiffCell
+                    diff={cell.value as number}
+                    column={column as DiffTableColumn}
+                    diffOnly={true}
+                />
+            );
+        }
+
+        if (cell?.treeNodeState) {
+            return <TreeCell cell={cell} />;
+        }
+    }
+
+    let formattedValue: React.ReactElement | string | undefined = cell.formattedValue;
+    if (!formattedValue) {
+        if (cell.value === null) {
+            formattedValue = String(cell.value);
+        } else if (cellType === 'date' && cell.value) {
+            const dateTimeValue = dateTimeUtc({input: cell.value as string});
+            const dateTimeFormat = get(column, 'format', DEFAULT_DATE_FORMAT);
+            formattedValue = dateTimeValue?.isValid()
+                ? dateTimeValue.format(dateTimeFormat)
+                : String(cell.value);
+        } else if (cellType === 'number') {
+            formattedValue = numberFormatter(cell.value as number, column as NumberViewOptions);
+        } else {
+            formattedValue = String(cell.value ?? '');
+        }
+    } else if (React.isValidElement(formattedValue)) {
+        return formattedValue;
+    } else if (isWrappedHTML(formattedValue)) {
+        return <HtmlCell content={formattedValue[WRAPPED_HTML_KEY]} onRender={onRender} />;
+    }
+
+    if (cell.link?.href) {
+        const {href, newWindow = true} = cell.link;
+        const content = {
+            tag: 'a',
+            attributes: {
+                href,
+                target: newWindow ? '_blank' : '_self',
+            },
+            content: formattedValue,
+        };
+        return <HtmlCell content={content} onRender={onRender} />;
+    }
+
+    return formattedValue;
+}

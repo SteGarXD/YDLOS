@@ -1,0 +1,74 @@
+﻿[
+    {
+        "Id": "sha256:cb17ea423d76a8a19a269d0bcd81fc12eee1f6365acd2a56b590dafb35696a95",
+        "RepoTags": [
+            "ghcr.io/datalens-tech/temporal-ui:2.34.0"
+        ],
+        "RepoDigests": [
+            "ghcr.io/datalens-tech/temporal-ui@sha256:cb17ea423d76a8a19a269d0bcd81fc12eee1f6365acd2a56b590dafb35696a95"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2025-01-13T18:27:08.358985393Z",
+        "Config": {
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "TEMPORAL_CLOUD_UI=false"
+            ],
+            "Entrypoint": [
+                "./start-ui-server.sh"
+            ],
+            "WorkingDir": "/home/ui-server",
+            "Labels": {
+                "org.opencontainers.image.created": "2025-01-13T18:26:04.941Z",
+                "org.opencontainers.image.description": "Golang Server for https://github.com/temporalio/ui",
+                "org.opencontainers.image.licenses": "MIT",
+                "org.opencontainers.image.revision": "c2de1f6487c29814a43f4b403422634486237ac1",
+                "org.opencontainers.image.source": "https://github.com/temporalio/ui-server",
+                "org.opencontainers.image.title": "ui-server",
+                "org.opencontainers.image.url": "https://github.com/temporalio/ui-server",
+                "org.opencontainers.image.version": "2.34.0"
+            },
+            "Shell": [
+                "/bin/bash",
+                "-c"
+            ]
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 48083538,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:d4fc045c9e3a848011de66f34b81f052d4f2c15a17bb196d637e526349601820",
+                "sha256:bd97e2233ae631557d8e54ddff52a1a1014e4db6a27e9b82ae644c093ce9027e",
+                "sha256:3208eec7f4517e16fc0bd65320323d9971cc795be903937098fa169b4ba5346d",
+                "sha256:20415d1360d3f5586c82941410105ca1dc6bac0a020b5290f8bcfa4e08f3ec05",
+                "sha256:3770df36aeabed7aecfa39ba988a769c8b49edd96b08d2bdf309f7161440a1a6",
+                "sha256:d59fba1ce9fc3d45242ab7f883f9fd0032a94603c141e8c0626835d6002558fe",
+                "sha256:da0d9655ff7138bc3e40bd587ca2f5a4417bb524967060619162415e4f171db5",
+                "sha256:b69ac1b9f5db3c65bfa7504492d2eb1a5df7443738db332751cfcac943fafe20",
+                "sha256:2399a247c71d2ee0afaa51e4035d9e159611deb2cbc292818f6bbf02e6a3343f",
+                "sha256:07a5d3290270f5506dc94b490c54a0ad864ace050d6492ae367beaea90d578ff",
+                "sha256:eab3d7137d4aff508e1ae3733a3defc6ece8de0db1ca48831a87bf04bb899c86"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-03-17T21:46:19.325088851Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:cb17ea423d76a8a19a269d0bcd81fc12eee1f6365acd2a56b590dafb35696a95",
+            "size": 1609
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "ghcr.io/datalens-tech/temporal-ui"
+                }
+            ]
+        }
+    }
+]

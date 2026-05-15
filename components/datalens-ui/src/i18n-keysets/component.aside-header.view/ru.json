@@ -1,0 +1,18 @@
+{
+  "label_about": "О сервисе",
+  "label_account": "Учётная запись",
+  "label_app-version": "Версия",
+  "label_collections": "Коллекции и воркбуки",
+  "label_docs": "Документация",
+  "label_gallery": "DataLens Gallery",
+  "label_github": "GitHub",
+  "label_logout": "Выйти",
+  "label_main": "Помощь",
+  "label_profile-settings": "Настройки профиля",
+  "label_settings": "Настройки",
+  "switch_collections": "Коллекции и воркбуки",
+  "switch_service-settings": "Настройки сервиса",
+  "switch_service-projects": "Проекты",
+  "switch_service-roles": "Роли",
+  "switch_service-users": "Пользователи"
+}

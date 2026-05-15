@@ -1,0 +1,74 @@
+﻿[
+    {
+        "Id": "sha256:eb8051de708a8cfd1495bfcdd418c06b2b5e5d81b90acca65d9426f1dae670fb",
+        "RepoTags": [
+            "aeronavigatorbi/datalens-meta-manager:0.50.0",
+            "akrasnov87/datalens-meta-manager:0.50.0"
+        ],
+        "RepoDigests": [
+            "aeronavigatorbi/datalens-meta-manager@sha256:eb8051de708a8cfd1495bfcdd418c06b2b5e5d81b90acca65d9426f1dae670fb",
+            "akrasnov87/datalens-meta-manager@sha256:eb8051de708a8cfd1495bfcdd418c06b2b5e5d81b90acca65d9426f1dae670fb"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2025-12-30T10:04:26.585042305+03:00",
+        "Config": {
+            "User": "app",
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "TZ=Etc/UTC",
+                "APP_VERSION=",
+                "TMPDIR=/tmp",
+                "NODE_ENV=production",
+                "APP_PORT=8080"
+            ],
+            "Entrypoint": [
+                "/opt/app/scripts/preflight.sh"
+            ],
+            "WorkingDir": "/opt/app",
+            "Labels": {
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 255735837,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:e8bce0aabd687e9ee90e0bada33884f40b277196f72aac9934357472863a80ae",
+                "sha256:3e401f9c4f69fe68091600ba795974f75c25fb9b2ab335369f9f4c1693e4a62d",
+                "sha256:4cafe0efe8e4b165aa29cf8de15b8b35842862325c960e8acd3b5c54e5521668",
+                "sha256:d699e061e7bbbf4286d80943fa82f907b6271585123c1d20d44cf12734e030a0",
+                "sha256:450bd41ab8db1c0e3efbbb0a95fa06639f8c3be41300576beb331d2be4f0eb14",
+                "sha256:24cd86668f7e5446c3237eadcc9f871c41c4a7bb33c46963f729e75f6854a9fe",
+                "sha256:a42bb896908288a8f19555ab4ec7133c672ba5d78ac50474f42df4311423bd81",
+                "sha256:e39987744d38623b227d3518fd697050a3679dfd82f05b503d22a87482256df3",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:a7448765d63c89776bd168373c769a6cff5cc425a6203db875f5cde76691bffd",
+                "sha256:39eb68a4bb28c53c5f12b6c08f9a1c34c77ac8d0be8cd9ddfd4083b28a5f3dbc",
+                "sha256:b36d6d203c37d68ca9be0eb40ea2e3781d54092aea0ea77e117733a2e47657e1",
+                "sha256:d6bfde86f0502aa35f6ed224a9f2cd916aacb93ed842b82ecdf54331c6c79b72"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-03-18T08:25:31.568303257Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "digest": "sha256:eb8051de708a8cfd1495bfcdd418c06b2b5e5d81b90acca65d9426f1dae670fb",
+            "size": 3042
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "docker.io/akrasnov87/datalens-meta-manager"
+                }
+            ]
+        }
+    }
+]

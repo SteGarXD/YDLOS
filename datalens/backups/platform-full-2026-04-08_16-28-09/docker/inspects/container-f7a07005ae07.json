@@ -1,0 +1,304 @@
+﻿[
+    {
+        "Id": "f7a07005ae07643417efad3a6db52a0f96b1668a653620c468d7454bbbd0cac6",
+        "Created": "2026-03-19T13:37:04.810614503Z",
+        "Path": "/usr/bin/supervisord",
+        "Args": [
+            "-c",
+            "/etc/supervisor/supervisord.conf"
+        ],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 137,
+            "Error": "",
+            "StartedAt": "2026-03-26T00:39:45.770256538Z",
+            "FinishedAt": "2026-03-26T00:40:26.521654728Z"
+        },
+        "Image": "sha256:4d9dbdf78c8cea06c710ef322f714dc450107a8a9305a119a78bfd187bd232c1",
+        "ResolvConfPath": "/var/lib/docker/containers/f7a07005ae07643417efad3a6db52a0f96b1668a653620c468d7454bbbd0cac6/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/f7a07005ae07643417efad3a6db52a0f96b1668a653620c468d7454bbbd0cac6/hostname",
+        "HostsPath": "/var/lib/docker/containers/f7a07005ae07643417efad3a6db52a0f96b1668a653620c468d7454bbbd0cac6/hosts",
+        "LogPath": "/var/lib/docker/containers/f7a07005ae07643417efad3a6db52a0f96b1668a653620c468d7454bbbd0cac6/f7a07005ae07643417efad3a6db52a0f96b1668a653620c468d7454bbbd0cac6-json.log",
+        "Name": "/datalens-ui-prod",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "D:\\YDLOS\\datalens\\nginx\\nginx.conf:/etc/nginx/nginx.conf:ro"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "datalens_default",
+            "PortBindings": {
+                "8080/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "8080"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "D:\\YDLOS\\datalens\\nginx\\nginx.conf",
+                "Destination": "/etc/nginx/nginx.conf",
+                "Mode": "ro",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "f7a07005ae07",
+            "Domainname": "",
+            "User": "app",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "OIDC_CLIENT_ID=datalens-client",
+                "OIDC_BASE_URL=http://localhost:8080",
+                "AUTH_SIGNUP_DISABLED=false",
+                "APP_INSTALLATION=opensource",
+                "YANDEX_MAP_ENABLED=0",
+                "OIDC_ISSUER=http://localhost:8090/realms/meridian-demo",
+                "HC=0",
+                "BI_API_ENDPOINT=http://control-api:8080",
+                "DATA_SINGLE_FETCHING_TIMEOUT_MS=120",
+                "AUTH_TOKEN_PUBLIC_KEY=-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA+HICDZMfimMIiGdd0dPr\\n2N3zxHOJqiVXuvUj/aBBS7c8760rJUh4344sP/0Gid558yH/v1MtzZ0R9w09v6gb\\nSNrSiNwIUNGPhbnm9Jf+kMezsI/rkcIdoVm3KJ8CFUYy6MRPzW7iJmIVRHBb82v1\\nmAYCCQFU6IRtFIa9hQ8wedWwxqXZekSNS+6NB37dmmQB9kz2E3MY+KRLigOh4i3p\\nCZ1ti3HVvMa9Rlgk9FmoWExzub5ECChqwm+vn8yFXjYW7kUSClcV2xx4nbQWqjrR\\nyyLk6W2BNOuCFVvz0j+5XkpLAt7tljtVZc+572HBEKpF2mAdmAip5NzeDhKqucJ+\\nZQIDAQAB\\n-----END PUBLIC KEY-----",
+                "DATA_FETCHING_TIMEOUT_MS=120",
+                "AUTH_POLICY=disabled",
+                "YANDEX_MAP_TOKEN=",
+                "AUTH_ENDPOINT=http://us-auth:80/demo",
+                "OIDC_ISSUER_INTERNAL=http://keycloak-test:8080/realms/meridian-demo",
+                "BI_DATA_ENDPOINT=http://data-api:8080",
+                "SERVICE_NAME=Aeronavigator BI",
+                "EXPORT_WORKBOOK_ENABLED=true",
+                "UNITED_STORAGE_CONFIG_LOADED_TIMEOUT=10000",
+                "HC_ENDPOINT=",
+                "OIDC_NAME=Keycloak",
+                "RELEASE_VERSION=1.0.0",
+                "OIDC_SECRET=BZxaWmdoLwwBOEpnyFp4gPFUUZIyhJbF",
+                "AUTH_MASTER_TOKEN=auth-master-token",
+                "US_ENDPOINT=http://us:8080",
+                "APP_ENV=production",
+                "HC_PROTOCOL=https",
+                "US_MASTER_TOKEN=us-master-token",
+                "AUTH_ENABLED=true",
+                "META_MANAGER_ENDPOINT=http://meta-manager:8080",
+                "EXPORT_DASH_EXCEL=false",
+                "APP_MODE=full",
+                "OIDC=true",
+                "FLAT_TABLE_ROWS_LIMIT=100000",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "TZ=Etc/UTC",
+                "APP_VERSION=",
+                "TMPDIR=/tmp",
+                "NODE_ENV=production",
+                "APP_BUILDER_CDN=false",
+                "UI_CORE_CDN=false",
+                "APP_PORT=3030"
+            ],
+            "Cmd": null,
+            "Image": "akrasnov87/datalens-ui:0.3498.0",
+            "Volumes": null,
+            "WorkingDir": "/opt/app",
+            "Entrypoint": [
+                "/usr/bin/supervisord",
+                "-c",
+                "/etc/supervisor/supervisord.conf"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "2b46e4ba72da156bb714548f4592838c4486f80f5dda6d6e4fe218aceb33a468",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "us:service_started:false",
+                "com.docker.compose.image": "sha256:4d9dbdf78c8cea06c710ef322f714dc450107a8a9305a119a78bfd187bd232c1",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "datalens",
+                "com.docker.compose.project.config_files": "D:\\YDLOS\\datalens\\docker-compose.yaml",
+                "com.docker.compose.project.environment_file": "D:\\YDLOS\\datalens\\.env",
+                "com.docker.compose.project.working_dir": "D:\\YDLOS\\datalens",
+                "com.docker.compose.service": "ui",
+                "com.docker.compose.version": "5.1.0",
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "22.04"
+            },
+            "StopTimeout": 1
+        },
+        "NetworkSettings": {
+            "SandboxID": "",
+            "SandboxKey": "",
+            "Ports": {},
+            "Networks": {
+                "datalens_default": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "datalens-ui-prod",
+                        "ui"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "e89f59f24bbc4bad570dee90f3a149228b7f73d788439d2002f2b5e06dc808e2",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "MacAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "datalens-ui-prod",
+                        "ui",
+                        "f7a07005ae07"
+                    ]
+                },
+                "keycloak-network": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "datalens-ui-prod",
+                        "ui"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "c729de5fc502fefbae7179fdfdf429a9e6314dcca33e7bca022faa2aba422ccd",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "MacAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "datalens-ui-prod",
+                        "ui",
+                        "f7a07005ae07"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "digest": "sha256:4d9dbdf78c8cea06c710ef322f714dc450107a8a9305a119a78bfd187bd232c1",
+            "size": 5550,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    }
+]

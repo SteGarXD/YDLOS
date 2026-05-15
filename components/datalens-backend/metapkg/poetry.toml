@@ -1,0 +1,7 @@
+[experimental]
+new-installer = false
+
+[virtualenvs]
+create = true
+in-project = true
+prefer-active-python = true

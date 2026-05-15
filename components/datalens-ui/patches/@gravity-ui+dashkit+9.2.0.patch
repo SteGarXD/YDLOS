@@ -1,0 +1,32 @@
+diff --git a/node_modules/@gravity-ui/dashkit/build/cjs/components/GridLayout/GridLayout.js b/node_modules/@gravity-ui/dashkit/build/cjs/components/GridLayout/GridLayout.js
+index a16ed86..9988f13 100644
+--- a/node_modules/@gravity-ui/dashkit/build/cjs/components/GridLayout/GridLayout.js
++++ b/node_modules/@gravity-ui/dashkit/build/cjs/components/GridLayout/GridLayout.js
+@@ -513,9 +513,9 @@ class GridLayout extends react_1.default.PureComponent {
+                         layout,
+                         context,
+                     };
+-                    return group.render(id, element, groupContext);
++                    return react_1.default.createElement(react_1.default.Fragment, { key: id }, group.render(id, element, groupContext));
+                 }
+-                return element;
++                return react_1.default.createElement(react_1.default.Fragment, { key: id }, element);
+             });
+         }
+         else {
+diff --git a/node_modules/@gravity-ui/dashkit/build/esm/components/GridLayout/GridLayout.js b/node_modules/@gravity-ui/dashkit/build/esm/components/GridLayout/GridLayout.js
+index 04ecc09..c036b0d 100644
+--- a/node_modules/@gravity-ui/dashkit/build/esm/components/GridLayout/GridLayout.js
++++ b/node_modules/@gravity-ui/dashkit/build/esm/components/GridLayout/GridLayout.js
+@@ -510,9 +510,9 @@ class GridLayout extends React.PureComponent {
+                         layout,
+                         context,
+                     };
+-                    return group.render(id, element, groupContext);
++                    return React.createElement(React.Fragment, { key: id }, group.render(id, element, groupContext));
+                 }
+-                return element;
++                return React.createElement(React.Fragment, { key: id }, element);
+             });
+         }
+         else {

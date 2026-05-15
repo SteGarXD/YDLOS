@@ -1,0 +1,21 @@
+@use 'sass:math';
+@use '../../../../styles/variables.scss' as vars;
+
+.wrapped-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 100vh;
+
+    &_with-height-offset {
+        height: calc(100vh - #{vars.$headerHeight});
+        top: math.div(-1 * vars.$headerHeight, 2);
+    }
+
+    &_with-height-offset#{&}_with-aside-header {
+        height: calc(100vh - #{vars.$actionPanelHeight});
+        // A slight asymmetry helps to remove the loader "jump" when the actions panel appears
+        top: math.div(-1 * vars.$actionPanelHeight, 2);
+    }
+}

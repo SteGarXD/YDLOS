@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.TIMEOUT_120_SEC = exports.TIMEOUT_100_SEC = exports.TIMEOUT_95_SEC = exports.TIMEOUT_90_SEC = exports.TIMEOUT_65_SEC = exports.TIMEOUT_60_SEC = exports.TIMEOUT_59_SEC = exports.TIMEOUT_10_SEC = exports.DEFAULT_TIMEOUT = void 0;
+exports.DEFAULT_TIMEOUT = 20000;
+exports.TIMEOUT_10_SEC = 10000;
+exports.TIMEOUT_59_SEC = 59000;
+exports.TIMEOUT_60_SEC = 60000;
+exports.TIMEOUT_65_SEC = 65000;
+exports.TIMEOUT_90_SEC = 90000;
+exports.TIMEOUT_95_SEC = 95000;
+exports.TIMEOUT_100_SEC = 100000;
+exports.TIMEOUT_120_SEC = 120000;

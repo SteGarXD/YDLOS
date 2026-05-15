@@ -1,0 +1,112 @@
+﻿[
+    {
+        "Id": "sha256:7b140a8079b34fbbfa125788abb368880dd0afd6d4879ff0e971b33e0bc6c224",
+        "RepoTags": [
+            "akrasnov87/datalens-postgres:16"
+        ],
+        "RepoDigests": [
+            "akrasnov87/datalens-postgres@sha256:7b140a8079b34fbbfa125788abb368880dd0afd6d4879ff0e971b33e0bc6c224"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2025-04-28T11:53:10.102160362Z",
+        "Config": {
+            "ExposedPorts": {
+                "5432/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/postgresql/16/bin",
+                "GOSU_VERSION=1.17",
+                "LANG=en_US.utf8",
+                "PG_MAJOR=16",
+                "PG_VERSION=16.8-1.pgdg120+1",
+                "PGDATA=/var/lib/postgresql/data",
+                "PYTHONUNBUFFERED=1",
+                "POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=en_US.utf8 --lc-ctype=en_US.utf8",
+                "HC=0",
+                "POSTGRES_HOST=localhost",
+                "POSTGRES_PORT=5432",
+                "POSTGRES_USER=pg-user",
+                "POSTGRES_DB_COMPENG=pg-compeng-db",
+                "POSTGRES_DB_AUTH=pg-auth-db",
+                "POSTGRES_DB_US=pg-us-db",
+                "POSTGRES_DB_DEMO=pg-demo-db",
+                "POSTGRES_DB_META_MANAGER=pg-meta-manager-db",
+                "POSTGRES_DB_TEMPORAL=pg-temporal-db",
+                "POSTGRES_DB_TEMPORAL_VISIBILITY=pg-temporal-visibility-db",
+                "POSTGRES_DUMP_FORMAT=custom",
+                "POSTGRES_DUMP_SKIP_CONFLICT=true",
+                "POSTGRES_DUMP_CLEAR_META=false",
+                "INIT_DB_DEMO=true",
+                "INIT_DB_AUTH=true",
+                "INIT_DB_META_MANAGER=true",
+                "INIT_DB_TEMPORAL=true",
+                "DEMO_DATA_SLEEP=3",
+                "DEMO_DATA_NAME=OpenSource Demo",
+                "INIT_DEMO_DATA=true",
+                "INIT_EXTERNAL_POSTGRES=false"
+            ],
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "Cmd": [
+                "postgres"
+            ],
+            "Volumes": {
+                "/var/lib/postgresql/data": {}
+            },
+            "StopSignal": "SIGINT"
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 201578068,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:ea680fbff095473bb8a6c867938d6d851e11ef0c177fce983ccc83440172bd72",
+                "sha256:f721ab6a72b1a41f5978ffa4ae688ae07db7022a279ec2c1a3a926c2933da1d0",
+                "sha256:e1c7104a3f0e8ea485a053a550816b0a3471937bf577026352e2cc0217f105fe",
+                "sha256:445060195b3386d7d8df106bb03bb6711d6af9767b979684bb7ce005f1230c97",
+                "sha256:b9c84c913e6cffd3e34aa4ecfa21397c51cd33d3463a27e86d1b8c1b4ee37944",
+                "sha256:6ed6e54df9bc883ee87c4d090b26e716375c6bb3afa43dfd96fd96f6bfd49a0c",
+                "sha256:5b9d236cef9ff43c70fd4bee0d5dd1798ba4a243aca86bf707e0302e340df99f",
+                "sha256:ec39de13f01941769af0e532d80a83e309147a0b935ba03015f60924ce057a8f",
+                "sha256:89ca81908f122b09225b36580a559410e1d3564442beda0493f5180e8195e61b",
+                "sha256:f806b22cb39f154d3812119171bf50a291a6c564a494eaa48cbcd1c1e45208f7",
+                "sha256:f58bfb41da2f4552a4d2c2dd6797f34a3de2173517adfa0d96a4596582f818e2",
+                "sha256:7e91edc5dd94305b21d6e17da3c642a39376ea6ac6342d3204ae1e08f974d9cd",
+                "sha256:acbfc0b7a652def416ca685fe53644d1712c52e83ac1b8b446adb39768c2072a",
+                "sha256:e7354e8f71fba6e46c59d851ab59def8adb9249bdd51f773e49cd8d473ad46d5",
+                "sha256:ae620dfb9cd1576e9bd31d97ac3a24f3d10f41fdd76fdd7a2359186457d37fff",
+                "sha256:00f757e353ac9d2b8ea715ffeef6d36abae8faeb170dbb0b042a746f7c6e6646",
+                "sha256:818cc763a38cf6766246791e0098652064f867cffe7c138538cf34186d495dbf",
+                "sha256:10bb7821388b93aa7a84879b22ac4e93a291ad78e77276f7baaf45cea6ac0495",
+                "sha256:8e57b9308c10eb9b083f2c378c1259b8f5ef43a352008e8f081920b205cb6bc8",
+                "sha256:ab3045ac189f214a6268e1c266446b7d83b38ae928500095e6257214c03b1251",
+                "sha256:4557a0da8a172f71eedb8f16cb9d5c3faf48f1c848a9837be35e2fb5be20b3b7",
+                "sha256:341ec172819d8eda1d560946390462bcc472b460094085037c41053bd3cf7619",
+                "sha256:3f40de3ece3ef36d6bfef3a3f8862b9bc816c4300a22013d55fec3f4628ac79c",
+                "sha256:fe1a99ccca1c170204d775aed0206bc598029bebf636cdd4fd05bfd7d647a467",
+                "sha256:e3509991414a1d8af2e959975a61d83a9cf6cd9992acc7d544fd28ff3044db79",
+                "sha256:8b4da43b2240fd9fdb5e2b84f60889b20f335732c2f0c58a0d4c4c48ec43ac04",
+                "sha256:7f18e386459ac1190444f566129fbba690d83f1abb798ed6439c077f2332fa55",
+                "sha256:b73649762a7f3f259124cdeff7bd8a0525b7da80ab2ae2dec105fc747e5aa645",
+                "sha256:cf8c18ce854376b705d0cedad6d155d1b91a4f98bc1d57a52b1df03f6e023590"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-03-17T21:46:57.047079101Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "digest": "sha256:7b140a8079b34fbbfa125788abb368880dd0afd6d4879ff0e971b33e0bc6c224",
+            "size": 6366
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "docker.io/akrasnov87/datalens-postgres"
+                }
+            ]
+        }
+    }
+]

@@ -1,0 +1,82 @@
+﻿{
+    "exportedAt":  "2026-03-26T00:31:55+03:00",
+    "sanitizeMode":  "strict",
+    "minimalExport":  false,
+    "includeCompengData":  false,
+    "postgresContainer":  "datalens-postgres-prod",
+    "postgresVersion":  "16.8 (Debian 16.8-1.pgdg120+1)",
+    "databases":  {
+                      "us":  "pg-us-db",
+                      "compeng":  "pg-compeng-db",
+                      "demo":  "pg-demo-db",
+                      "temporal":  "pg-temporal-db",
+                      "metaManager":  "pg-meta-manager-db",
+                      "temporalVisibility":  "pg-temporal-visibility-db",
+                      "auth":  "pg-auth-db"
+                  },
+    "files":  [
+                  {
+                      "sha256":  "9709f9699809d32da1fd661e930796a2ef1ac7eb4178062cf9d78de156197b33",
+                      "name":  "pg-us-db.sql",
+                      "bytes":  561247
+                  },
+                  {
+                      "sha256":  "aeb37cdff4d3de2e09ff2a470b37a1c5e7864064e72f7e7c37d0daba56b6a7bb",
+                      "name":  "pg-meta-manager-db.sql",
+                      "bytes":  2354
+                  },
+                  {
+                      "sha256":  "2e0ec3d9ae813dd584641c27e3de22f3509b1c9f67a10f7401c25f34b08ac977",
+                      "name":  "pg-compeng-db.schema.sql",
+                      "bytes":  2045
+                  },
+                  {
+                      "sha256":  "37593facd85e992af35705cf83413d88b32677f609c961296f2fbf150f4f0691",
+                      "name":  "pg-auth-db.sql",
+                      "bytes":  563
+                  },
+                  {
+                      "sha256":  "37593facd85e992af35705cf83413d88b32677f609c961296f2fbf150f4f0691",
+                      "name":  "pg-demo-db.sql",
+                      "bytes":  563
+                  },
+                  {
+                      "sha256":  "50469267e95026c362a7b33bd96510c4f17de96c9fb21d25b227a8821794d9ee",
+                      "name":  "pg-temporal-db.schema.sql",
+                      "bytes":  26185
+                  },
+                  {
+                      "sha256":  "89eb7f553c699fac88ac102b6dbc0990a6fb47791993a039f3ffaeecb0b96e52",
+                      "name":  "pg-temporal-visibility-db.schema.sql",
+                      "bytes":  23917
+                  },
+                  {
+                      "sha256":  "17b566ef149e5725f407f23800f34a71a2cea60209fb3956f9685ecbe04814a9",
+                      "name":  "footprint-us.json",
+                      "bytes":  81
+                  },
+                  {
+                      "sha256":  "6b4bbba24718d6ac0061f30069502f4b36c43fac3a27c80d87a65c55ef5328f9",
+                      "name":  "footprint-meta-manager.json",
+                      "bytes":  89
+                  },
+                  {
+                      "sha256":  "5e3431dc2a71aabdb69b532af658b6df2a95343e2b75f636249b0b1ef482fb2e",
+                      "name":  "footprint-compeng.json",
+                      "bytes":  84
+                  },
+                  {
+                      "sha256":  "d1aac71ac3d69496f05999b4e9de2a2b172deab6b0b8b5042bbd563c6911fa05",
+                      "name":  "footprint-auth.json",
+                      "bytes":  81
+                  },
+                  {
+                      "sha256":  "dcd2c940f909e798e2af99965dc3e7cdbda929c052571edaae840293a8fac431",
+                      "name":  "footprint-demo.json",
+                      "bytes":  81
+                  }
+              ],
+    "notes":  [
+
+              ]
+}

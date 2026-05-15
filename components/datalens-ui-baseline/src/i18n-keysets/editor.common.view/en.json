@@ -1,0 +1,9 @@
+{
+  "button_retry": "Repeat",
+  "button_secrets": "Add secret",
+  "button_show-preview": "Execute",
+  "label_load-failed": "Failed to load",
+  "label_new-chart": "New chart",
+  "section_choose-template": "Select template",
+  "toast_unsaved": "There are unsaved changes on the page. Are you sure?"
+}

@@ -1,0 +1,10 @@
+@use '../../../../../../../styles/mixins' as *;
+
+.chartkit-markdown {
+    overflow: auto;
+    padding: 10px;
+
+    &.yfm {
+        @include yfm-text-style();
+    }
+}

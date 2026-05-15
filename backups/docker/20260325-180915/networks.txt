@@ -1,0 +1,6 @@
+﻿NETWORK ID     NAME               DRIVER    SCOPE
+123845744bbb   bridge             bridge    local
+e89f59f24bbc   datalens_default   bridge    local
+22e7747ebfce   host               host      local
+c729de5fc502   keycloak-network   bridge    local
+b531f76f0181   none               null      local

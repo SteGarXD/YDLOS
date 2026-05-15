@@ -1,0 +1,31 @@
+.gcharts-axis .domain {
+  stroke: #000000;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+.gcharts-axis .tick text {
+  color: #000000;
+  fill: #000000;
+  dominant-baseline: text-after-edge;
+  text-rendering: optimizeSpeed;
+  font-weight: 400;
+}
+.gcharts-axis .gcharts-axis__outer-tick {
+  stroke: #000000;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+.gcharts-axis .gcharts-axis__outer-tick-batch {
+  stroke: #000000;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+.gcharts-axis__title {
+  dominant-baseline: text-after-edge;
+  fill: #000000;
+  text-rendering: optimizeSpeed;
+  font-weight: 400;
+}
+.gcharts-axis__title tspan {
+  dominant-baseline: text-after-edge;
+}

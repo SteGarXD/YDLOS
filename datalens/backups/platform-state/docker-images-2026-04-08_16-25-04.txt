@@ -1,0 +1,20 @@
+﻿REPOSITORY                                TAG        IMAGE ID       CREATED
+aeronavigatorbi/dl-ui                     local      88c1a58e21de   2 hours ago
+aeronavigatorbi/datalens-data-api         0.2396.0   a85b2bdc739b   2 weeks ago
+akrasnov87/datalens-data-api              0.2396.0   a85b2bdc739b   2 weeks ago
+aeronavigatorbi/datalens-control-api      0.2396.0   93c3b33a5589   2 weeks ago
+akrasnov87/datalens-control-api           0.2396.0   93c3b33a5589   2 weeks ago
+akrasnov87/datalens-us                    0.413.0    8ecf3acd6066   2 weeks ago
+aeronavigatorbi/datalens-ui               0.3498.0   ba32ae6f66b0   3 weeks ago
+aeronavigatorbi/datalens-temporal         1.27.2     ce1b9bcd799e   3 weeks ago
+aeronavigatorbi/datalens-postgres         16         12c872cda5bd   3 weeks ago
+alpine                                    3.20       a4f4213abb84   2 months ago
+aeronavigatorbi/datalens-meta-manager     0.50.0     eb8051de708a   3 months ago
+akrasnov87/datalens-meta-manager          0.50.0     eb8051de708a   3 months ago
+akrasnov87/datalens-ui                    0.3498.0   4d9dbdf78c8c   3 months ago
+aeronavigatorbi/datalens-us               0.413.0    4f778de188b1   3 months ago
+ghcr.io/datalens-tech/datalens-temporal   1.27.2     64820b925c63   4 months ago
+aeronavigatorbi/datalens-auth             0.2.6      2dbea1babcbf   5 months ago
+akrasnov87/datalens-auth                  0.2.6      2dbea1babcbf   5 months ago
+akrasnov87/datalens-postgres              16         7b140a8079b3   11 months ago
+ghcr.io/datalens-tech/temporal-ui         2.34.0     cb17ea423d76   14 months ago

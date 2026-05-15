@@ -1,0 +1,100 @@
+[tool.poetry]
+authors = ["DataLens Team <datalens-opensource@yandex-team.ru>"]
+description = ""
+license = "Apache 2.0"
+name = "dl-connector-mssql"
+packages = [{include = "dl_connector_mssql"}]
+readme = "README.md"
+version = "0.0.1"
+
+[tool.poetry.dependencies]
+attrs = "*"
+dl-api-commons = {path = "../dl_api_commons"}
+dl-api-connector = {path = "../dl_api_connector"}
+dl-configs = {path = "../dl_configs"}
+dl-constants = {path = "../dl_constants"}
+dl-core = {path = "../dl_core"}
+dl-db-testing = {path = "../dl_db_testing"}
+dl-formula = {path = "../dl_formula"}
+dl-formula-ref = {path = "../dl_formula_ref"}
+dl-i18n = {path = "../dl_i18n"}
+dl-sqlalchemy-mssql = {path = "../dl_sqlalchemy_mssql"}
+dl-type-transformer = {path = "../dl_type_transformer"}
+pyodbc = "*"
+python = ">=3.10, <3.13"
+sqlalchemy = "*"
+
+[tool.poetry.group.tests.dependencies]
+aiohttp = "*"
+dl-api-lib-testing = {path = "../dl_api_lib_testing"}
+dl-core-testing = {path = "../dl_core_testing"}
+dl-formula-testing = {path = "../dl_formula_testing"}
+dl-testing = {path = "../dl_testing"}
+frozendict = "*"
+pytest = "*"
+
+[tool.poetry.plugins]
+
+[tool.poetry.plugins."dl_api_lib.connectors"]
+mssql = "dl_connector_mssql.api.connector:MSSQLApiConnector"
+
+[tool.poetry.plugins."dl_core.connectors"]
+mssql = "dl_connector_mssql.core.connector:MSSQLCoreConnector"
+
+[tool.poetry.plugins."dl_db_testing.connectors"]
+mssql = "dl_connector_mssql.db_testing.connector:MSSQLDbTestingConnector"
+
+[tool.poetry.plugins."dl_formula.connectors"]
+mssql = "dl_connector_mssql.formula.connector:MSSQLFormulaConnector"
+
+[tool.poetry.plugins."dl_formula_ref.plugins"]
+mssql = "dl_connector_mssql.formula_ref.plugin:MSSQLFormulaRefPlugin"
+
+[tool.deptry.per_rule_ignores]
+DEP002 = [
+  "dl-sqlalchemy-mssql",
+]
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_untyped_defs = true
+exclude = ["dl_connector_mssql_tests"]
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = ["pyodbc.*"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+minversion = "6.0"
+testpaths = ["dl_connector_mssql_tests/db", "dl_connector_mssql_tests/unit"]
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]
+
+[datalens.i18n.domains]
+dl_connector_mssql = [
+  {path = "dl_connector_mssql/api"},
+  {path = "dl_connector_mssql/core"},
+]
+dl_formula_ref_dl_connector_mssql = [
+  {path = "dl_connector_mssql/formula_ref"},
+]
+
+[datalens.pytest.db]
+labels = ["fat"]
+root_dir = "dl_connector_mssql_tests/"
+target_path = "db"
+
+[datalens.pytest.unit]
+labels = ["no_compose"]
+root_dir = "dl_connector_mssql_tests/"
+skip_compose = "true"
+target_path = "unit"

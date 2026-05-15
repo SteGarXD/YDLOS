@@ -1,0 +1,12 @@
+diff --git a/node_modules/@gravity-ui/app-builder/dist/common/webpack/config.js b/node_modules/@gravity-ui/app-builder/dist/common/webpack/config.js
+index 270f55f..26a35cc 100644
+--- a/node_modules/@gravity-ui/app-builder/dist/common/webpack/config.js
++++ b/node_modules/@gravity-ui/app-builder/dist/common/webpack/config.js
+@@ -174,6 +174,7 @@ async function rspackConfigFactory(options) {
+             : undefined,
+         experiments: configureRspackExperiments(helperOptions),
+         cache,
++        performance: false,
+     };
+     rspackConfig = await config.rspack(rspackConfig, {
+         configType: isEnvProduction ? 'production' : 'development',

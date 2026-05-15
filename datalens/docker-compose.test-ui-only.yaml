@@ -1,0 +1,11 @@
+# YDL OS: тест «наш UI + бэкенд akrasnov87».
+# Использование: после build-and-run-ui.ps1 выполнить:
+#   docker compose -f docker-compose.yaml -f docker-compose.own-images.yaml -f docker-compose.test-ui-only.yaml up -d --force-recreate control-api data-api
+# Тогда ui/ui-api остаются на нашей сборке (aeronavigatorbi), а control-api и data-api — на образах akrasnov87 (без наших патчей).
+# Если 400 исчезнет — виноваты патчи бэкенда. Если 400 останется — виноват код UI.
+
+services:
+  control-api:
+    image: akrasnov87/datalens-control-api:0.2396.0
+  data-api:
+    image: akrasnov87/datalens-data-api:0.2396.0

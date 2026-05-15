@@ -1,0 +1,7 @@
+from dl_api_lib_testing.connector.complex_queries import DefaultBasicComplexQueryTestSuite
+
+from dl_connector_postgresql_tests.db.api.base import PostgreSQLDataApiTestBase
+
+
+class TestPostgreSQLBasicComplexQueries(PostgreSQLDataApiTestBase, DefaultBasicComplexQueryTestSuite):
+    pass

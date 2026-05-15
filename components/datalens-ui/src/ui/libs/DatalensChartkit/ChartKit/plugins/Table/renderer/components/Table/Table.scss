@@ -1,0 +1,1074 @@
+:root {
+    --dl-table-header-cell-vertical-align: top;
+    --dl-table-cell-vertical-align: top;
+    --dl-table-footer-cell-vertical-align: top;
+    --dl-table-sort-icon-space: 18px;
+}
+
+/* Без calc(100%+2px): псевдоэлемент не должен заходить под соседа (двойная светло-серая линия) */
+@mixin stickyCellBg() {
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
+}
+
+@mixin tableSize() {
+    &_size {
+        &_l {
+            --dl-table-row-height: 32px;
+            --dl-table-font-size: 14px;
+            --dl-table-cell-vertical-padding: 6px;
+            --dl-table-cell-horizontal-padding: 10px;
+            --dl-table-cell-bar-height: 19px;
+            --chartkit-bg-bar-offset-width: 10px;
+            line-height: 17px;
+        }
+
+        &_m {
+            --dl-table-row-height: 28px;
+            --dl-table-font-size: 13px;
+            --dl-table-cell-vertical-padding: 5px;
+            /* YDL OS: чуть больше воздуха у цифр, чтобы не прилипали к границам (как в эталонной сетке) */
+            --dl-table-cell-horizontal-padding: 9px;
+            --chartkit-bg-bar-offset-width: 6px;
+            --dl-table-cell-bar-height: 18px;
+            line-height: 16px;
+        }
+
+        &_s {
+            --dl-table-row-height: 22px;
+            --dl-table-font-size: 12px;
+            --dl-table-cell-vertical-padding: 4px;
+            --dl-table-cell-horizontal-padding: 7px;
+            --chartkit-bg-bar-offset-width: 4px;
+            --dl-table-cell-bar-height: 16px;
+            line-height: 14px;
+        }
+    }
+}
+
+/* Дефолты таблицы — здесь, не в теме; сводная получает все стили из cell.css с бэкенда. */
+.dl-table {
+    --dl-table-border-color: var(--g-color-line-generic-solid, #d8d8d8);
+    /* Тело: светлая сетка как у линий платформы; #888 давал «тяжёлый» вид и казался дублированием */
+    --dl-table-body-grid-color: #d0d0d0;
+
+    /* Плоская таблица (light header): единая нейтральная сетка шапки, тела и футера */
+    &.dl-table_light-header {
+        --dl-table-body-grid-color: #efefef;
+        --dl-table-border-color: #efefef;
+    }
+
+    /* Отчёт 5 «Загрузка рейса по классам»: граница всей таблицы */
+    &.dl-table_light-header.dl-table_flight-load-by-class {
+        --dl-table-body-grid-color: #ececec;
+        --dl-table-border-color: #ececec;
+    }
+
+    /* 8-й дашборд «Групповые бронирования»: эталонная сетка + единый визуальный ритм цифр/букв */
+    &.dl-table_group-bookings-profile {
+        --dl-table-body-grid-color: #e8e8e8;
+        --dl-table-border-color: #e8e8e8;
+        font-feature-settings: 'tnum' 1, 'lnum' 1;
+        font-variant-numeric: tabular-nums lining-nums;
+        letter-spacing: 0.01em;
+    }
+
+    /* 7-й дашборд «Предварительная продажа на период»: сетка как у 4-го (#e8e8e8) */
+    &.dl-table_pre-sale-period-matrix {
+        --dl-table-body-grid-color: #e8e8e8;
+        --dl-table-border-color: #e8e8e8;
+        font-feature-settings: 'tnum' 1, 'lnum' 1;
+        font-variant-numeric: tabular-nums lining-nums;
+    }
+
+    /* Отступы шапки «Групповые бронирования» — см. table.dl-table_prepared (там !important перебивает общий light-header) */
+    --dl-table-header-bg-color: var(--g-color-base-background, #fff);
+    --dl-table-body-bg-color: var(--g-color-base-background, #fff);
+    --dl-table-no-data-bg-color: var(--g-color-base-generic, #f0f0f0);
+    --dl-table-footer-bg-color: var(--g-color-base-generic, #f0f0f0);
+    border-collapse: collapse;
+    min-width: 100%;
+    width: max-content;
+
+    &__table-wrapper {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+
+        /* overflow-x: hidden обрезает последний px границ; 1px отступ компенсирует */
+        &_no-h-scroll {
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding-inline-end: 1px;
+            padding-bottom: 1px;
+            box-sizing: border-box;
+        }
+
+        &_highlight-rows {
+            tbody tr:not(.dl-table__tr_no-data):hover td:not(.dl-table__td_pinned),
+            tbody tr:not(.dl-table__tr_no-data):hover td:before {
+                background: var(--g-color-base-simple-hover);
+            }
+        }
+
+        /* До замеров ширин (BackgroundTable) не показываем промежуточную вёрстку */
+        &_pending {
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @include tableSize();
+    }
+
+    /* Корень виджета таблицы + chartkit-scrollable-node: даём сжиматься в ячейке сетки дашборда */
+    &__snapter-container {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        flex: 1 1 auto;
+    }
+
+    &__title {
+        font-weight: 700;
+        padding: 5px 40px 5px 0;
+        text-align: right;
+    }
+
+    &__th {
+        text-align: left;
+    }
+    /* Сводная: шапка по центру. Обычная таблица — слева (модификатор .dl-table_light-header на table) */
+    &:not(.dl-table_light-header) &__header &__th {
+        text-align: center !important;
+        justify-content: center !important;
+    }
+
+    &__th,
+    &__td {
+        border: 1px solid var(--dl-table-border-color);
+        border-top: 0;
+        border-left: 0;
+        font-size: var(--dl-table-font-size);
+        box-sizing: border-box;
+        /* min-content на grid-ячейках раздувает треки шире grid-template-columns — ломает ширины колонок */
+        min-width: 0;
+
+        &_clickable {
+            cursor: pointer;
+        }
+
+        &_align_left {
+            text-align: left;
+            justify-content: flex-start;
+        }
+
+        &_align_center {
+            text-align: center;
+            justify-content: center;
+        }
+
+        &_type_number {
+            text-align: right;
+            justify-content: flex-end;
+        }
+    }
+
+    &__th-content {
+        display: inline-block;
+
+        /* Обычная таблица: текст у левого края ячейки, по вертикали по центру */
+        &_alignLeft,
+        &_align-left {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            min-width: 0;
+            height: 100%;
+            text-align: left;
+            box-sizing: border-box;
+        }
+
+        &_sortable {
+            position: relative;
+            padding-right: var(--dl-table-sort-icon-space);
+            height: fit-content;
+        }
+
+        &_alignLeft#{&}_sortable,
+        &_align-left#{&}_sortable {
+            height: 100%;
+            padding-right: var(--dl-table-sort-icon-space);
+        }
+
+        &_align-center,
+        &_alignCenter {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        &_alignCenter#{&}_sortable,
+        &_align-center#{&}_sortable {
+            padding-right: 0;
+        }
+    }
+
+    &__cell-content {
+        display: flex;
+        /* min-width: 100% растягивал длинные числа и срывал сетку (display:grid + flex) */
+        min-width: 0;
+        max-width: 100%;
+        flex: 1 1 auto;
+        height: 100%;
+        justify-content: inherit;
+        align-items: inherit;
+        overflow: hidden;
+        box-sizing: border-box;
+
+        &_type_null {
+            font-style: italic;
+            opacity: 0.5;
+        }
+    }
+
+    &__header {
+        /* stylelint-disable */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            top: 0.5px;
+        }
+        /* stylelint-enable */
+
+        &_sticky {
+            top: 0;
+            z-index: 1;
+            position: sticky;
+            background: var(--dl-table-header-bg-color);
+
+            th {
+                @include stickyCellBg();
+            }
+
+            /* Границы только у th (цвет из cell.css с бэкенда); :before не рисует границы — иначе смешение серого и чёрного */
+            th:before {
+                border: none;
+            }
+        }
+    }
+
+    /* Сводная: чёрная сетка шапки */
+    &:not(.dl-table_light-header) &__header {
+        --dl-table-border-color: #000;
+
+        th {
+            background: var(--dl-table-header-bg-color);
+            border-color: #000 !important;
+            border-top-color: #000 !important;
+            border-right-color: #000 !important;
+            border-bottom-color: #000 !important;
+            /* Заливка не заходит под border — иначе субпиксельно «просвечивает» серый/синий под чёрной линией */
+            background-clip: padding-box !important;
+            background-origin: padding-box !important;
+        }
+    }
+
+    /* Обычная таблица (модификатор на table): шапка — та же сетка, что тело */
+    &.dl-table_light-header &__header {
+        --dl-table-border-color: var(--dl-table-body-grid-color);
+
+        th {
+            background: var(--dl-table-header-bg-color);
+            border-color: var(--dl-table-body-grid-color) !important;
+            border-top-color: var(--dl-table-body-grid-color) !important;
+            border-right-color: var(--dl-table-body-grid-color) !important;
+            border-bottom-color: var(--dl-table-body-grid-color) !important;
+        }
+    }
+
+    &__header &__th {
+        position: relative;
+        font-weight: 500;
+        padding: var(--dl-table-cell-vertical-padding) var(--dl-table-cell-horizontal-padding);
+        vertical-align: var(--dl-table-header-cell-vertical-align);
+        box-sizing: border-box;
+        height: 100%;
+        min-height: var(--dl-table-row-height);
+        border-bottom: 0;
+    }
+
+    /* Первая строка шапки — верх и линия под рядом (у dl-table_prepared верх на th, не на thead) */
+    &:not(.dl-table_light-header) &__header &__tr:first-child &__th {
+        text-align: center;
+        border-top: 1px solid #000 !important;
+        border-bottom: 1px solid #000 !important;
+    }
+
+    &.dl-table_light-header &__header &__tr:first-child &__th {
+        border-top: 1px solid var(--dl-table-body-grid-color) !important;
+        border-bottom: 1px solid var(--dl-table-body-grid-color) !important;
+    }
+
+    &:not(.dl-table_light-header) &__header &__tr:last-child &__th {
+        border-bottom: 1px solid #000 !important;
+    }
+
+    /*
+     * Двухуровневая шапка: у нижних строк без явного border-top субпиксельно может «дублироваться»
+     * линия с border-bottom предыдущего ряда — оставляем только нижнюю границу последнего ряда шапки.
+     */
+    &:not(.dl-table_light-header) &__header &__tr:not(:first-child) &__th {
+        border-top: 0 !important;
+    }
+
+    &.dl-table_light-header &__header &__tr:last-child &__th {
+        border-bottom: 1px solid var(--dl-table-body-grid-color) !important;
+    }
+    &__header &__sort-icon {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    &__body {
+        /* Одна переменная на границы тела — без дублирования border с &__th,&__td (иначе «двойные» линии) */
+        --dl-table-border-color: var(--dl-table-body-grid-color);
+    }
+
+    &__body &__tr {
+        height: var(--dl-table-row-height);
+        td {
+            min-height: var(--dl-table-row-height);
+        }
+
+        &_no-data {
+            background: var(--dl-table-no-data-bg-color);
+        }
+    }
+
+    &__body &__td {
+        padding: var(--dl-table-cell-vertical-padding) var(--dl-table-cell-horizontal-padding);
+        vertical-align: var(--dl-table-cell-vertical-align);
+        overflow: visible;
+        white-space: nowrap;
+    }
+
+    /* Сводная: одна линия между шапкой и телом (без второй линии от border-top у первой строки тела). */
+    &:not(.dl-table_light-header) &__body &__tr:first-child &__td {
+        border-top: 0 !important;
+    }
+
+    /* Числа ближе к правому краю (меньше внутренний отступ справа) */
+    &__body &__td_type_number {
+        padding-right: 3px;
+    }
+
+    /* Строки сегментов (вложенные в дереве): цифры на каплю крупнее для читаемости. */
+    &__body &__tr_segment-row &__td_type_number {
+        font-size: calc(var(--dl-table-font-size) + 0.5px);
+        /* Ближе к правому краю, даже если inline-стили приходят с бэкенда. */
+        padding-right: 0 !important;
+    }
+
+    &__body &__tr_segment-row &__td_type_number &__cell-content {
+        transform: translateX(1.2px);
+    }
+
+    /*
+     * В строках сегментов часть числовых значений может прийти без *_type_number.
+     * Выравниваем все «данные справа» (с 3-й колонки и далее) единообразно:
+     * так цифры в сегментах становятся в одну вертикаль с "Всего".
+     */
+    &__body &__tr_segment-row td[data-col-start]:not([data-col-start='0']):not([data-col-start='1']) {
+        text-align: right !important;
+        justify-content: flex-end !important;
+        padding-right: 0 !important;
+    }
+
+    &__body
+        &__tr_segment-row
+        td[data-col-start]:not([data-col-start='0']):not([data-col-start='1'])
+        > .dl-table__cell-content {
+        justify-content: flex-end !important;
+        text-align: right !important;
+        transform: translateX(1.2px);
+    }
+
+    &__footer {
+        position: relative;
+        z-index: 2;
+        top: 0;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    /* Левая граница первой колонки — шапка сводной чёрная; обычная таблица — как тело */
+    &:not(.dl-table_light-header) &__header &__tr &__th[data-col-start='0'] {
+        border-left: 1px solid #000;
+    }
+
+    &.dl-table_light-header &__header &__tr &__th[data-col-start='0'] {
+        border-left: 1px solid var(--dl-table-body-grid-color) !important;
+    }
+    &__body &__tr &__td[data-col-start='0'] {
+        border-left: 1px solid var(--dl-table-body-grid-color);
+    }
+    &__footer &__tr &__td[data-col-start='0'] {
+        border-left: 1px solid #000 !important;
+    }
+
+    /* Футер ИТОГО: все границы чёрные, единый контур (перебиваем любые стили с бэкенда) */
+    /* min-width: 0 как у тела — min-content раздувал ячейки шире grid-трека и рвал сетку/границы в нижних строках */
+    &__footer &__td {
+        min-height: var(--dl-table-row-height);
+        min-width: 0;
+        padding: 0;
+        overflow: visible;
+        border-top: 0 !important;
+        border-left: 0 !important;
+        border-right: 1px solid #000 !important;
+        border-bottom: 1px solid #000 !important;
+        border-color: #000 !important;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 0;
+    }
+    /* Верхняя граница ИТОГО — штатная 1px линия без дополнительного слоя. */
+    &:not(.dl-table_light-header) &__footer &__tr:first-child &__td {
+        border-top: 1px solid #000 !important;
+    }
+
+    /*
+     * Сводная футер: без background-clip: padding-box — на grid+flex он давал микрозазоры между
+     * ячейками («тусклая» внутренняя сетка). Ячейки тянем по высоте трека, границы — строго solid.
+     */
+    &:not(.dl-table_light-header) &__footer &__td {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+        align-self: stretch;
+        border-style: solid !important;
+        border-bottom: 0 !important;
+    }
+
+    &:not(.dl-table_light-header) &__footer &__td::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 1px;
+        background: #000;
+        pointer-events: none;
+    }
+
+    /* Плоская таблица: футер — та же сетка #efefef, что тело (не чёрная как у сводной) */
+    &.dl-table_light-header &__footer &__tr &__td[data-col-start='0'] {
+        border-left: 1px solid var(--dl-table-body-grid-color) !important;
+    }
+
+    &.dl-table_light-header &__footer &__td {
+        border-right: 1px solid var(--dl-table-body-grid-color) !important;
+        border-bottom: 1px solid var(--dl-table-body-grid-color) !important;
+        border-color: var(--dl-table-body-grid-color) !important;
+    }
+
+    &.dl-table_light-header &__footer &__tr:first-child &__td {
+        border-top: 1px solid var(--dl-table-body-grid-color) !important;
+    }
+
+    &.dl-table_light-header &__footer &__tr &__td[data-col-start='1'] {
+        border-right: 1px solid var(--dl-table-body-grid-color) !important;
+    }
+    /*
+     * У последней логической строки тела убираем нижнюю границу только при видимом футере
+     * (см. isLastBeforeFooter в TableBody — :last-child ломается при виртуализации строк).
+     */
+    &__body &__tr_last-before-footer &__td {
+        border-bottom: none !important;
+    }
+    &__body &__td_last-before-footer {
+        border-bottom: none !important;
+    }
+    &__body &__td_last-before-footer[data-col-start='0'],
+    &__body &__td_last-before-footer[data-col-start='1'] {
+        border-bottom-color: transparent !important;
+    }
+    /*
+     * Фолбэк на случай DPI/zoom-артефактов и флапа виртуализации:
+     * если футер видим, у последней фактической строки tbody всегда снимаем нижнюю линию,
+     * чтобы стык body/tfoot рисовался только одной (верхней) границей футера.
+     */
+    &.dl-table_has-footer &__body &__tr:last-child &__td {
+        border-bottom: none !important;
+    }
+
+    /* Сводная: первая ячейка с colSpan=2, rowSpan=4 — надпись ИТОГО по центру блока 2×4 (фон/границы с бэкенда). */
+    &__footer tr:first-child &__td:first-child {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-self: stretch;
+        min-height: 100%;
+    }
+    &__footer tr:first-child &__td:first-child &__footer-cell-content {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0;
+    }
+    /*
+     * ИТОГО — числовые колонки: вправо. Не использовать :nth-child: в строках футера разный набор <td>
+     * из‑за rowSpan/colSpan, «4-я ячейка» в DOM ≠ колонки 1–2 и 29–30 по смыслу → визуальные сдвиги.
+     */
+    &__footer &__tr &__td_type_number &__footer-cell-content {
+        justify-content: flex-end;
+        text-align: right;
+        padding-right: 3px;
+    }
+
+    &__footer-cell-content {
+        display: flex;
+        justify-content: inherit;
+        width: 100%;
+        min-width: 0;
+        height: 100%;
+        padding: var(--dl-table-cell-vertical-padding) var(--dl-table-cell-horizontal-padding);
+        white-space: nowrap;
+        overflow: visible;
+        vertical-align: var(--dl-table-footer-cell-vertical-align);
+        font-weight: 500;
+        box-sizing: border-box;
+    }
+
+    &__footer .chartkit-table-bar {
+        height: fit-content;
+    }
+
+    &__header &__th_pinned,
+    &__body &__td_pinned,
+    &__footer &__td_pinned {
+        left: 0;
+        position: sticky;
+        z-index: 1;
+
+        @include stickyCellBg();
+        /*
+         * Раньше здесь был border-left на :before — он дублировал border-right соседа слева
+         * (сетка рисуется только right+bottom у ячеек). Между двумя pinned (Напр-е | Measure names)
+         * получалась «двойная» вертикаль. Левый край первой колонки — border-left у :first-child.
+         */
+        &:before {
+            border: none;
+            z-index: -1;
+        }
+    }
+
+    /* Разделитель Напр-е (1) | Measure names (2): строго одна вертикаль на логической границе. */
+    &__body &__tr &__td[data-col-start='1'] {
+        border-right: 1px solid var(--dl-table-body-grid-color) !important;
+    }
+    &__body &__tr &__td[data-col-start='2'] {
+        border-left: 0 !important;
+    }
+    &:not(.dl-table_light-header) &__header &__tr &__th[data-col-start='1'] {
+        border-right: 1px solid #000 !important;
+    }
+
+    &.dl-table_light-header &__header &__tr &__th[data-col-start='1'] {
+        border-right: 1px solid var(--dl-table-body-grid-color) !important;
+    }
+
+    &__header &__tr &__th[data-col-start='2'] {
+        border-left: 0 !important;
+    }
+    &__footer &__tr &__td[data-col-start='1'] {
+        border-right: 1px solid #000 !important;
+    }
+    &__footer &__tr &__td[data-col-start='2'] {
+        border-left: 0 !important;
+    }
+
+    /* Рейс, Напр-е, Measure names: без переноса, надписи в одну линию (перебиваем cell.css с бэкенда) */
+    &__header &__th_pinned &__th-content,
+    &__header &__th_measure-names &__th-content,
+    &__body &__td_pinned &__cell-content,
+    &__body &__td_measure-names &__cell-content,
+    &__footer &__td_pinned &__footer-cell-content,
+    &__footer &__td_measure-names &__footer-cell-content {
+        white-space: nowrap !important;
+        word-break: normal !important;
+        overflow: visible;
+        min-width: 0;
+    }
+    /* Дочерние элементы в pinned/measure-names — тоже в одну строку (на случай inline style с бэкенда) */
+    &__body &__td_pinned &__cell-content *,
+    &__body &__td_measure-names &__cell-content * {
+        white-space: nowrap !important;
+        word-break: normal !important;
+    }
+
+    /* Надписи метрик (ПКЗ, ЗПК %, Млн. Р) — по левому краю с небольшим отступом */
+    &__header &__th_measure-names,
+    &__body &__td_measure-names,
+    &__footer &__td_measure-names {
+        text-align: left !important;
+        justify-content: flex-start !important;
+        padding-left: 2px !important;
+
+        .dl-table__th-content,
+        .dl-table__cell-content,
+        .dl-table__footer-cell-content {
+            justify-content: flex-start;
+            text-align: left;
+            padding-left: 1px;
+        }
+    }
+
+    /* Градиентная тень у последней pinned убрана с разметки — оставалась «двойная» линия с border */
+
+    &__no-data {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        padding: var(--dl-table-cell-vertical-padding) var(--dl-table-cell-horizontal-padding);
+        background: var(--dl-table-no-data-bg-color);
+        border: 1px solid var(--dl-table-border-color);
+        min-height: var(--dl-table-row-height);
+        align-items: flex-start;
+        display: flex;
+        // for compatibility with the old table (delete after switching to a new plugin)
+        margin-top: -1px;
+    }
+
+    colgroup {
+        display: none;
+    }
+
+    &__background-table {
+        position: absolute;
+        top: -100000px;
+        left: -100000px;
+        z-index: -1;
+        overflow: auto;
+        font-size: var(--g-text-body-1-font-size);
+        user-select: none;
+
+        @include tableSize();
+
+        table {
+            min-width: auto;
+        }
+
+        tbody td,
+        tfoot td {
+            white-space: nowrap;
+            overflow: visible !important;
+        }
+
+        &_preWrap tbody td {
+            white-space: pre-wrap;
+        }
+
+        .dl-table__th-content {
+            width: min-content;
+        }
+
+        .dl-table__footer-cell-content {
+            width: auto;
+        }
+    }
+
+    &__diff-cell {
+        display: flex;
+        gap: 4px;
+    }
+
+    &__diff-cell-icon {
+        font-size: 11px;
+
+        &_inc {
+            color: #008000;
+
+            &:before {
+                content: '▲';
+            }
+        }
+
+        &_dec {
+            color: #ff0000;
+
+            &:before {
+                content: '▼';
+            }
+        }
+    }
+}
+
+table.dl-table_prepared {
+    /* На случай, если на table нет light-header (не ожидается для отчёта 5) */
+    &.dl-table_flight-load-by-class {
+        --dl-table-border-color: #ececec;
+        --dl-table-body-grid-color: #ececec;
+    }
+
+    /* 5-й дашборд «Загрузка рейса по классам»: значения по вертикали по центру ячейки */
+    &.dl-table_flight-load-by-class.dl-table_light-header tbody .dl-table__td {
+        align-items: center !important;
+    }
+
+    border-collapse: collapse;
+    box-sizing: border-box;
+    /* После fitColumnWidthsToBudget сумма треков = ширине виджета — таблица на всю ширину контейнера */
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+
+    thead,
+    tbody,
+    tfoot {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    thead {
+        display: grid;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        /* Верх на ячейках th (.dl-table__header __tr:first-child), не на thead — иначе линия «уезжает» от колонок */
+        border-top: none;
+        box-sizing: border-box;
+
+        tr {
+            display: contents;
+        }
+    }
+
+    tbody {
+        display: grid;
+        position: relative;
+
+        tr {
+            display: contents;
+        }
+    }
+
+    tfoot {
+        display: grid;
+        position: relative;
+        z-index: 2;
+
+        tr {
+            display: contents;
+        }
+    }
+
+    td,
+    th {
+        display: flex;
+        min-width: 0;
+        overflow: visible;
+    }
+
+    thead th.dl-table__th_align_center {
+        justify-content: center !important;
+        align-items: stretch !important;
+        align-self: stretch;
+        text-align: center !important;
+    }
+
+    &:not(.dl-table_light-header) thead th.dl-table__th {
+        justify-content: center !important;
+        align-items: stretch !important;
+        align-self: stretch;
+        text-align: center !important;
+    }
+
+    &.dl-table_light-header thead th.dl-table__th_align_left {
+        justify-content: flex-start !important;
+        align-items: center !important;
+        align-self: stretch;
+        text-align: left !important;
+    }
+
+    &.dl-table_light-header thead th.dl-table__th_align_left .dl-table__th-content {
+        width: 100%;
+        min-width: 0;
+    }
+
+    /* Плоская таблица: заголовки в одну строку — иначе узкий colgroup даёт перенос «Вх. тр.» */
+    &.dl-table_light-header thead .dl-table__th {
+        white-space: nowrap;
+        word-break: normal;
+    }
+
+    /* Обычная таблица: сетка шапки как у тела (сводная остаётся с чёрной сеткой — правила выше по файлу) */
+    &.dl-table_light-header .dl-table__header {
+        --dl-table-border-color: var(--dl-table-body-grid-color);
+
+        th {
+            border-color: var(--dl-table-body-grid-color) !important;
+            border-top-color: var(--dl-table-body-grid-color) !important;
+            border-right-color: var(--dl-table-body-grid-color) !important;
+            border-bottom-color: var(--dl-table-body-grid-color) !important;
+        }
+    }
+
+    &.dl-table_light-header .dl-table__header .dl-table__tr:first-child .dl-table__th {
+        border-top: 1px solid var(--dl-table-body-grid-color) !important;
+        border-bottom: 1px solid var(--dl-table-body-grid-color) !important;
+    }
+
+    &.dl-table_light-header .dl-table__header .dl-table__tr:last-child .dl-table__th {
+        border-bottom: 1px solid var(--dl-table-body-grid-color) !important;
+    }
+
+    &.dl-table_light-header .dl-table__header .dl-table__tr .dl-table__th[data-col-start='0'] {
+        border-left: 1px solid var(--dl-table-body-grid-color) !important;
+    }
+
+    /* Подписи шапки: ещё на каплю левее */
+    &.dl-table_light-header thead .dl-table__th {
+        padding-left: calc(5px - 0.82px) !important;
+        padding-right: 4px;
+    }
+
+    &.dl-table_light-header thead .dl-table__th .dl-table__th-content {
+        padding-left: calc(1px - 0.72px);
+        margin-left: 0;
+    }
+
+    &.dl-table_light-header thead .dl-table__th .dl-table__th-content_sortable {
+        padding-right: calc(var(--dl-table-sort-icon-space) - 2px);
+    }
+
+    /* 8 «Групповые бронирования»: «Дата» — 5px; 2+ — золотая середина между «впритык» и «слишком право» */
+    &.dl-table_group-bookings-profile.dl-table_light-header thead .dl-table__th[data-col-start='0'] {
+        padding-left: 5px !important;
+        padding-right: 6px !important;
+    }
+
+    &.dl-table_group-bookings-profile.dl-table_light-header thead .dl-table__th:not([data-col-start='0']) {
+        padding-left: 3px !important;
+        padding-right: 6px !important;
+    }
+
+    &.dl-table_group-bookings-profile.dl-table_light-header
+        thead
+        .dl-table__th:not([data-col-start='0'])
+        .dl-table__th-content {
+        padding-left: 1px !important;
+        margin-left: 0;
+    }
+
+    /* Шапка 8-го отчёта: все границы ячеек — #e8e8e8 как у «решётки» последних колонок */
+    &.dl-table_group-bookings-profile.dl-table_light-header thead .dl-table__th {
+        border-color: #e8e8e8 !important;
+        border-top-color: #e8e8e8 !important;
+        border-right-color: #e8e8e8 !important;
+        border-bottom-color: #e8e8e8 !important;
+        border-left-color: #e8e8e8 !important;
+    }
+
+    /* Тело: вертикали/горизонтали «белые» у колонок 1–8; полная сетка #e8e8e8 только у 9–10 */
+    &.dl-table_group-bookings-profile.dl-table_light-header tbody .dl-table__td[data-col-start='0'],
+    &.dl-table_group-bookings-profile.dl-table_light-header tbody .dl-table__td[data-col-start='1'],
+    &.dl-table_group-bookings-profile.dl-table_light-header tbody .dl-table__td[data-col-start='2'],
+    &.dl-table_group-bookings-profile.dl-table_light-header tbody .dl-table__td[data-col-start='3'],
+    &.dl-table_group-bookings-profile.dl-table_light-header tbody .dl-table__td[data-col-start='4'],
+    &.dl-table_group-bookings-profile.dl-table_light-header tbody .dl-table__td[data-col-start='5'],
+    &.dl-table_group-bookings-profile.dl-table_light-header tbody .dl-table__td[data-col-start='6'] {
+        border-right-color: #ffffff !important;
+        border-bottom-color: #ffffff !important;
+    }
+
+    &.dl-table_group-bookings-profile.dl-table_light-header tbody .dl-table__td[data-col-start='7'] {
+        border-right-color: #e8e8e8 !important;
+        border-bottom-color: #ffffff !important;
+    }
+
+    &.dl-table_group-bookings-profile.dl-table_light-header tbody .dl-table__td[data-col-start='8'],
+    &.dl-table_group-bookings-profile.dl-table_light-header tbody .dl-table__td[data-col-start='9'] {
+        border-color: #e8e8e8 !important;
+    }
+
+    &.dl-table_group-bookings-profile.dl-table_light-header tbody .dl-table__tr:first-child .dl-table__td {
+        border-top-color: #e8e8e8 !important;
+    }
+
+    /* 7 «Предварительная продажа»: шапка и первые 4 колонки — влево; буквы и Итого — вправо; сетка #e8e8e8 */
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header thead .dl-table__th {
+        justify-content: flex-start !important;
+        text-align: left !important;
+        align-items: center !important;
+        border-color: #e8e8e8 !important;
+        border-top-color: #e8e8e8 !important;
+        border-right-color: #e8e8e8 !important;
+        border-bottom-color: #e8e8e8 !important;
+        border-left-color: #e8e8e8 !important;
+        padding-left: 3px !important;
+        padding-right: 4px !important;
+    }
+
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header thead .dl-table__th-content {
+        justify-content: flex-start !important;
+        text-align: left !important;
+        width: 100%;
+        min-width: 0;
+        padding-left: 0 !important;
+        margin-left: 0 !important;
+    }
+
+    /* Ровная сетка двух строк шапки + без переноса «Итого» в последней колонке */
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header thead.dl-table__header {
+        align-items: stretch;
+    }
+
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header thead.dl-table__header .dl-table__th {
+        align-self: stretch;
+    }
+
+    /*
+     * У родительских ячеек групповой шапки meta.index = -1 → нет data-col-start — общее правило border-left для col 0 не цепляет.
+     * Первая ячейка верхнего ряда без явной левой границы «уплывает» влево относительно второго ряда.
+     */
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header thead .dl-table__tr:first-child > .dl-table__th:first-child {
+        border-left: 1px solid #e8e8e8 !important;
+        box-sizing: border-box !important;
+    }
+
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header thead .dl-table__tr:last-child .dl-table__th:last-child,
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header
+        thead
+        .dl-table__tr:last-child
+        .dl-table__th:last-child
+        .dl-table__th-content {
+        white-space: nowrap !important;
+    }
+
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .dl-table__td {
+        font-weight: 700 !important;
+    }
+
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .dl-table__cell-content {
+        font-weight: 700 !important;
+    }
+
+    /*
+     * Даты в дереве: тот же font-weight, что у тела (700), без 800 — иначе выглядит «пережирно»;
+     * лёгкий акцент только за счёт +0.35px к размеру и цвета колонки.
+     */
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .tree-cell__value {
+        /* Как PRE_SALE_MATRIX_BODY_INLINE_TOTAL_TEXT — подписи «Итого» в теле */
+        color: #516288 !important;
+        font-weight: 700 !important;
+        font-size: calc(var(--dl-table-font-size) + 0.35px) !important;
+    }
+
+    /*
+     * RowSpan: td[data-col-start='0'] — align-items:flex-start, чтобы блок дерева был у верха объединённой ячейки.
+     * Внутри .tree-cell — align-items:center: квадрат ± и текст даты по вертикали вровень (иначе flex-start + translateY давали сдвиг).
+     */
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .tree-cell {
+        align-items: center;
+    }
+
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .tree-cell .tree-cell__btn {
+        /* Выше строки даты (отрицательный translateY) */
+        transform: translateY(-1px);
+        font-weight: 400 !important;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .dl-table__td[data-col-start='0'] {
+        align-items: flex-start !important;
+        padding-left: 2px !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+    }
+
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .dl-table__td[data-col-start='1'],
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .dl-table__td[data-col-start='2'],
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .dl-table__td[data-col-start='3'] {
+        padding-left: 4px !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+    }
+
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .dl-table__td[data-col-start='0'] > .dl-table__cell-content {
+        justify-content: flex-start !important;
+        text-align: left !important;
+        align-items: flex-start !important;
+    }
+
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .dl-table__td[data-col-start='1'] > .dl-table__cell-content,
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .dl-table__td[data-col-start='2'] > .dl-table__cell-content,
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .dl-table__td[data-col-start='3'] > .dl-table__cell-content {
+        justify-content: flex-start !important;
+        text-align: left !important;
+    }
+
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .dl-table__td[data-col-start]:not([data-col-start='0']):not([data-col-start='1']):not([data-col-start='2']):not([data-col-start='3']) {
+        justify-content: flex-end !important;
+        text-align: right !important;
+        padding-left: 4px !important;
+        padding-right: 2px !important;
+        /* Иначе --dl-table-cell-vertical-align: top + flex-end дают «прилипание» числа к верху ячейки */
+        align-items: center !important;
+    }
+
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .dl-table__td[data-col-start]:not([data-col-start='0']):not([data-col-start='1']):not([data-col-start='2']):not([data-col-start='3'])
+        > .dl-table__cell-content {
+        justify-content: flex-end !important;
+        text-align: right !important;
+        align-items: center !important;
+        width: 100%;
+    }
+
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .dl-table__td_type_number {
+        justify-content: flex-end !important;
+        text-align: right !important;
+    }
+
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .dl-table__td_type_number > .dl-table__cell-content {
+        justify-content: flex-end !important;
+        text-align: right !important;
+    }
+
+    /* Вложенные строки сегмента: общие правила tr_segment-row не задают align-items — цифры «съезжали» вниз */
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header tbody .dl-table__tr_segment-row .dl-table__td[data-col-start]:not([data-col-start='0']):not([data-col-start='1']):not([data-col-start='2']):not([data-col-start='3']) {
+        align-items: center !important;
+    }
+
+    &.dl-table_pre-sale-period-matrix.dl-table_light-header
+        tbody
+        .dl-table__tr_segment-row
+        .dl-table__td[data-col-start]:not([data-col-start='0']):not([data-col-start='1']):not([data-col-start='2']):not([data-col-start='3'])
+        > .dl-table__cell-content {
+        align-items: center !important;
+    }
+
+    /* Футер: 4 строки — первая ячейка (ИТОГО, rowSpan=4) по центру блока 2 колонок */
+    tfoot tr:first-child td:first-child {
+        justify-content: center;
+        align-items: center;
+        align-self: stretch;
+    }
+}

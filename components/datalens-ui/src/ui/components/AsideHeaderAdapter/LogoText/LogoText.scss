@@ -1,0 +1,23 @@
+@use '../../../styles/mixins.scss' as *;
+
+.aside-header-logo-text {
+    &__title {
+        @include text-body-2;
+        /* Чуть крупнее название продукта в шапке сайдбара (+1px), без сдвига вёрстки */
+        font-size: 16px;
+        line-height: 21px;
+        font-weight: 700;
+    }
+
+    &__title_rebranding {
+        @include text-subheader-2;
+        font-weight: 700;
+        font-size: 17px;
+        line-height: 22px;
+    }
+
+    &__installation-info {
+        @include installation-info-font;
+        width: fit-content;
+    }
+}

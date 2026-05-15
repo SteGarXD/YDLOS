@@ -1,0 +1,35 @@
+services:
+  db-mssql-14:
+    labels:
+      datalens.ci.service: db-mssql-14
+
+    # image: "microsoft/mssql-server-linux:2017-CU12"
+    image: "mcr.microsoft.com/mssql/server:2017-CU12@sha256:19b9392f035fc9f82b77f6833d1490bca8cb041b445cd451de0d1f1f3efe70e8"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "qweRTY123"
+    ports:
+     - "52100:1433"
+
+  # INFRA
+  pg-us:
+    extends:
+      file: ../testenv-common/docker-compose.common.yml
+      service: pg-us
+    ports:
+     - "52110:5432"
+
+  us:
+    extends:
+      file: ../testenv-common/docker-compose.common.yml
+      service: us
+    ports:
+     - "52111:8080"
+
+  redis-caches:
+    # image: "bitnami/redis:5.0.8"
+    image: "bitnami/redis:5.0.8@sha256:3127620da977815556439a9dc347fff89432a79b6bb6e93a16f20ac4a34ce337"
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+     - "52112:6379"

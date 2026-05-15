@@ -1,0 +1,72 @@
+# ============================================================
+# YDL OS - Production Override
+# ============================================================
+# Использование: docker compose -f docker-compose.yaml -f docker-compose.production.yaml up -d
+#
+# Добавляет:
+# - Nginx reverse proxy (HTTP → UI; TLS только на внешнем nginx сисадмина — без сертификатов на этом хосте)
+# - Ограничения ресурсов
+# - Логирование
+# - Автоперезапуск
+
+services:
+  # --- Nginx reverse proxy ---
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: ydl-os-nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      # Edge proxy only (not the ui-in-container nginx.conf). Сертификаты сюда не монтируем — не требуются.
+      - ./nginx/nginx-edge-proxy.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - ui
+    networks:
+      - default
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  # --- Убираем внешние порты у UI (только через Nginx) ---
+  ui:
+    ports: !reset []
+    # Не монтировать repo nginx.conf в UI: образ уже содержит /etc/nginx из deploy/nginx; ro-монт ломает entrypoint (sed) и логи.
+    volumes: !reset []
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  postgres:
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  temporal:
+    restart: always
+
+  control-api:
+    restart: always
+
+  data-api:
+    restart: always
+
+  us:
+    restart: always
+
+  ui-api:
+    restart: always
+
+  meta-manager:
+    restart: always
+
+  us-auth:
+    restart: always

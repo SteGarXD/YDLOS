@@ -1,0 +1,95 @@
+@import '~@gravity-ui/uikit/styles/mixins';
+@import '../../styles/mixins';
+// TODO: think about how to make it more clear (moved these from the dashkit)
+
+.dashkit_theme_datalens {
+    // overrides dashkit using cascade from theme selector
+
+    .dashkit-plugin-title {
+        align-items: flex-end;
+    }
+
+    .dashkit-grid-item {
+        z-index: 1;
+        // Transition added for case when element is unfocused but
+        // there could be tooltip with hide animation
+        transition: z-index 0.5s;
+
+        &.cssTransforms {
+            // overload default transform transition
+            transition: z-index 0.5s;
+        }
+
+        &.dashkit-grid-item_is-focused {
+            z-index: 2;
+            transition: none;
+        }
+
+        &.react-draggable-dragging {
+            z-index: 3;
+            transition: none;
+        }
+
+        div.yfm {
+            @include yfm-text-style();
+        }
+    }
+}
+
+.dashkit-plugin-menu__item {
+    &_danger {
+        color: var(--g-color-text-danger);
+    }
+}
+
+.dashkit-mobile-layout {
+    &__item {
+        // since there is no grid in the mobile layout, widgets gets their "native" height
+        // but for the case of the map embed, you must specify the height of the container, otherwise the map will collapse
+
+        .dashkit-plugin-widget__body_fullscreen .chartkit-ymap,
+        .dl-widget_fullscreen.dl-widget_d3 .chartkit {
+            height: 100%;
+        }
+
+        .chartkit-ymap,
+        .chartkit-table__body,
+        .dl-widget_d3 .chartkit,
+        .yagr {
+            height: 400px;
+        }
+
+        &_autoheight {
+            .chartkit-table__body {
+                height: auto;
+            }
+        }
+    }
+
+    .dl-chartkit-body-mix {
+        // in the chartkit, the position: absolute rule is applied on this node (made to solve
+        // the problem - CHARTS-1427), which assumes that the width and height of the parent are set
+        // obviously (at the expense of the grid) because there id no such problem with a mobile layout,
+        // and the height is not explicitly set here it is necessary to redefine position
+
+        position: relative;
+    }
+
+    .dashkit-plugin-widget {
+        &__body {
+            min-height: 40px;
+            flex: none;
+        }
+
+        &_fullscreen {
+            .dashkit-plugin-widget__body {
+                height: 100%;
+                flex: auto;
+            }
+
+            .chartkit-highcharts text {
+                user-select: none;
+            }
+        }
+    }
+}

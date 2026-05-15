@@ -1,0 +1,28 @@
+.conn-form-check-params-button {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+
+    &__icon {
+        margin-left: 5px;
+        /* Галочка/крестик проверки: явно показываем SVG (на случай глобальных правил брендинга) */
+        svg {
+            opacity: 1 !important;
+        }
+    }
+
+    &__tooltip {
+        width: 192px;
+
+        .g-button {
+            flex-grow: 0;
+        }
+    }
+
+    &__tooltip-content {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+}

@@ -1,0 +1,105 @@
+﻿[
+    {
+        "Name": "datalens_default",
+        "Id": "e89f59f24bbc4bad570dee90f3a149228b7f73d788439d2002f2b5e06dc808e2",
+        "Created": "2026-03-19T13:37:02.944736353Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.19.0.0/16",
+                    "Gateway": "172.19.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {
+            "com.docker.network.enable_ipv4": "true"
+        },
+        "Labels": {
+            "com.docker.compose.config-hash": "5b8da5393ef27f3dbb44472645c8ec4545e844084d90f422abb990522e0430f8",
+            "com.docker.compose.network": "default",
+            "com.docker.compose.project": "datalens",
+            "com.docker.compose.version": "5.1.0"
+        },
+        "Containers": {
+            "0710259e07a7dbc4adc937ded5ad64169eb1cc31a7955568c3b67598634ffadf": {
+                "Name": "datalens-data-api-prod",
+                "EndpointID": "fa11ddbce5847deae0086196d1671593a8e4af0d071406dce5e5f7c499fb2be1",
+                "MacAddress": "06:54:83:ac:ff:62",
+                "IPv4Address": "172.19.0.8/16",
+                "IPv6Address": ""
+            },
+            "270499f97e223fd48639b6ff9c80b0dc455f3c56a409801390158ad5c19fc817": {
+                "Name": "datalens-us-prod",
+                "EndpointID": "1d4dc32529bc33d75aa05a4a0be0f4624530faf5c9a5b3e3f33e300ac554d7bd",
+                "MacAddress": "5a:2d:a1:74:a4:79",
+                "IPv4Address": "172.19.0.5/16",
+                "IPv6Address": ""
+            },
+            "2c15cb3d3ceed9ea028665a52118a304ed4fa1c02bf9983829781b1ed10d50d2": {
+                "Name": "datalens-ui-api-prod",
+                "EndpointID": "7f44f99b68eb7d1d893e280a85db74f1fb45c01ef7efa756cd673f3ca0a8abab",
+                "MacAddress": "7a:87:a2:a7:f6:7b",
+                "IPv4Address": "172.19.0.6/16",
+                "IPv6Address": ""
+            },
+            "36db16aae050a7771815e9e00fe64571a6a0646bafb019db6a840ffffe868f50": {
+                "Name": "datalens-meta-manager-prod",
+                "EndpointID": "50fae13dfac82e9cc27b3a74aa8973d28fdb85833b321b0cc8a640b44d82defe",
+                "MacAddress": "96:be:88:eb:f9:39",
+                "IPv4Address": "172.19.0.7/16",
+                "IPv6Address": ""
+            },
+            "3f70e2a184200610ca3a02428eeca63d710bcec86008363d65d11653b78f8c86": {
+                "Name": "datalens-auth-prod",
+                "EndpointID": "c5e5ef47cc364f4ba004207c58a2193996730d7743ed754a1fdfa2def233bced",
+                "MacAddress": "9e:06:8f:5a:e7:02",
+                "IPv4Address": "172.19.0.2/16",
+                "IPv6Address": ""
+            },
+            "537246a18edcc1b11fff8089beb10ab6265809f375b23e579c6cc1890adaf21f": {
+                "Name": "datalens-control-api-prod",
+                "EndpointID": "06d5fcb4e60d5ce8a03b19a1a902896787a00c7a59da234b1963f66e16edc7e9",
+                "MacAddress": "42:66:76:76:9e:fa",
+                "IPv4Address": "172.19.0.3/16",
+                "IPv6Address": ""
+            },
+            "7f0677a719147fd664c589c82d3d47fa331dd6570a6468532d13b56ecc97566e": {
+                "Name": "datalens-postgres-prod",
+                "EndpointID": "4e9ccd372dda678d76c5b7988a3f739561ff71e9d0559c3ac1dfb6817b07b38a",
+                "MacAddress": "06:c5:75:8e:17:68",
+                "IPv4Address": "172.19.0.9/16",
+                "IPv6Address": ""
+            },
+            "a82e550d3161bcb3a3191cebbda593d6739e1a2d8e4a89f9e31476093733aca2": {
+                "Name": "datalens-temporal-prod",
+                "EndpointID": "2ea97e39beb7c725c5203f0593e6354b2fd1ecd89c6403dfe0cbade041ad2b34",
+                "MacAddress": "82:e5:47:d1:a5:24",
+                "IPv4Address": "172.19.0.4/16",
+                "IPv6Address": ""
+            }
+        },
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "172.19.0.0/16": {
+                        "IPsInUse": 11,
+                        "DynamicIPsAvailable": 65525
+                    }
+                }
+            }
+        }
+    }
+]

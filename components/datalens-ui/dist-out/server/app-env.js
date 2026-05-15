@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.unitedStorageConfigLoadedTimeout = exports.isOpensourceInstallation = exports.isPublicApiMode = exports.isApiMode = exports.isChartsMode = exports.isDatalensMode = exports.isFullMode = exports.docsUrl = exports.releaseVersion = exports.appEnv = exports.appInstallation = void 0;
+const shared_1 = require("../shared");
+const mode = process.env.APP_MODE;
+exports.appInstallation = process.env.APP_INSTALLATION;
+exports.appEnv = process.env.APP_ENV;
+exports.releaseVersion = process.env.RELEASE_VERSION;
+exports.docsUrl = process.env.DOCS_URL;
+exports.isFullMode = mode === shared_1.AppMode.Full;
+exports.isDatalensMode = mode === shared_1.AppMode.Datalens;
+exports.isChartsMode = mode === shared_1.AppMode.Charts;
+exports.isApiMode = mode === shared_1.AppMode.Api;
+exports.isPublicApiMode = mode === shared_1.AppMode.PublicApi;
+exports.isOpensourceInstallation = exports.appInstallation === shared_1.AppInstallation.Opensource;
+exports.unitedStorageConfigLoadedTimeout = parseInt(process.env.UNITED_STORAGE_CONFIG_LOADED_TIMEOUT || '10000');

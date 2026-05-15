@@ -1,0 +1,6 @@
+from dl_connector_clickhouse.formula.testing.test_suites import LiteralFunctionClickHouseTestSuite
+from dl_connector_clickhouse_tests.db.formula.base import ClickHouse_21_8TestBase
+
+
+class TestLiteralFunctionClickHouse_21_8(ClickHouse_21_8TestBase, LiteralFunctionClickHouseTestSuite):
+    pass

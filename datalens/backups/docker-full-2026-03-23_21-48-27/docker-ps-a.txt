@@ -1,0 +1,10 @@
+﻿CONTAINER ID   IMAGE                                            COMMAND                  CREATED      STATUS                  PORTS                                           NAMES
+0710259e07a7   akrasnov87/datalens-data-api:0.2396.0            "/etc/service/dl_apiтАж"   2 days ago   Up 25 hours             0.0.0.0:8020->8080/tcp, [::]:8020->8080/tcp     datalens-data-api-prod
+537246a18edc   akrasnov87/datalens-control-api:0.2396.0         "/etc/service/dl_apiтАж"   2 days ago   Up 25 hours             0.0.0.0:8010->8080/tcp, [::]:8010->8080/tcp     datalens-control-api-prod
+36db16aae050   akrasnov87/datalens-meta-manager:0.50.0          "/opt/app/scripts/prтАж"   3 days ago   Up 11 hours             0.0.0.0:3050->8080/tcp, [::]:3050->8080/tcp     datalens-meta-manager-prod
+2c15cb3d3cee   akrasnov87/datalens-ui:0.3498.0                  "/usr/bin/supervisorтАж"   3 days ago   Up 25 hours             0.0.0.0:13040->8080/tcp, [::]:13040->8080/tcp   datalens-ui-api-prod
+a82e550d3161   ghcr.io/datalens-tech/datalens-temporal:1.27.2   "/etc/temporal/init-тАж"   3 days ago   Up 25 hours (healthy)   0.0.0.0:7233->7233/tcp, [::]:7233->7233/tcp     datalens-temporal-prod
+270499f97e22   akrasnov87/datalens-us:0.413.0                   "/opt/app/scripts/prтАж"   3 days ago   Up 25 hours             0.0.0.0:8030->8080/tcp, [::]:8030->8080/tcp     datalens-us-prod
+3f70e2a18420   akrasnov87/datalens-auth:0.2.6                   "/bin/bash /start-noтАж"   3 days ago   Up 25 hours             0.0.0.0:8088->80/tcp, [::]:8088->80/tcp         datalens-auth-prod
+7f0677a71914   akrasnov87/datalens-postgres:16                  "docker-entrypoint.sтАж"   3 days ago   Up 25 hours (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp     datalens-postgres-prod
+f7a07005ae07   akrasnov87/datalens-ui:0.3498.0                  "/usr/bin/supervisorтАж"   4 days ago   Exited (0) 3 days ago                                                   datalens-ui-prod

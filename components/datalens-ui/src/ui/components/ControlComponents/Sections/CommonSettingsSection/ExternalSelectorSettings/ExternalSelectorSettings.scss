@@ -1,0 +1,19 @@
+.external-selector-settings {
+    &__checkbox-option {
+        padding-top: 6px;
+    }
+
+    .cc-form-layout__row-right {
+        margin-left: -60px;
+    }
+
+    &__link {
+        grid-auto-rows: 40px;
+        --dl-dropdown-navigation-width: initial;
+    }
+
+    &__navigation {
+        grid-template-columns: 1fr auto;
+        grid-template-rows: 40px;
+    }
+}

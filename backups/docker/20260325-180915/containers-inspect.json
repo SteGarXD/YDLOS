@@ -1,0 +1,2464 @@
+﻿[
+    {
+        "Id": "0710259e07a7dbc4adc937ded5ad64169eb1cc31a7955568c3b67598634ffadf",
+        "Created": "2026-03-21T15:39:48.723399635Z",
+        "Path": "/etc/service/dl_api/run",
+        "Args": [],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 826,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-03-22T18:04:34.400068105Z",
+            "FinishedAt": "2026-03-22T16:26:50.608307055Z"
+        },
+        "Image": "sha256:a85b2bdc739b4297964a9b1178b0ac71ff3e67d517dd6ced93fc3d23aeed1665",
+        "ResolvConfPath": "/var/lib/docker/containers/0710259e07a7dbc4adc937ded5ad64169eb1cc31a7955568c3b67598634ffadf/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/0710259e07a7dbc4adc937ded5ad64169eb1cc31a7955568c3b67598634ffadf/hostname",
+        "HostsPath": "/var/lib/docker/containers/0710259e07a7dbc4adc937ded5ad64169eb1cc31a7955568c3b67598634ffadf/hosts",
+        "LogPath": "/var/lib/docker/containers/0710259e07a7dbc4adc937ded5ad64169eb1cc31a7955568c3b67598634ffadf/0710259e07a7dbc4adc937ded5ad64169eb1cc31a7955568c3b67598634ffadf-json.log",
+        "Name": "/datalens-data-api-prod",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "datalens_default",
+            "PortBindings": {
+                "8080/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "8020"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": [
+                "host.docker.internal:host-gateway"
+            ],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "0710259e07a7",
+            "Domainname": "",
+            "User": "app",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "RQE_SECRET_KEY=",
+                "DL_CRY_ACTUAL_KEY_ID=KEY",
+                "AUTH__JWT_KEY=-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA+HICDZMfimMIiGdd0dPr\\n2N3zxHOJqiVXuvUj/aBBS7c8760rJUh4344sP/0Gid558yH/v1MtzZ0R9w09v6gb\\nSNrSiNwIUNGPhbnm9Jf+kMezsI/rkcIdoVm3KJ8CFUYy6MRPzW7iJmIVRHBb82v1\\nmAYCCQFU6IRtFIa9hQ8wedWwxqXZekSNS+6NB37dmmQB9kz2E3MY+KRLigOh4i3p\\nCZ1ti3HVvMa9Rlgk9FmoWExzub5ECChqwm+vn8yFXjYW7kUSClcV2xx4nbQWqjrR\\nyyLk6W2BNOuCFVvz0j+5XkpLAt7tljtVZc+572HBEKpF2mAdmAip5NzeDhKqucJ+\\nZQIDAQAB\\n-----END PUBLIC KEY-----",
+                "RQE_FORCE_OFF=1",
+                "BI_COMPENG_PG_URL=postgres://pg-user:postgres@postgres:5432/pg-compeng-db",
+                "MUTATIONS_CACHES_ON=0",
+                "CACHES_ON=0",
+                "AUTH__TYPE=NONE",
+                "AUTH__JWT_ALGORITHM=PS256",
+                "GUNICORN_WORKERS_COUNT=5",
+                "US_MASTER_TOKEN=us-master-token",
+                "COMMON_TIMEOUT_SEC=120",
+                "DL_CRY_KEY_VAL_ID_KEY=ZGF0YWxlbnN1bnNlY3VyZWZlcm5ldGNyeXB0b2tleQo=",
+                "US_HOST=http://us:8080",
+                "BI_COMPENG_PG_ON=1",
+                "PATH=/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "container=docker",
+                "LD_LIBRARY_PATH=:/usr/lib/x86_64-linux-gnu/odbc",
+                "REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt",
+                "VIRTUAL_ENV=/venv",
+                "CONFIG_PATH=/etc/backend-configs/api.yaml",
+                "GUNICORN_LOG_CONFIG=/code/gunicorn_logging.ini",
+                "GUNICORN_CONFIG=/code/gunicorn_config.py"
+            ],
+            "Cmd": null,
+            "Image": "akrasnov87/datalens-data-api:0.2396.0",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/etc/service/dl_api/run"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "3280ae9dc77eaae13b85d8a3f20f6e280c80e81e4d1470e59cad035f101fe98e",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "postgres:service_healthy:false",
+                "com.docker.compose.image": "sha256:a85b2bdc739b4297964a9b1178b0ac71ff3e67d517dd6ced93fc3d23aeed1665",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "datalens",
+                "com.docker.compose.project.config_files": "D:\\YDLOS\\datalens\\docker-compose.yaml,D:\\YDLOS\\datalens\\docker-compose.demo.yaml",
+                "com.docker.compose.project.working_dir": "D:\\YDLOS\\datalens",
+                "com.docker.compose.replace": "datalens-data-api-prod",
+                "com.docker.compose.service": "data-api",
+                "com.docker.compose.version": "5.1.0",
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "24.04"
+            },
+            "StopTimeout": 1
+        },
+        "NetworkSettings": {
+            "SandboxID": "5e5242e8d63c1d471c904ba5107aaa81e2fc1adc56017b2ff52d4cba4b5a6dc9",
+            "SandboxKey": "/var/run/docker/netns/5e5242e8d63c",
+            "Ports": {
+                "8080/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "8020"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "8020"
+                    }
+                ]
+            },
+            "Networks": {
+                "datalens_default": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "datalens-data-api-prod",
+                        "data-api"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "e89f59f24bbc4bad570dee90f3a149228b7f73d788439d2002f2b5e06dc808e2",
+                    "EndpointID": "1f54e737e1971758ac415d794237e85e6bb3dce00a18bc7ba9e7fd83ca63508b",
+                    "Gateway": "172.19.0.1",
+                    "IPAddress": "172.19.0.5",
+                    "MacAddress": "da:6d:f8:ad:d8:a6",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "datalens-data-api-prod",
+                        "data-api",
+                        "0710259e07a7"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:61e6a3ac718c470ef6e9c4773d78ea177a2b8dca53c4bbf6aaa801e25a7247d2",
+            "size": 6336,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    },
+    {
+        "Id": "537246a18edcc1b11fff8089beb10ab6265809f375b23e579c6cc1890adaf21f",
+        "Created": "2026-03-21T15:39:48.713252705Z",
+        "Path": "/etc/service/dl_api/run",
+        "Args": [],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 880,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-03-22T18:04:34.385603245Z",
+            "FinishedAt": "2026-03-22T16:26:50.610457491Z"
+        },
+        "Image": "sha256:93c3b33a558906c64e9be69abdf647adff42467d9d6d4c72a661ae14189cd904",
+        "ResolvConfPath": "/var/lib/docker/containers/537246a18edcc1b11fff8089beb10ab6265809f375b23e579c6cc1890adaf21f/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/537246a18edcc1b11fff8089beb10ab6265809f375b23e579c6cc1890adaf21f/hostname",
+        "HostsPath": "/var/lib/docker/containers/537246a18edcc1b11fff8089beb10ab6265809f375b23e579c6cc1890adaf21f/hosts",
+        "LogPath": "/var/lib/docker/containers/537246a18edcc1b11fff8089beb10ab6265809f375b23e579c6cc1890adaf21f/537246a18edcc1b11fff8089beb10ab6265809f375b23e579c6cc1890adaf21f-json.log",
+        "Name": "/datalens-control-api-prod",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "datalens_default",
+            "PortBindings": {
+                "8080/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "8010"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": [
+                "host.docker.internal:host-gateway"
+            ],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "537246a18edc",
+            "Domainname": "",
+            "User": "app",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "CONNECTOR_AVAILABILITY_VISIBLE=clickhouse,postgres,chyt,ydb,mysql,greenplum,mssql,oracle,trino,appmetrica_api,metrika_api",
+                "RQE_FORCE_OFF=1",
+                "AUTH__JWT_ALGORITHM=PS256",
+                "AUTH__TYPE=NONE",
+                "US_MASTER_TOKEN=us-master-token",
+                "BI_API_UWSGI_WORKERS_COUNT=4",
+                "RQE_SECRET_KEY=",
+                "DL_CRY_ACTUAL_KEY_ID=KEY",
+                "US_HOST=http://us:8080",
+                "AUTH__JWT_KEY=-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA+HICDZMfimMIiGdd0dPr\\n2N3zxHOJqiVXuvUj/aBBS7c8760rJUh4344sP/0Gid558yH/v1MtzZ0R9w09v6gb\\nSNrSiNwIUNGPhbnm9Jf+kMezsI/rkcIdoVm3KJ8CFUYy6MRPzW7iJmIVRHBb82v1\\nmAYCCQFU6IRtFIa9hQ8wedWwxqXZekSNS+6NB37dmmQB9kz2E3MY+KRLigOh4i3p\\nCZ1ti3HVvMa9Rlgk9FmoWExzub5ECChqwm+vn8yFXjYW7kUSClcV2xx4nbQWqjrR\\nyyLk6W2BNOuCFVvz0j+5XkpLAt7tljtVZc+572HBEKpF2mAdmAip5NzeDhKqucJ+\\nZQIDAQAB\\n-----END PUBLIC KEY-----",
+                "DL_CRY_KEY_VAL_ID_KEY=ZGF0YWxlbnN1bnNlY3VyZWZlcm5ldGNyeXB0b2tleQo=",
+                "PATH=/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "container=docker",
+                "LD_LIBRARY_PATH=:/usr/lib/x86_64-linux-gnu/odbc",
+                "REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt",
+                "VIRTUAL_ENV=/venv",
+                "CONFIG_PATH=/etc/backend-configs/api.yaml",
+                "PYTHONUNBUFFERED=1"
+            ],
+            "Cmd": null,
+            "Image": "akrasnov87/datalens-control-api:0.2396.0",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/etc/service/dl_api/run"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "3039e4b9aac3e87e8d90d1ec5c697be6c956494622c515d8f5ca926678d8da9b",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "",
+                "com.docker.compose.image": "sha256:93c3b33a558906c64e9be69abdf647adff42467d9d6d4c72a661ae14189cd904",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "datalens",
+                "com.docker.compose.project.config_files": "D:\\YDLOS\\datalens\\docker-compose.yaml,D:\\YDLOS\\datalens\\docker-compose.demo.yaml",
+                "com.docker.compose.project.working_dir": "D:\\YDLOS\\datalens",
+                "com.docker.compose.replace": "datalens-control-api-prod",
+                "com.docker.compose.service": "control-api",
+                "com.docker.compose.version": "5.1.0",
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "24.04"
+            },
+            "StopTimeout": 1
+        },
+        "NetworkSettings": {
+            "SandboxID": "103f7569bab6f385c679f762cb0a16d98f9d3d7b4080681cd357e898cd13a856",
+            "SandboxKey": "/var/run/docker/netns/103f7569bab6",
+            "Ports": {
+                "8080/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "8010"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "8010"
+                    }
+                ]
+            },
+            "Networks": {
+                "datalens_default": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "datalens-control-api-prod",
+                        "control-api"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "e89f59f24bbc4bad570dee90f3a149228b7f73d788439d2002f2b5e06dc808e2",
+                    "EndpointID": "02edfc3e551b6d84886cb767637d750c64c75ea5d95469da40c6403371d3629f",
+                    "Gateway": "172.19.0.1",
+                    "IPAddress": "172.19.0.3",
+                    "MacAddress": "c6:ad:d9:10:f5:7f",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "datalens-control-api-prod",
+                        "control-api",
+                        "537246a18edc"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:c3645a7bf867be749a23426e662ea32c3fc062fbaa1f05703336373f7b3958e9",
+            "size": 4081,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    },
+    {
+        "Id": "36db16aae050a7771815e9e00fe64571a6a0646bafb019db6a840ffffe868f50",
+        "Created": "2026-03-19T20:17:36.258098472Z",
+        "Path": "/opt/app/scripts/preflight.sh",
+        "Args": [],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 158145,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-03-23T07:48:19.934999155Z",
+            "FinishedAt": "2026-03-22T18:04:49.600033341Z"
+        },
+        "Image": "sha256:eb8051de708a8cfd1495bfcdd418c06b2b5e5d81b90acca65d9426f1dae670fb",
+        "ResolvConfPath": "/var/lib/docker/containers/36db16aae050a7771815e9e00fe64571a6a0646bafb019db6a840ffffe868f50/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/36db16aae050a7771815e9e00fe64571a6a0646bafb019db6a840ffffe868f50/hostname",
+        "HostsPath": "/var/lib/docker/containers/36db16aae050a7771815e9e00fe64571a6a0646bafb019db6a840ffffe868f50/hosts",
+        "LogPath": "/var/lib/docker/containers/36db16aae050a7771815e9e00fe64571a6a0646bafb019db6a840ffffe868f50/36db16aae050a7771815e9e00fe64571a6a0646bafb019db6a840ffffe868f50-json.log",
+        "Name": "/datalens-meta-manager-prod",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "3",
+                    "max-size": "5m"
+                }
+            },
+            "NetworkMode": "datalens_default",
+            "PortBindings": {
+                "8080/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "3050"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "36db16aae050",
+            "Domainname": "",
+            "User": "app",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "US_ENDPOINT=http://us:8080",
+                "POSTGRES_DSN_LIST=postgres://pg-user:postgres@postgres:5432/pg-meta-manager-db",
+                "NODE_RPC_URL=http://us-auth:80/demo/rpc",
+                "AUTH_ENABLED=true",
+                "EXPORT_DATA_VERIFICATION_KEY=export-data-verification-key",
+                "APP_PORT=8080",
+                "TEMPORAL_ENDPOINT=temporal:7233",
+                "TEMPORAL_AUTH_PRIVATE_KEY=-----BEGIN RSA PRIVATE KEY-----\\nMIIEowIBAAKCAQEAqHLHK4aK5RGhTqbk5SYUeNtJDdP2wNR7e45Q+fKAdnR51rxC\\nXIJdg11d4UkkkzwmwblFEzCQt0dFHrnsHNso3YU3bM4xPsxKRdJ4L4+nH7fcj4lH\\nKpl1PosNBi/py7dtJLGOFktEhZ4YvtB9Fqq6o/kF0hPhuTm1mzyoYAN4Aisch3ZY\\nw8WjPFYZPUqLqi+OEUyuYU8j36I7uxybpw55pSvnCHCtxuxSuX1er14fCplX8yik\\nnc2ePY7dOwTM9iS1aMcWoobQOuyda3Vp2opznassgcnXkgAj+1e1vosDahc98nXb\\nExyMRDzJglLUmF+wb1/jaNClK48bX+CihRxOKQIDAQABAoIBADk06cE1axxKdX7R\\nnTDZUuCMkG3ay5VHVDxs48FPAyO3gN1ViDAEsh936PcmsP4z0nG+KuBOgQdNdALw\\nX2iZYXKB2IXiLMVH+f1mchys67QQ7B3vIDUucqvv61drlDn0LGPmzPtzSm0aeQrs\\noV6+Uq53Vuu2htUx7SQwYHpjEzGgx03WDwwPze7rf/jsVZAILpW3z2Na/514rOtO\\n7Kd5c4U+3YDcfQuQyp4PTW4h6VQm/TBalvR26bYKdcdB5UR0s1tply0zUxPmA/Rm\\nseJpKhfnUipKvQMPdaEvEGVJO3GeHiCc2ssULWXDPc/cpg4V66w3zP939NRsWaG9\\n47H6fJECgYEA2qvCkj30yl7LbjgW1O/eYUH9BXQrialYLGx8sO275cocV+dGfDLg\\na2PHzYUWDhEXYM/sBCR19p/agcG9TPDkHTSheuNoDxIz8Q8BuCB9C5FA51flL6vd\\neyKcdnq0KlL0qSGMAD3twuGDh2p54dWcUM3lUPhcq6FCfnsE5TZY6t0CgYEAxTQ3\\nq5VqCtVQEQy4hZNW+fjdBKoT9cM4TsZ9IqFrkkt/+JVBLP0G8bYYz+pB6E2GsFPP\\n89EdnRecu/qQxfXLQ8oKpBOP4o7tVMTEgQatmbmPuzxycABmiVLf65tfrcxvRKCS\\nH9hzHVPyn6BQOZfZeL/id5Q5ioqkayKhLYLdfb0CgYEAgmQfLqMBH9csyPlrK+go\\nm6gEn0bpWzn+mObL55irDVfaVNRU5GRWC9NA5h0wzIyGezUgkEvJh5lEa1FCdunB\\nrGSg0a1edHYvQNPo+4lr5wTjRc/UmvuJow49bCy41/AFcgDOAarr5uQgURQ9v1tn\\nzYso7YJbiAAtrUvf3Gnu1YUCgYAW0U7rtJMbg8kK3/ztv7mdnNT9+CvtENSQENlj\\ny2el+sRo3+Q1r2VBTH+cdw9/MJE4D8qM/JI/nf7NpVVhAmqtglAu4fCRF1aQq1/N\\nSheGJPljgcAAA5vZodQ077pnYrMxLp8ZvjK7nv4AyEzgDRjlptYuXeE2jYout0gM\\n+wpjxQKBgAkaphyQPD0hsv9Q3+CRXzmFX9XL3NEcQtNUv/h5Iq3DgctgGkG0qeJP\\ns4qhnarh6IFQZf53j35AUuIp45A6C26xkvS0NoTi/J9Q4xNkgl4aaPQ6h/t9aqIH\\nGofbNqb4LSXato4Kxh4BEGCv6X6kbi//xGCQ2JMkZgt1bOmM6r+e\\n-----END RSA PRIVATE KEY-----",
+                "UI_API_ENDPOINT=http://ui-api:8080",
+                "APP_ENV=prod",
+                "US_MASTER_TOKEN=us-master-token",
+                "TEMPORAL_AUTH_ENABLED=true",
+                "APP_INSTALLATION=opensource",
+                "AUTH_TOKEN_PUBLIC_KEY=-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA+HICDZMfimMIiGdd0dPr\\n2N3zxHOJqiVXuvUj/aBBS7c8760rJUh4344sP/0Gid558yH/v1MtzZ0R9w09v6gb\\nSNrSiNwIUNGPhbnm9Jf+kMezsI/rkcIdoVm3KJ8CFUYy6MRPzW7iJmIVRHBb82v1\\nmAYCCQFU6IRtFIa9hQ8wedWwxqXZekSNS+6NB37dmmQB9kz2E3MY+KRLigOh4i3p\\nCZ1ti3HVvMa9Rlgk9FmoWExzub5ECChqwm+vn8yFXjYW7kUSClcV2xx4nbQWqjrR\\nyyLk6W2BNOuCFVvz0j+5XkpLAt7tljtVZc+572HBEKpF2mAdmAip5NzeDhKqucJ+\\nZQIDAQAB\\n-----END PUBLIC KEY-----",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "TZ=Etc/UTC",
+                "APP_VERSION=",
+                "TMPDIR=/tmp",
+                "NODE_ENV=production"
+            ],
+            "Cmd": null,
+            "Image": "akrasnov87/datalens-meta-manager:0.50.0",
+            "Volumes": null,
+            "WorkingDir": "/opt/app",
+            "Entrypoint": [
+                "/opt/app/scripts/preflight.sh"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "be606f39248b11f5ea396fba3971772a216d57230886542ee826a654c0358228",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "temporal:service_healthy:false,ui-api:service_started:false",
+                "com.docker.compose.image": "sha256:eb8051de708a8cfd1495bfcdd418c06b2b5e5d81b90acca65d9426f1dae670fb",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "datalens",
+                "com.docker.compose.project.config_files": "D:\\YDLOS\\datalens\\docker-compose.yaml,D:\\YDLOS\\datalens\\docker-compose.demo.yaml",
+                "com.docker.compose.project.working_dir": "D:\\YDLOS\\datalens",
+                "com.docker.compose.replace": "datalens-meta-manager-prod",
+                "com.docker.compose.service": "meta-manager",
+                "com.docker.compose.version": "5.1.0",
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "24.04"
+            },
+            "StopTimeout": 1
+        },
+        "NetworkSettings": {
+            "SandboxID": "f79bfe4d83fbc995186548f1d0149f9539b4d860f69d31192118ee26488c5022",
+            "SandboxKey": "/var/run/docker/netns/f79bfe4d83fb",
+            "Ports": {
+                "8080/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "3050"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "3050"
+                    }
+                ]
+            },
+            "Networks": {
+                "datalens_default": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "datalens-meta-manager-prod",
+                        "meta-manager"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "e89f59f24bbc4bad570dee90f3a149228b7f73d788439d2002f2b5e06dc808e2",
+                    "EndpointID": "4537b969d97c65970b7c6da92b1f134cb843a4104b594a2f4b8d4a291f71be9f",
+                    "Gateway": "172.19.0.1",
+                    "IPAddress": "172.19.0.2",
+                    "MacAddress": "4a:31:ae:93:90:f0",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "datalens-meta-manager-prod",
+                        "meta-manager",
+                        "36db16aae050"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "digest": "sha256:eb8051de708a8cfd1495bfcdd418c06b2b5e5d81b90acca65d9426f1dae670fb",
+            "size": 3042,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    },
+    {
+        "Id": "2c15cb3d3ceed9ea028665a52118a304ed4fa1c02bf9983829781b1ed10d50d2",
+        "Created": "2026-03-19T20:17:34.417768286Z",
+        "Path": "/usr/bin/supervisord",
+        "Args": [
+            "-c",
+            "/etc/supervisor/supervisord.conf"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 962,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-03-22T18:04:34.397737624Z",
+            "FinishedAt": "2026-03-22T16:26:50.60874567Z"
+        },
+        "Image": "sha256:4d9dbdf78c8cea06c710ef322f714dc450107a8a9305a119a78bfd187bd232c1",
+        "ResolvConfPath": "/var/lib/docker/containers/2c15cb3d3ceed9ea028665a52118a304ed4fa1c02bf9983829781b1ed10d50d2/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/2c15cb3d3ceed9ea028665a52118a304ed4fa1c02bf9983829781b1ed10d50d2/hostname",
+        "HostsPath": "/var/lib/docker/containers/2c15cb3d3ceed9ea028665a52118a304ed4fa1c02bf9983829781b1ed10d50d2/hosts",
+        "LogPath": "/var/lib/docker/containers/2c15cb3d3ceed9ea028665a52118a304ed4fa1c02bf9983829781b1ed10d50d2/2c15cb3d3ceed9ea028665a52118a304ed4fa1c02bf9983829781b1ed10d50d2-json.log",
+        "Name": "/datalens-ui-api-prod",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "datalens_default",
+            "PortBindings": {
+                "8080/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "13040"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "2c15cb3d3cee",
+            "Domainname": "",
+            "User": "app",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "US_ENDPOINT=http://us:8080",
+                "APP_ENV=production",
+                "APP_INSTALLATION=opensource",
+                "APP_MODE=api",
+                "BI_API_ENDPOINT=http://control-api:8080",
+                "SERVICE_NAME=Aeronavigator BI",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "TZ=Etc/UTC",
+                "APP_VERSION=",
+                "TMPDIR=/tmp",
+                "NODE_ENV=production",
+                "APP_BUILDER_CDN=false",
+                "UI_CORE_CDN=false",
+                "APP_PORT=3030"
+            ],
+            "Cmd": null,
+            "Image": "akrasnov87/datalens-ui:0.3498.0",
+            "Volumes": null,
+            "WorkingDir": "/opt/app",
+            "Entrypoint": [
+                "/usr/bin/supervisord",
+                "-c",
+                "/etc/supervisor/supervisord.conf"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "f0f31b26e3a08416a714ff5cd789c78f1e7b7c3d9fac45b189693b688929616a",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "us:service_started:false",
+                "com.docker.compose.image": "sha256:4d9dbdf78c8cea06c710ef322f714dc450107a8a9305a119a78bfd187bd232c1",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "datalens",
+                "com.docker.compose.project.config_files": "D:\\YDLOS\\datalens\\docker-compose.yaml,D:\\YDLOS\\datalens\\docker-compose.demo.yaml",
+                "com.docker.compose.project.working_dir": "D:\\YDLOS\\datalens",
+                "com.docker.compose.replace": "datalens-ui-api-prod",
+                "com.docker.compose.service": "ui-api",
+                "com.docker.compose.version": "5.1.0",
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "22.04"
+            },
+            "StopTimeout": 1
+        },
+        "NetworkSettings": {
+            "SandboxID": "6f6049edb3848944a26f3d803bc109e96735f885a595a9ec1d59975ccd5fe88d",
+            "SandboxKey": "/var/run/docker/netns/6f6049edb384",
+            "Ports": {
+                "8080/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "13040"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "13040"
+                    }
+                ]
+            },
+            "Networks": {
+                "datalens_default": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "datalens-ui-api-prod",
+                        "ui-api"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "e89f59f24bbc4bad570dee90f3a149228b7f73d788439d2002f2b5e06dc808e2",
+                    "EndpointID": "d345e62335ef44907566d0ac38673a9ac798e6376ae1485b99a6391d268ee295",
+                    "Gateway": "172.19.0.1",
+                    "IPAddress": "172.19.0.6",
+                    "MacAddress": "36:7d:94:c4:de:b9",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "datalens-ui-api-prod",
+                        "ui-api",
+                        "2c15cb3d3cee"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "digest": "sha256:4d9dbdf78c8cea06c710ef322f714dc450107a8a9305a119a78bfd187bd232c1",
+            "size": 5550,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    },
+    {
+        "Id": "a82e550d3161bcb3a3191cebbda593d6739e1a2d8e4a89f9e31476093733aca2",
+        "Created": "2026-03-19T20:17:30.439023392Z",
+        "Path": "/etc/temporal/init-temporal.sh",
+        "Args": [],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 961,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-03-22T18:04:34.440265897Z",
+            "FinishedAt": "2026-03-22T16:26:50.60892468Z",
+            "Health": {
+                "Status": "healthy",
+                "FailingStreak": 0,
+                "Log": [
+                    {
+                        "Start": "2026-03-25T15:08:50.723767611Z",
+                        "End": "2026-03-25T15:08:50.841869018Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-03-25T15:09:00.824893447Z",
+                        "End": "2026-03-25T15:09:00.931864092Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-03-25T15:09:10.932650961Z",
+                        "End": "2026-03-25T15:09:11.055470966Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-03-25T15:09:21.056236279Z",
+                        "End": "2026-03-25T15:09:21.213690118Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-03-25T15:09:31.201473507Z",
+                        "End": "2026-03-25T15:09:31.335824534Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    }
+                ]
+            }
+        },
+        "Image": "sha256:64820b925c63499de4df7ec55cbe7dbf9c786a8e8966db131d963f4c5f50c6ad",
+        "ResolvConfPath": "/var/lib/docker/containers/a82e550d3161bcb3a3191cebbda593d6739e1a2d8e4a89f9e31476093733aca2/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/a82e550d3161bcb3a3191cebbda593d6739e1a2d8e4a89f9e31476093733aca2/hostname",
+        "HostsPath": "/var/lib/docker/containers/a82e550d3161bcb3a3191cebbda593d6739e1a2d8e4a89f9e31476093733aca2/hosts",
+        "LogPath": "/var/lib/docker/containers/a82e550d3161bcb3a3191cebbda593d6739e1a2d8e4a89f9e31476093733aca2/a82e550d3161bcb3a3191cebbda593d6739e1a2d8e4a89f9e31476093733aca2-json.log",
+        "Name": "/datalens-temporal-prod",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "3",
+                    "max-size": "5m"
+                }
+            },
+            "NetworkMode": "datalens_default",
+            "PortBindings": {
+                "7233/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "7233"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "a82e550d3161",
+            "Domainname": "",
+            "User": "temporal",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "6933/tcp": {},
+                "6934/tcp": {},
+                "6935/tcp": {},
+                "6939/tcp": {},
+                "7233/tcp": {},
+                "7234/tcp": {},
+                "7235/tcp": {},
+                "7239/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "TEMPORAL_AUTH_ENABLED=false",
+                "TEMPORAL_AUTH_PRIVATE_KEY=-----BEGIN RSA PRIVATE KEY-----\\nMIIEowIBAAKCAQEAqHLHK4aK5RGhTqbk5SYUeNtJDdP2wNR7e45Q+fKAdnR51rxC\\nXIJdg11d4UkkkzwmwblFEzCQt0dFHrnsHNso3YU3bM4xPsxKRdJ4L4+nH7fcj4lH\\nKpl1PosNBi/py7dtJLGOFktEhZ4YvtB9Fqq6o/kF0hPhuTm1mzyoYAN4Aisch3ZY\\nw8WjPFYZPUqLqi+OEUyuYU8j36I7uxybpw55pSvnCHCtxuxSuX1er14fCplX8yik\\nnc2ePY7dOwTM9iS1aMcWoobQOuyda3Vp2opznassgcnXkgAj+1e1vosDahc98nXb\\nExyMRDzJglLUmF+wb1/jaNClK48bX+CihRxOKQIDAQABAoIBADk06cE1axxKdX7R\\nnTDZUuCMkG3ay5VHVDxs48FPAyO3gN1ViDAEsh936PcmsP4z0nG+KuBOgQdNdALw\\nX2iZYXKB2IXiLMVH+f1mchys67QQ7B3vIDUucqvv61drlDn0LGPmzPtzSm0aeQrs\\noV6+Uq53Vuu2htUx7SQwYHpjEzGgx03WDwwPze7rf/jsVZAILpW3z2Na/514rOtO\\n7Kd5c4U+3YDcfQuQyp4PTW4h6VQm/TBalvR26bYKdcdB5UR0s1tply0zUxPmA/Rm\\nseJpKhfnUipKvQMPdaEvEGVJO3GeHiCc2ssULWXDPc/cpg4V66w3zP939NRsWaG9\\n47H6fJECgYEA2qvCkj30yl7LbjgW1O/eYUH9BXQrialYLGx8sO275cocV+dGfDLg\\na2PHzYUWDhEXYM/sBCR19p/agcG9TPDkHTSheuNoDxIz8Q8BuCB9C5FA51flL6vd\\neyKcdnq0KlL0qSGMAD3twuGDh2p54dWcUM3lUPhcq6FCfnsE5TZY6t0CgYEAxTQ3\\nq5VqCtVQEQy4hZNW+fjdBKoT9cM4TsZ9IqFrkkt/+JVBLP0G8bYYz+pB6E2GsFPP\\n89EdnRecu/qQxfXLQ8oKpBOP4o7tVMTEgQatmbmPuzxycABmiVLf65tfrcxvRKCS\\nH9hzHVPyn6BQOZfZeL/id5Q5ioqkayKhLYLdfb0CgYEAgmQfLqMBH9csyPlrK+go\\nm6gEn0bpWzn+mObL55irDVfaVNRU5GRWC9NA5h0wzIyGezUgkEvJh5lEa1FCdunB\\nrGSg0a1edHYvQNPo+4lr5wTjRc/UmvuJow49bCy41/AFcgDOAarr5uQgURQ9v1tn\\nzYso7YJbiAAtrUvf3Gnu1YUCgYAW0U7rtJMbg8kK3/ztv7mdnNT9+CvtENSQENlj\\ny2el+sRo3+Q1r2VBTH+cdw9/MJE4D8qM/JI/nf7NpVVhAmqtglAu4fCRF1aQq1/N\\nSheGJPljgcAAA5vZodQ077pnYrMxLp8ZvjK7nv4AyEzgDRjlptYuXeE2jYout0gM\\n+wpjxQKBgAkaphyQPD0hsv9Q3+CRXzmFX9XL3NEcQtNUv/h5Iq3DgctgGkG0qeJP\\ns4qhnarh6IFQZf53j35AUuIp45A6C26xkvS0NoTi/J9Q4xNkgl4aaPQ6h/t9aqIH\\nGofbNqb4LSXato4Kxh4BEGCv6X6kbi//xGCQ2JMkZgt1bOmM6r+e\\n-----END RSA PRIVATE KEY-----",
+                "NAMESPACES=meta-manager",
+                "POSTGRES_USER=pg-user",
+                "POSTGRES_PORT=5432",
+                "POSTGRES_PASSWORD=postgres",
+                "POSTGRES_TLS_CA_FILE=",
+                "POSTGRES_TLS_DISABLE_HOST_VERIFICATION=true",
+                "POSTGRES_TLS_ENABLED=false",
+                "POSTGRES_DB=pg-temporal-db",
+                "POSTGRES_DB_VISIBILITY=pg-temporal-visibility-db",
+                "TEMPORAL_AUTH_PUBLIC_KEY=-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqHLHK4aK5RGhTqbk5SYU\\neNtJDdP2wNR7e45Q+fKAdnR51rxCXIJdg11d4UkkkzwmwblFEzCQt0dFHrnsHNso\\n3YU3bM4xPsxKRdJ4L4+nH7fcj4lHKpl1PosNBi/py7dtJLGOFktEhZ4YvtB9Fqq6\\no/kF0hPhuTm1mzyoYAN4Aisch3ZYw8WjPFYZPUqLqi+OEUyuYU8j36I7uxybpw55\\npSvnCHCtxuxSuX1er14fCplX8yiknc2ePY7dOwTM9iS1aMcWoobQOuyda3Vp2opz\\nnassgcnXkgAj+1e1vosDahc98nXbExyMRDzJglLUmF+wb1/jaNClK48bX+CihRxO\\nKQIDAQAB\\n-----END PUBLIC KEY-----",
+                "POSTGRES_HOST=postgres",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "TEMPORAL_HOME=/etc/temporal",
+                "TEMPORAL_SHA=ed81e7c8a77866c9c5f3ef3b34cbb3c8b8c6fc2",
+                "TCTL_SHA=d31f5204538c534d72aeddeb2a08722dda0c8b5",
+                "TEMPORAL_PORT=7233",
+                "DB=postgres12",
+                "NUM_HISTORY_SHARDS=512",
+                "DEFAULT_NAMESPACE_RETENTION=24h",
+                "SKIP_NAMESPACES_CREATION=false",
+                "POSTGRES_CONNECT_ATTRIBUTES="
+            ],
+            "Cmd": null,
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "/etc/temporal/healthcheck.sh"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 3000000000,
+                "Retries": 6
+            },
+            "Image": "ghcr.io/datalens-tech/datalens-temporal:1.27.2",
+            "Volumes": null,
+            "WorkingDir": "/etc/temporal",
+            "Entrypoint": [
+                "/etc/temporal/init-temporal.sh"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "fe38f2fa371aed5026806e96b89594e30b3e4b87850456351a8d20b0a898b298",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "postgres:service_healthy:false",
+                "com.docker.compose.image": "sha256:64820b925c63499de4df7ec55cbe7dbf9c786a8e8966db131d963f4c5f50c6ad",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "datalens",
+                "com.docker.compose.project.config_files": "D:\\YDLOS\\datalens\\docker-compose.yaml,D:\\YDLOS\\datalens\\docker-compose.demo.yaml",
+                "com.docker.compose.project.working_dir": "D:\\YDLOS\\datalens",
+                "com.docker.compose.replace": "datalens-temporal-prod",
+                "com.docker.compose.service": "temporal",
+                "com.docker.compose.version": "5.1.0",
+                "org.opencontainers.image.created": "2025-02-20T23:39:46.492Z",
+                "org.opencontainers.image.description": "Workflow as Code (TM) to build and operate resilient applications",
+                "org.opencontainers.image.licenses": "MIT",
+                "org.opencontainers.image.revision": "8306e2dbba922ed718c6da576c263f11e50e950f",
+                "org.opencontainers.image.source": "https://github.com/temporalio/temporal",
+                "org.opencontainers.image.title": "server",
+                "org.opencontainers.image.url": "https://github.com/temporalio/temporal",
+                "org.opencontainers.image.version": "1.15.11"
+            },
+            "StopTimeout": 1
+        },
+        "NetworkSettings": {
+            "SandboxID": "db98233e43a44b70b769cbc73ef7e0195a703e6579612f15d35307b3f5126aee",
+            "SandboxKey": "/var/run/docker/netns/db98233e43a4",
+            "Ports": {
+                "7233/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "7233"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "7233"
+                    }
+                ]
+            },
+            "Networks": {
+                "datalens_default": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "datalens-temporal-prod",
+                        "temporal"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "e89f59f24bbc4bad570dee90f3a149228b7f73d788439d2002f2b5e06dc808e2",
+                    "EndpointID": "22095c5caa4e03bec531ef594a8fdce8d917d22de2ee258146131c1ea3ade800",
+                    "Gateway": "172.19.0.1",
+                    "IPAddress": "172.19.0.7",
+                    "MacAddress": "42:c0:3b:50:7e:9c",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "datalens-temporal-prod",
+                        "temporal",
+                        "a82e550d3161"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:12185ea3268c772bfe9e7b7d73f0a433c32cbc7b83e37c83e27aaaf76198c78a",
+            "size": 5599,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    },
+    {
+        "Id": "270499f97e223fd48639b6ff9c80b0dc455f3c56a409801390158ad5c19fc817",
+        "Created": "2026-03-19T20:17:30.302451099Z",
+        "Path": "/opt/app/scripts/preflight.sh",
+        "Args": [],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 896,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-03-22T18:04:34.361117982Z",
+            "FinishedAt": "2026-03-22T16:26:50.608853008Z"
+        },
+        "Image": "sha256:8ecf3acd60665c798b5f578935fef09995839bf7c85e69a04c982347498d314a",
+        "ResolvConfPath": "/var/lib/docker/containers/270499f97e223fd48639b6ff9c80b0dc455f3c56a409801390158ad5c19fc817/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/270499f97e223fd48639b6ff9c80b0dc455f3c56a409801390158ad5c19fc817/hostname",
+        "HostsPath": "/var/lib/docker/containers/270499f97e223fd48639b6ff9c80b0dc455f3c56a409801390158ad5c19fc817/hosts",
+        "LogPath": "/var/lib/docker/containers/270499f97e223fd48639b6ff9c80b0dc455f3c56a409801390158ad5c19fc817/270499f97e223fd48639b6ff9c80b0dc455f3c56a409801390158ad5c19fc817-json.log",
+        "Name": "/datalens-us-prod",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "datalens_default",
+            "PortBindings": {
+                "8080/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "8030"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "270499f97e22",
+            "Domainname": "",
+            "User": "app",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "MASTER_TOKEN=us-master-token",
+                "AUTH_ENABLED=true",
+                "POSTGRES_USER=pg-user",
+                "APP_PORT=8080",
+                "AUTH_ENDPOINT=http://us-auth:80",
+                "SKIP_INSTALL_DB_EXTENSIONS=1",
+                "SKIP_MIGRATION=0",
+                "SQL_DEBUG=true",
+                "APP_INSTALLATION=opensource",
+                "HC=0",
+                "POSTGRES_DSN_LIST=postgres://pg-user:postgres@postgres:5432/pg-us-db",
+                "AUTH_MASTER_TOKEN=auth-master-token",
+                "NODE_RPC_URL=http://us-auth:80/demo/rpc",
+                "APP_ENV=prod",
+                "AUTH_TOKEN_PUBLIC_KEY=-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA+HICDZMfimMIiGdd0dPr\\n2N3zxHOJqiVXuvUj/aBBS7c8760rJUh4344sP/0Gid558yH/v1MtzZ0R9w09v6gb\\nSNrSiNwIUNGPhbnm9Jf+kMezsI/rkcIdoVm3KJ8CFUYy6MRPzW7iJmIVRHBb82v1\\nmAYCCQFU6IRtFIa9hQ8wedWwxqXZekSNS+6NB37dmmQB9kz2E3MY+KRLigOh4i3p\\nCZ1ti3HVvMa9Rlgk9FmoWExzub5ECChqwm+vn8yFXjYW7kUSClcV2xx4nbQWqjrR\\nyyLk6W2BNOuCFVvz0j+5XkpLAt7tljtVZc+572HBEKpF2mAdmAip5NzeDhKqucJ+\\nZQIDAQAB\\n-----END PUBLIC KEY-----",
+                "US_SURPRESS_DB_STATUS_LOGS=true",
+                "USE_AUTH_DATA=1",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "TZ=Etc/UTC",
+                "APP_VERSION=",
+                "TMPDIR=/tmp",
+                "NODE_ENV=production"
+            ],
+            "Cmd": null,
+            "Image": "akrasnov87/datalens-us:0.413.0",
+            "Volumes": null,
+            "WorkingDir": "/opt/app",
+            "Entrypoint": [
+                "/opt/app/scripts/preflight.sh"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "4d3bf6b1bd7582cb82a06f7757f3aafed74735eb0bbf0857a9db82cb3f6bae7c",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "postgres:service_healthy:false",
+                "com.docker.compose.image": "sha256:8ecf3acd60665c798b5f578935fef09995839bf7c85e69a04c982347498d314a",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "datalens",
+                "com.docker.compose.project.config_files": "D:\\YDLOS\\datalens\\docker-compose.yaml,D:\\YDLOS\\datalens\\docker-compose.demo.yaml",
+                "com.docker.compose.project.working_dir": "D:\\YDLOS\\datalens",
+                "com.docker.compose.replace": "datalens-us-prod",
+                "com.docker.compose.service": "us",
+                "com.docker.compose.version": "5.1.0",
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "24.04"
+            },
+            "StopTimeout": 1
+        },
+        "NetworkSettings": {
+            "SandboxID": "4d624b72e4b00d3e3dac98378721c670b26a255f7b48f57b14ee010152d792fc",
+            "SandboxKey": "/var/run/docker/netns/4d624b72e4b0",
+            "Ports": {
+                "8080/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "8030"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "8030"
+                    }
+                ]
+            },
+            "Networks": {
+                "datalens_default": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "datalens-us-prod",
+                        "us"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "e89f59f24bbc4bad570dee90f3a149228b7f73d788439d2002f2b5e06dc808e2",
+                    "EndpointID": "7034d8808b438de6e0e0d280b39fe482dccce05770ea419bb76e5a2bc14cbdaa",
+                    "Gateway": "172.19.0.1",
+                    "IPAddress": "172.19.0.4",
+                    "MacAddress": "3a:f2:06:53:19:a8",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "datalens-us-prod",
+                        "us",
+                        "270499f97e22"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:c8e3d222cf3449f9ca737402cdb33004b602897d202009c1e808a2bf3f6f2c85",
+            "size": 3332,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    },
+    {
+        "Id": "3f70e2a184200610ca3a02428eeca63d710bcec86008363d65d11653b78f8c86",
+        "Created": "2026-03-19T20:17:30.298226052Z",
+        "Path": "/bin/bash",
+        "Args": [
+            "/start-node.sh"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 976,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-03-22T18:04:34.407482937Z",
+            "FinishedAt": "2026-03-22T16:26:50.609339576Z"
+        },
+        "Image": "sha256:2dbea1babcbf4e302e4b921db967d7dd68894020a0a0d4f8a9fac4cba019ccd6",
+        "ResolvConfPath": "/var/lib/docker/containers/3f70e2a184200610ca3a02428eeca63d710bcec86008363d65d11653b78f8c86/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/3f70e2a184200610ca3a02428eeca63d710bcec86008363d65d11653b78f8c86/hostname",
+        "HostsPath": "/var/lib/docker/containers/3f70e2a184200610ca3a02428eeca63d710bcec86008363d65d11653b78f8c86/hosts",
+        "LogPath": "/var/lib/docker/containers/3f70e2a184200610ca3a02428eeca63d710bcec86008363d65d11653b78f8c86/3f70e2a184200610ca3a02428eeca63d710bcec86008363d65d11653b78f8c86-json.log",
+        "Name": "/datalens-auth-prod",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "3",
+                    "max-size": "5m"
+                }
+            },
+            "NetworkMode": "datalens_default",
+            "PortBindings": {
+                "80/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "8088"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "3f70e2a18420",
+            "Domainname": "",
+            "User": "dl",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PROJECT_ID=datalens-demo",
+                "NODE_THREAD=2",
+                "IGNORE_SCHEMA=",
+                "BUDIBASE_URI=",
+                "APP_ENV=demo",
+                "VERSION_CONTAINER=0.2.6",
+                "AUTH_KEY_MODE=false",
+                "NODE_VPATH=/demo/",
+                "CONNECT_STR=postgres://pg-user:postgres@postgres:5432/pg-us-db",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/start-node.sh"
+            ],
+            "Image": "akrasnov87/datalens-auth:0.2.6",
+            "Volumes": null,
+            "WorkingDir": "/app",
+            "Entrypoint": [
+                "/bin/bash"
+            ],
+            "Labels": {
+                "author": "Aleksandr Krasnov",
+                "com.docker.compose.config-hash": "ef560a47d4b4b0a2dc50f5e1eb09afce38f87a6f86fd704b35b49dd2fb21c1f7",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "postgres:service_healthy:false",
+                "com.docker.compose.image": "sha256:2dbea1babcbf4e302e4b921db967d7dd68894020a0a0d4f8a9fac4cba019ccd6",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "datalens",
+                "com.docker.compose.project.config_files": "D:\\YDLOS\\datalens\\docker-compose.yaml,D:\\YDLOS\\datalens\\docker-compose.demo.yaml",
+                "com.docker.compose.project.working_dir": "D:\\YDLOS\\datalens",
+                "com.docker.compose.replace": "datalens-auth-prod",
+                "com.docker.compose.service": "us-auth",
+                "com.docker.compose.version": "5.1.0",
+                "desc": "╨Ю╨▒╤А╨░╨╖ RPC-╤Б╨╡╤А╨▓╨╕╤Б╨░ ╨┤╨╗╤П ╨░╨▓╤В╨╛╤А╨╕╨╖╨░╤Ж╨╕╨╕ ╨▓ Datalens",
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "20.04"
+            },
+            "StopTimeout": 1
+        },
+        "NetworkSettings": {
+            "SandboxID": "5d91f0cfa135433f7ba4d5bba0a3db760ae1169ea88c85c9ee7f3e1feadd1d9f",
+            "SandboxKey": "/var/run/docker/netns/5d91f0cfa135",
+            "Ports": {
+                "80/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "8088"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "8088"
+                    }
+                ]
+            },
+            "Networks": {
+                "datalens_default": {
+                    "IPAMConfig": {},
+                    "Links": null,
+                    "Aliases": [
+                        "datalens-auth-prod",
+                        "us-auth",
+                        "auth"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "e89f59f24bbc4bad570dee90f3a149228b7f73d788439d2002f2b5e06dc808e2",
+                    "EndpointID": "d5837827373b255db475585bfa7062e2335337f1a1580e083f4514d6f37ab553",
+                    "Gateway": "172.19.0.1",
+                    "IPAddress": "172.19.0.8",
+                    "MacAddress": "56:dd:09:cc:f0:e3",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "datalens-auth-prod",
+                        "us-auth",
+                        "auth",
+                        "3f70e2a18420"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "digest": "sha256:2dbea1babcbf4e302e4b921db967d7dd68894020a0a0d4f8a9fac4cba019ccd6",
+            "size": 4903,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    },
+    {
+        "Id": "7f0677a719147fd664c589c82d3d47fa331dd6570a6468532d13b56ecc97566e",
+        "Created": "2026-03-19T20:17:28.815470634Z",
+        "Path": "docker-entrypoint.sh",
+        "Args": [
+            "postgres"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 970,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-03-22T18:04:34.43692544Z",
+            "FinishedAt": "2026-03-22T16:26:50.611510252Z",
+            "Health": {
+                "Status": "healthy",
+                "FailingStreak": 0,
+                "Log": [
+                    {
+                        "Start": "2026-03-25T15:08:48.542655404Z",
+                        "End": "2026-03-25T15:08:48.611511179Z",
+                        "ExitCode": 0,
+                        "Output": "/var/run/postgresql:5432 - accepting connections\n"
+                    },
+                    {
+                        "Start": "2026-03-25T15:08:58.612601935Z",
+                        "End": "2026-03-25T15:08:58.664803275Z",
+                        "ExitCode": 0,
+                        "Output": "/var/run/postgresql:5432 - accepting connections\n"
+                    },
+                    {
+                        "Start": "2026-03-25T15:09:08.647548409Z",
+                        "End": "2026-03-25T15:09:08.710179561Z",
+                        "ExitCode": 0,
+                        "Output": "/var/run/postgresql:5432 - accepting connections\n"
+                    },
+                    {
+                        "Start": "2026-03-25T15:09:18.710761065Z",
+                        "End": "2026-03-25T15:09:18.822773979Z",
+                        "ExitCode": 0,
+                        "Output": "/var/run/postgresql:5432 - accepting connections\n"
+                    },
+                    {
+                        "Start": "2026-03-25T15:09:28.823360912Z",
+                        "End": "2026-03-25T15:09:28.92031615Z",
+                        "ExitCode": 0,
+                        "Output": "/var/run/postgresql:5432 - accepting connections\n"
+                    }
+                ]
+            }
+        },
+        "Image": "sha256:7b140a8079b34fbbfa125788abb368880dd0afd6d4879ff0e971b33e0bc6c224",
+        "ResolvConfPath": "/var/lib/docker/containers/7f0677a719147fd664c589c82d3d47fa331dd6570a6468532d13b56ecc97566e/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/7f0677a719147fd664c589c82d3d47fa331dd6570a6468532d13b56ecc97566e/hostname",
+        "HostsPath": "/var/lib/docker/containers/7f0677a719147fd664c589c82d3d47fa331dd6570a6468532d13b56ecc97566e/hosts",
+        "LogPath": "/var/lib/docker/containers/7f0677a719147fd664c589c82d3d47fa331dd6570a6468532d13b56ecc97566e/7f0677a719147fd664c589c82d3d47fa331dd6570a6468532d13b56ecc97566e-json.log",
+        "Name": "/datalens-postgres-prod",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "datalens-volume-prod:/var/lib/postgresql/data:rw"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "datalens_default",
+            "PortBindings": {
+                "5432/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "5432"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "datalens-volume-prod",
+                "Source": "/var/lib/docker/volumes/datalens-volume-prod/_data",
+                "Destination": "/var/lib/postgresql/data",
+                "Driver": "local",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+        "Config": {
+            "Hostname": "7f0677a71914",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "5432/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "POSTGRES_PASSWORD=postgres",
+                "INIT_EXTERNAL_POSTGRES=0",
+                "POSTGRES_DB_AUTH=pg-auth-db",
+                "POSTGRES_DB_US=pg-us-db",
+                "POSTGRES_DB_TEMPORAL=pg-temporal-db",
+                "POSTGRES_DB_DEMO=pg-demo-db",
+                "INIT_DB_DEMO=1",
+                "POSTGRES_PORT=5432",
+                "POSTGRES_DB_META_MANAGER=pg-meta-manager-db",
+                "INIT_DB_META_MANAGER=1",
+                "INIT_DEMO_DATA=1",
+                "POSTGRES_HOST=localhost",
+                "POSTGRES_DB_COMPENG=pg-compeng-db",
+                "HC=0",
+                "US_ENDPOINT=http://us:8080",
+                "POSTGRES_DB_TEMPORAL_VISIBILITY=pg-temporal-visibility-db",
+                "INIT_DB_AUTH=1",
+                "CONTROL_API_CRYPTO_KEY=ZGF0YWxlbnN1bnNlY3VyZWZlcm5ldGNyeXB0b2tleQo=",
+                "INIT_DB_TEMPORAL=1",
+                "POSTGRES_USER=pg-user",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/postgresql/16/bin",
+                "GOSU_VERSION=1.17",
+                "LANG=en_US.utf8",
+                "PG_MAJOR=16",
+                "PG_VERSION=16.8-1.pgdg120+1",
+                "PGDATA=/var/lib/postgresql/data",
+                "PYTHONUNBUFFERED=1",
+                "POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=en_US.utf8 --lc-ctype=en_US.utf8",
+                "POSTGRES_DUMP_FORMAT=custom",
+                "POSTGRES_DUMP_SKIP_CONFLICT=true",
+                "POSTGRES_DUMP_CLEAR_META=false",
+                "DEMO_DATA_SLEEP=3",
+                "DEMO_DATA_NAME=OpenSource Demo"
+            ],
+            "Cmd": [
+                "postgres"
+            ],
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "pg_isready",
+                    "-d",
+                    "pg-us-db",
+                    "-U",
+                    "pg-user"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 3000000000,
+                "Retries": 6
+            },
+            "Image": "akrasnov87/datalens-postgres:16",
+            "Volumes": {
+                "/var/lib/postgresql/data": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "5990bbc25c6e3130214c53914400716b2471308257c38e8c1c20dbae84a516ce",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "",
+                "com.docker.compose.image": "sha256:7b140a8079b34fbbfa125788abb368880dd0afd6d4879ff0e971b33e0bc6c224",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "datalens",
+                "com.docker.compose.project.config_files": "D:\\YDLOS\\datalens\\docker-compose.yaml,D:\\YDLOS\\datalens\\docker-compose.demo.yaml",
+                "com.docker.compose.project.working_dir": "D:\\YDLOS\\datalens",
+                "com.docker.compose.replace": "datalens-postgres-prod",
+                "com.docker.compose.service": "postgres",
+                "com.docker.compose.version": "5.1.0"
+            },
+            "StopSignal": "SIGINT",
+            "StopTimeout": 1
+        },
+        "NetworkSettings": {
+            "SandboxID": "b149a24cbc76bbc501d7d3d60c415fedf90aec3d7c0f8ef5463fe0d85bdce1fb",
+            "SandboxKey": "/var/run/docker/netns/b149a24cbc76",
+            "Ports": {
+                "5432/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "5432"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "5432"
+                    }
+                ]
+            },
+            "Networks": {
+                "datalens_default": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "datalens-postgres-prod",
+                        "postgres"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "e89f59f24bbc4bad570dee90f3a149228b7f73d788439d2002f2b5e06dc808e2",
+                    "EndpointID": "c3daf845b1ccca6d1018a3315e7e0910095b231f5380c911657206e6aea4a0f5",
+                    "Gateway": "172.19.0.1",
+                    "IPAddress": "172.19.0.9",
+                    "MacAddress": "aa:8e:b5:04:10:f9",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "datalens-postgres-prod",
+                        "postgres",
+                        "7f0677a71914"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "digest": "sha256:7b140a8079b34fbbfa125788abb368880dd0afd6d4879ff0e971b33e0bc6c224",
+            "size": 6366,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    },
+    {
+        "Id": "f7a07005ae07643417efad3a6db52a0f96b1668a653620c468d7454bbbd0cac6",
+        "Created": "2026-03-19T13:37:04.810614503Z",
+        "Path": "/usr/bin/supervisord",
+        "Args": [
+            "-c",
+            "/etc/supervisor/supervisord.conf"
+        ],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-03-19T20:17:45.03803899Z",
+            "FinishedAt": "2026-03-19T20:54:12.294887666Z"
+        },
+        "Image": "sha256:4d9dbdf78c8cea06c710ef322f714dc450107a8a9305a119a78bfd187bd232c1",
+        "ResolvConfPath": "/var/lib/docker/containers/f7a07005ae07643417efad3a6db52a0f96b1668a653620c468d7454bbbd0cac6/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/f7a07005ae07643417efad3a6db52a0f96b1668a653620c468d7454bbbd0cac6/hostname",
+        "HostsPath": "/var/lib/docker/containers/f7a07005ae07643417efad3a6db52a0f96b1668a653620c468d7454bbbd0cac6/hosts",
+        "LogPath": "/var/lib/docker/containers/f7a07005ae07643417efad3a6db52a0f96b1668a653620c468d7454bbbd0cac6/f7a07005ae07643417efad3a6db52a0f96b1668a653620c468d7454bbbd0cac6-json.log",
+        "Name": "/datalens-ui-prod",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "D:\\YDLOS\\datalens\\nginx\\nginx.conf:/etc/nginx/nginx.conf:ro"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "datalens_default",
+            "PortBindings": {
+                "8080/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "8080"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "D:\\YDLOS\\datalens\\nginx\\nginx.conf",
+                "Destination": "/etc/nginx/nginx.conf",
+                "Mode": "ro",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "f7a07005ae07",
+            "Domainname": "",
+            "User": "app",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "OIDC_CLIENT_ID=datalens-client",
+                "OIDC_BASE_URL=http://localhost:8080",
+                "AUTH_SIGNUP_DISABLED=false",
+                "APP_INSTALLATION=opensource",
+                "YANDEX_MAP_ENABLED=0",
+                "OIDC_ISSUER=http://localhost:8090/realms/meridian-demo",
+                "HC=0",
+                "BI_API_ENDPOINT=http://control-api:8080",
+                "DATA_SINGLE_FETCHING_TIMEOUT_MS=120",
+                "AUTH_TOKEN_PUBLIC_KEY=-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA+HICDZMfimMIiGdd0dPr\\n2N3zxHOJqiVXuvUj/aBBS7c8760rJUh4344sP/0Gid558yH/v1MtzZ0R9w09v6gb\\nSNrSiNwIUNGPhbnm9Jf+kMezsI/rkcIdoVm3KJ8CFUYy6MRPzW7iJmIVRHBb82v1\\nmAYCCQFU6IRtFIa9hQ8wedWwxqXZekSNS+6NB37dmmQB9kz2E3MY+KRLigOh4i3p\\nCZ1ti3HVvMa9Rlgk9FmoWExzub5ECChqwm+vn8yFXjYW7kUSClcV2xx4nbQWqjrR\\nyyLk6W2BNOuCFVvz0j+5XkpLAt7tljtVZc+572HBEKpF2mAdmAip5NzeDhKqucJ+\\nZQIDAQAB\\n-----END PUBLIC KEY-----",
+                "DATA_FETCHING_TIMEOUT_MS=120",
+                "AUTH_POLICY=disabled",
+                "YANDEX_MAP_TOKEN=",
+                "AUTH_ENDPOINT=http://us-auth:80/demo",
+                "OIDC_ISSUER_INTERNAL=http://keycloak-test:8080/realms/meridian-demo",
+                "BI_DATA_ENDPOINT=http://data-api:8080",
+                "SERVICE_NAME=Aeronavigator BI",
+                "EXPORT_WORKBOOK_ENABLED=true",
+                "UNITED_STORAGE_CONFIG_LOADED_TIMEOUT=10000",
+                "HC_ENDPOINT=",
+                "OIDC_NAME=Keycloak",
+                "RELEASE_VERSION=1.0.0",
+                "OIDC_SECRET=BZxaWmdoLwwBOEpnyFp4gPFUUZIyhJbF",
+                "AUTH_MASTER_TOKEN=auth-master-token",
+                "US_ENDPOINT=http://us:8080",
+                "APP_ENV=production",
+                "HC_PROTOCOL=https",
+                "US_MASTER_TOKEN=us-master-token",
+                "AUTH_ENABLED=true",
+                "META_MANAGER_ENDPOINT=http://meta-manager:8080",
+                "EXPORT_DASH_EXCEL=false",
+                "APP_MODE=full",
+                "OIDC=true",
+                "FLAT_TABLE_ROWS_LIMIT=100000",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "TZ=Etc/UTC",
+                "APP_VERSION=",
+                "TMPDIR=/tmp",
+                "NODE_ENV=production",
+                "APP_BUILDER_CDN=false",
+                "UI_CORE_CDN=false",
+                "APP_PORT=3030"
+            ],
+            "Cmd": null,
+            "Image": "akrasnov87/datalens-ui:0.3498.0",
+            "Volumes": null,
+            "WorkingDir": "/opt/app",
+            "Entrypoint": [
+                "/usr/bin/supervisord",
+                "-c",
+                "/etc/supervisor/supervisord.conf"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "2b46e4ba72da156bb714548f4592838c4486f80f5dda6d6e4fe218aceb33a468",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "us:service_started:false",
+                "com.docker.compose.image": "sha256:4d9dbdf78c8cea06c710ef322f714dc450107a8a9305a119a78bfd187bd232c1",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "datalens",
+                "com.docker.compose.project.config_files": "D:\\YDLOS\\datalens\\docker-compose.yaml",
+                "com.docker.compose.project.environment_file": "D:\\YDLOS\\datalens\\.env",
+                "com.docker.compose.project.working_dir": "D:\\YDLOS\\datalens",
+                "com.docker.compose.service": "ui",
+                "com.docker.compose.version": "5.1.0",
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "22.04"
+            },
+            "StopTimeout": 1
+        },
+        "NetworkSettings": {
+            "SandboxID": "",
+            "SandboxKey": "",
+            "Ports": {},
+            "Networks": {
+                "datalens_default": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "datalens-ui-prod",
+                        "ui"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "e89f59f24bbc4bad570dee90f3a149228b7f73d788439d2002f2b5e06dc808e2",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "MacAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "datalens-ui-prod",
+                        "ui",
+                        "f7a07005ae07"
+                    ]
+                },
+                "keycloak-network": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "datalens-ui-prod",
+                        "ui"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "c729de5fc502fefbae7179fdfdf429a9e6314dcca33e7bca022faa2aba422ccd",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "MacAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "datalens-ui-prod",
+                        "ui",
+                        "f7a07005ae07"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "digest": "sha256:4d9dbdf78c8cea06c710ef322f714dc450107a8a9305a119a78bfd187bd232c1",
+            "size": 5550,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    }
+]

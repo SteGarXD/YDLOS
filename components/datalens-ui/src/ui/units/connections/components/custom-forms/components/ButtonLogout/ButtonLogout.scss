@@ -1,0 +1,27 @@
+.conn-button-logout {
+    position: relative;
+
+    &__label-content {
+        margin-right: 22px;
+    }
+
+    &__action {
+        position: absolute;
+        right: 0;
+
+        --g-button-background-color: transparent;
+        --g-button-background-color-hover: var(--g-color-base-misc-heavy-hover);
+        --g-button-border-radius: 4px;
+
+        color: var(--g-color-text-misc);
+
+        &:active,
+        &:focus {
+            color: var(--g-color-text-misc);
+        }
+
+        &:hover {
+            color: var(--g-color-text-inverted-primary);
+        }
+    }
+}

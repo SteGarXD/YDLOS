@@ -1,0 +1,38 @@
+services:
+  db-ydb:
+    build:
+      context: docker-compose
+      dockerfile: Dockerfile.db-ydb
+    environment:
+      YDB_LOCAL_SURVIVE_RESTART: "true"
+      GRPC_PORT: "51900"
+      YDB_GRPC_ENABLE_TLS: 1
+      GRPC_TLS_PORT: "51902"
+      YDB_GRPC_TLS_DATA_PATH: "/ydb_certs"
+    hostname: "db-ydb"
+    ports:
+      - "51900:51900"
+      - "51902:51902"
+      - "51904:51904"
+
+  pg-us:
+    extends:
+      file: ../testenv-common/docker-compose.common.yml
+      service: pg-us
+    ports:
+      - "51910:5432"
+
+  us:
+    extends:
+      file: ../testenv-common/docker-compose.common.yml
+      service: us
+    ports:
+      - "51911:8080"
+
+  redis-caches:
+    # image: "bitnami/redis:5.0.8"
+    image: "bitnami/redis:5.0.8@sha256:3127620da977815556439a9dc347fff89432a79b6bb6e93a16f20ac4a34ce337"
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+     - "51812:6379"

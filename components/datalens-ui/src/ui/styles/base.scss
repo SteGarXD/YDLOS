@@ -1,0 +1,61 @@
+@use '~@gravity-ui/uikit/styles/mixins' as uikit;
+
+html,
+body,
+#root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    // for correct overflow: hidden in safari
+    position: relative;
+}
+
+*,
+:after,
+:before {
+    box-sizing: inherit;
+}
+
+body.js-screenshot-mode * {
+    transition: none !important; // stylelint-disable-line declaration-no-important
+}
+
+/*
+    At the moment of dynamic loading of the charts from @gravity-ui/chartkit, the main styles come to the runtime
+    from @gravity-ui/uikit, which override font-family, where the basic font is 'Helvetica Neue'
+    https://github.com/gravity-ui/uikit/blob/main/styles/typography.scss#L2
+*/
+
+body.g-root {
+    --g-font-family-sans: 'YS Text', 'Helvetica Neue', 'Arial', 'Helvetica', sans-serif;
+    --gn-top-alert-height: 0px;
+    // Disable overscroll for desktop cause sticky and fixed navigation elements has different behavior
+    overscroll-behavior: none;
+
+    scrollbar-width: var(--g-scrollbar-width);
+    scrollbar-color: var(--g-color-scroll-handle) var(--g-color-scroll-track);
+    @include uikit.scrollbar;
+}
+
+// Enable overscroll for mobile and iframe
+
+body.dl-iframe,
+body.g-root_mobile {
+    overscroll-behavior: auto;
+}
+
+.g-help-mark {
+    margin-top: auto;
+    margin-bottom: auto;
+    flex-shrink: 0;
+}
+
+.g-help-mark__popover {
+    max-width: var(--dl-help-mark-popover-max-width, 300px);
+}

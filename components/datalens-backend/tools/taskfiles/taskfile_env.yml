@@ -1,0 +1,46 @@
+version: '3'
+
+vars:
+  PACKAGE_NAME:
+    sh: basename {{.USER_WORKING_DIR}}
+
+  DOCKER_HOST:
+    sh: cat ./.env | grep -e 'DOCKER_HOST=.*' | cut -d '=' -f 2
+
+tasks:
+  mk_dot_env:
+    cmds:
+      - cp .env.sample .env
+      - echo 'fix env to point to the correct python executable'
+      - echo 'Add DOCKER_HOST=... to .env if you are using remote docker'
+
+  ensure_venv:
+    dotenv:
+      - .env
+    cmds:
+      - |
+        if [ -f .env ]; then echo ""; else echo "Please create .env (at $(realpath .)), use .env.sample as reference"; exit 1; fi;
+        $PYTHON -m venv $VENV_PATH
+        . $VENV_PATH/bin/activate
+        pip install -r requirements-localhost.txt
+        pip install -e $(realpath  ../terrarium/dl_repmanager) $(realpath ../terrarium/bi_ci) $(realpath ../terrarium/dl_gitmanager)
+    status:
+      - test -f $VENV_PATH/bin/activate
+    # todo: deal with ci to skip ensure_venv
+    #    sources:
+    #      - requirements-localhost.txt
+    silent: true
+
+  devenv:
+    dir: '/{{.USER_WORKING_DIR}}'
+    cmds:
+      - docker-compose up --build
+    env:
+      DOCKER_HOST: '{{.DOCKER_HOST}}'
+
+  devenv-d:
+    dir: '/{{.USER_WORKING_DIR}}'
+    cmds:
+      - docker-compose up --build -d
+    env:
+      DOCKER_HOST: '{{.DOCKER_HOST}}'

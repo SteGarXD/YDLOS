@@ -1,0 +1,42 @@
+[tool.poetry]
+authors = ["DataLens Team <datalens-opensource@yandex-team.ru>"]
+description = "BI PromQL SQLAlchemy Dialect"
+license = "Apache 2.0"
+name = "dl-sqlalchemy-promql"
+packages = [{include = "dl_sqlalchemy_promql"}]
+readme = "README.rst"
+version = "0.1"
+
+[tool.poetry.dependencies]
+python = ">=3.10, <3.13"
+requests = "*"
+sqlalchemy = "*"
+
+[tool.poetry.group.tests.dependencies]
+pytest = "*"
+
+[tool.poetry.plugins."sqlalchemy.dialects"]
+bi_promql = "dl_sqlalchemy_promql.base:PromQLDialect"
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_untyped_defs = true
+ignore_errors = true # ignore mypy in entire module
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+minversion = "6.0"
+testpaths = ["dl_sqlalchemy_promql_tests/unit"]
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]
+
+[datalens.meta.mypy]
+targets = [] # ignore mypy in entire module

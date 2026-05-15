@@ -1,0 +1,12 @@
+.dl-core-navigation-error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 100%;
+
+    &__button-retry {
+        margin-top: 30px;
+    }
+}

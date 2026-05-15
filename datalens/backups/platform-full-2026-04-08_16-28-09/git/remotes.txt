@@ -1,0 +1,4 @@
+﻿aeronavigator	https://git.aeronavigator.ru/Aeronavigator/ydl-os.git (fetch)
+aeronavigator	https://git.aeronavigator.ru/Aeronavigator/ydl-os.git (push)
+origin	https://git.aeronavigator.ru/SteGar/ydl-os.git (fetch)
+origin	https://git.aeronavigator.ru/SteGar/ydl-os.git (push)

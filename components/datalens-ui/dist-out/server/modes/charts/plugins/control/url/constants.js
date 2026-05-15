@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CONNECTIONS_DASHSQL_WITH_EXPORT_INFO = exports.CONNECTIONS_DASHSQL = exports.CONNECTIONS_TYPED_QUERY_RAW_URL = exports.CONNECTIONS_TYPED_QUERY_URL = exports.DATASET_RESULT_URL = exports.DATASET_FIELDS_URL = exports.DATASET_DISTINCTS_URL = exports.CONNECTION_ID_PLACEHOLDER = exports.DATASET_ID_PLACEHOLDER = void 0;
+exports.DATASET_ID_PLACEHOLDER = '{datasetId}';
+exports.CONNECTION_ID_PLACEHOLDER = '{connectionId}';
+exports.DATASET_DISTINCTS_URL = '/_bi_datasets/{datasetId}/values/distinct';
+exports.DATASET_FIELDS_URL = '/_bi_datasets/{datasetId}/fields';
+exports.DATASET_RESULT_URL = '/_bi_datasets/{datasetId}/result';
+exports.CONNECTIONS_TYPED_QUERY_URL = '/_bi_connections/{connectionId}/typed_query';
+exports.CONNECTIONS_TYPED_QUERY_RAW_URL = '/_bi_connections/{connectionId}/typed_query_raw';
+exports.CONNECTIONS_DASHSQL = '/_bi_connections/{connectionId}/dashsql';
+exports.CONNECTIONS_DASHSQL_WITH_EXPORT_INFO = '/_bi_connections/{connectionId}/dashsql?with_export_info=true';

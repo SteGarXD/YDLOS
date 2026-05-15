@@ -1,0 +1,17 @@
+{
+  "button_open": "Редактор Групп",
+  "title_dialog": "Настройка групп рейсов",
+  "placeholder_group_name": "Имя группы",
+  "button_add": "Добавить",
+  "button_delete": "Удалить",
+  "button_replace": "Заменить",
+  "label_flights_in": "Рейсы в группе",
+  "label_flights_out": "Рейсы не в группе",
+  "button_clear_filter": "Сбросить фильтр",
+  "button_remove_flight": "Убрать рейс из группы",
+  "button_add_flight": "Добавить рейс в группу",
+  "label_selected": "Выбрана группа",
+  "button_close": "Закрыть",
+  "toast_load_error": "Не удалось загрузить данные редактора групп",
+  "toast_save_error": "Не удалось сохранить изменения"
+}

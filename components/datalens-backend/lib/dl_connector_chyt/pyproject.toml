@@ -1,0 +1,77 @@
+[tool.poetry]
+authors = ["DataLens Team <datalens-opensource@yandex-team.ru>"]
+description = ""
+license = "Apache 2.0"
+name = "dl-connector-chyt"
+packages = [{include = "dl_connector_chyt"}]
+readme = "README.md"
+version = "0.0.1"
+
+[tool.poetry.dependencies]
+aiohttp = "*"
+attrs = "*"
+clickhouse-sqlalchemy = {path = "../clickhouse-sqlalchemy"}
+dl-api-commons = {path = "../dl_api_commons"}
+dl-api-connector = {path = "../dl_api_connector"}
+dl-configs = {path = "../dl_configs"}
+dl-connector-clickhouse = {path = "../dl_connector_clickhouse"}
+dl-constants = {path = "../dl_constants"}
+dl-core = {path = "../dl_core"}
+dl-db-testing = {path = "../dl_db_testing"}
+dl-i18n = {path = "../dl_i18n"}
+dl-sqlalchemy-chyt = {path = "../dl_sqlalchemy_chyt"}
+dl-type-transformer = {path = "../dl_type_transformer"}
+dl-utils = {path = "../dl_utils"}
+marshmallow = "*"
+python = ">=3.10, <3.13"
+sqlalchemy = "*"
+
+[tool.poetry.plugins]
+
+[tool.poetry.plugins."dl_api_lib.connectors"]
+chyt = "dl_connector_chyt.api.connector:CHYTApiConnector"
+
+[tool.poetry.plugins."dl_core.connectors"]
+chyt = "dl_connector_chyt.core.connector:CHYTCoreConnector"
+
+[tool.poetry.plugins."dl_db_testing.connectors"]
+chyt = "dl_connector_chyt.db_testing.connector:CHYTDbTestingConnector"
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_untyped_defs = true
+exclude = ["dl_connector_chyt_tests/"]
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = [
+  "clickhouse_sqlalchemy.*",
+  "dl_sqlalchemy_chyt.*",
+]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+minversion = "6.0"
+testpaths = []
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]
+
+[datalens.i18n.domains]
+dl_connector_chyt = [
+  {path = "dl_connector_chyt/api"},
+  {path = "dl_connector_chyt/core"},
+]
+
+[datalens.pytest.unit]
+labels = ["no_compose"]
+root_dir = "dl_connector_chyt_tests/"
+skip_compose = "true"
+target_path = "unit"

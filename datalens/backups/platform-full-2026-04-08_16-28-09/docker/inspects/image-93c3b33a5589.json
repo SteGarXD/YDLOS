@@ -1,0 +1,82 @@
+﻿[
+    {
+        "Id": "sha256:93c3b33a558906c64e9be69abdf647adff42467d9d6d4c72a661ae14189cd904",
+        "RepoTags": [
+            "aeronavigatorbi/datalens-control-api:0.2396.0",
+            "akrasnov87/datalens-control-api:0.2396.0"
+        ],
+        "RepoDigests": [
+            "aeronavigatorbi/datalens-control-api@sha256:93c3b33a558906c64e9be69abdf647adff42467d9d6d4c72a661ae14189cd904",
+            "akrasnov87/datalens-control-api@sha256:93c3b33a558906c64e9be69abdf647adff42467d9d6d4c72a661ae14189cd904"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-03-21T15:39:37.610780458Z",
+        "Config": {
+            "User": "app",
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Env": [
+                "PATH=/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "container=docker",
+                "LD_LIBRARY_PATH=:/usr/lib/x86_64-linux-gnu/odbc",
+                "REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt",
+                "VIRTUAL_ENV=/venv",
+                "CONFIG_PATH=/etc/backend-configs/api.yaml",
+                "PYTHONUNBUFFERED=1"
+            ],
+            "Entrypoint": [
+                "/etc/service/dl_api/run"
+            ],
+            "Labels": {
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 183563288,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:e8bce0aabd687e9ee90e0bada33884f40b277196f72aac9934357472863a80ae",
+                "sha256:27d1e002946a93eb22e6e557e192ccd52df629e6effc374718b51ad479eedd2e",
+                "sha256:7298d394cd2c8382ad98ecdb9810d6258c7ad9b77d4ff5b9ecd36ec5f98c8feb",
+                "sha256:c98b1aeac90ae691641e3c1acde03eef6b0a3a0af25039f12ee4208f7068d5bb",
+                "sha256:d9b9363a9f4e026108d051cae92ac944693a84195a0916ea65f46f4d1e1d9e0d",
+                "sha256:da07463b0a0d8a698c4e66e7072b4386bce58cecb940d49d0e511cf59c0d1845",
+                "sha256:81d2eb282457ae4d62acc1acbd32ff93196f0103569a3049d4a023555f92fc9f",
+                "sha256:526c46e0b2ee0576e21c8c0b3e147de12c5b1d3698882f9ddd05034f6f14e110",
+                "sha256:3006db77bf32f40a251dfda3e7622b4edd1c91f5756c814b467722ac5fc40042",
+                "sha256:bd769169e50425a6cfe8be9300094ae123feedb474c61cb122ad3207294a3573",
+                "sha256:dd03fd94246e241fd7ccd1033a5a96a6a2201dbb42dac03fd094a6fd5e0a1c03",
+                "sha256:efce00ba3eb22f5b1250be2a9d4de61f592c874fe9a44043e6dd1625a1d56c37",
+                "sha256:7a4d39e52061c41562f66c80dab8522c8675ac7ed58c6de47380c578d0fb6f0e",
+                "sha256:9907b9cf06f0ba880a9cb7e1a65f0efb46ac09a97de00f1d5cadd8776eea76a3",
+                "sha256:549872a4ef67cef9dd8bfbdd43c93c971ee36481340bf0beadacc7d68a34ed5f",
+                "sha256:d69379f6c349de1727aaeea1ed1991dab0d2647e569b118ceb6e7aaac73fe9db",
+                "sha256:99ebffcf1ea35436d1215e61e19ffe86044af6ec6ce539d8f83e420887420dae",
+                "sha256:e0b15642c82570406deab27833839ee539d265a22a4099147d1490569d6ace1d",
+                "sha256:5060202dbace483f6da486f1a8ae4d167c5606b2b1ae0d9771aea10647338bae",
+                "sha256:8e1d9156679f54e1c21a1254fa852152fab93c44bfcfd8696adeddab54ee0f8e"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-03-21T15:39:38.185735068Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:93c3b33a558906c64e9be69abdf647adff42467d9d6d4c72a661ae14189cd904",
+            "size": 856
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "rbb3ut8xe8iiw6cikuhhagwcm",
+                    "CreatedAt": "2026-03-21T15:39:38.226147735Z"
+                }
+            ]
+        }
+    }
+]

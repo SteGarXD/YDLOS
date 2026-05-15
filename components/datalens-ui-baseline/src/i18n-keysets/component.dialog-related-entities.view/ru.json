@@ -1,0 +1,21 @@
+{
+  "label_button-retry": "Повторить",
+  "label_current-object": "Текущий объект",
+  "label_entities-count": "Количество связанных объектов:",
+  "label_no-relatives": "Связанные объекты отсутствуют",
+  "label_request-error": "При запросе данных произошла ошибка",
+  "label_scope-chart": "Чарты",
+  "label_scope-connection": "Подключения",
+  "label_scope-dash": "Дашборды",
+  "label_scope-dataset": "Датасеты",
+  "label_scope-other": "Другое",
+  "label_title": "Связанные объекты",
+  "value_includes": "Содержит объекты",
+  "value_where-contained": "Используется в объектах",
+  "refresh": "Обновить",
+  "cancel": "Отменить",
+  "apply": "Применить",
+  "select_all": "Выбрать всё",
+  "label_selected-entities-count": "Количество выбранных связанных объектов:",
+  "selected-entities-assign-description": "Внимание! Права текущего объекта будут скопированы во все выбранные элементы."
+}

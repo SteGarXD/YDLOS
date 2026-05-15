@@ -1,0 +1,73 @@
+[tool.poetry]
+authors = ["DataLens Team <datalens-opensource@yandex-team.ru>"]
+description = ""
+license = "Apache 2.0"
+name = "dl-connector-greenplum"
+packages = [{include = "dl_connector_greenplum"}]
+readme = "README.md"
+version = "0.0.1"
+
+[tool.poetry.dependencies]
+asyncpg = "*"
+attrs = "*"
+dl-api-commons = {path = "../dl_api_commons"}
+dl-api-connector = {path = "../dl_api_connector"}
+dl-configs = {path = "../dl_configs"}
+dl-connector-postgresql = {path = "../dl_connector_postgresql"}
+dl-constants = {path = "../dl_constants"}
+dl-core = {path = "../dl_core"}
+dl-i18n = {path = "../dl_i18n"}
+python = ">=3.10, <3.13"
+sqlalchemy = "*"
+
+[tool.poetry.group.tests.dependencies]
+aiohttp = "*"
+dl-api-client = {path = "../dl_api_client"}
+dl-api-lib-testing = {path = "../dl_api_lib_testing"}
+dl-core-testing = {path = "../dl_core_testing"}
+dl-testing = {path = "../dl_testing"}
+pytest = "*"
+
+[tool.poetry.plugins]
+
+[tool.poetry.plugins."dl_api_lib.connectors"]
+greenplum = "dl_connector_greenplum.api.connector:GreenplumApiConnector"
+
+[tool.poetry.plugins."dl_core.connectors"]
+greenplum = "dl_connector_greenplum.core.connector:GreenplumCoreConnector"
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_untyped_defs = true
+exclude = ["dl_connector_greenplum_tests/"]
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+minversion = "6.0"
+testpaths = []
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]
+
+[datalens.i18n.domains]
+dl_connector_greenplum = [
+  {path = "dl_connector_greenplum/api"},
+  {path = "dl_connector_greenplum/core"},
+]
+
+[datalens.pytest.db]
+root_dir = "dl_connector_greenplum_tests/"
+target_path = "db"
+
+[datalens.pytest.unit]
+labels = ["no_compose"]
+root_dir = "dl_connector_greenplum_tests/"
+skip_compose = "true"
+target_path = "unit"

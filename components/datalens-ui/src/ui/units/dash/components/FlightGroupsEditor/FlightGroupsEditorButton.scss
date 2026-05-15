@@ -1,0 +1,14 @@
+.flight-groups-editor-entry {
+    display: inline-flex;
+    align-items: center;
+    /* Чуть правее к блоку с «Редактировать» */
+    margin-right: 4px;
+
+    &_mobile-inline {
+        margin-right: 0;
+    }
+
+    &_mobile-float {
+        margin-right: 0;
+    }
+}

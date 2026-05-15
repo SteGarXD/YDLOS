@@ -1,0 +1,286 @@
+from __future__ import annotations
+
+import typing
+
+from marshmallow import Schema
+from marshmallow import fields as ma_fields
+
+from dl_api_commons.base_models import FormConfigParams
+from dl_api_connector.form_config.models.base import ConnectionFormMode
+from dl_api_lib.api_decorators import schematic_request
+from dl_api_lib.app.control_api.resources import API
+from dl_api_lib.app.control_api.resources.base import BIResource
+from dl_api_lib.connection_forms.registry import (
+    NoForm,
+    get_connection_form_factory_cls,
+)
+from dl_api_lib.enums import BI_TYPE_AGGREGATIONS
+from dl_api_lib.exc import (
+    BadConnectionType,
+    UnsupportedForEntityType,
+)
+from dl_api_lib.public.entity_usage_checker import PublicEnvEntityUsageChecker
+from dl_api_lib.schemas.connection import ConnectionFormQuerySchema
+from dl_api_lib.schemas.main import BadRequestResponseSchema
+from dl_constants.enums import (
+    ConnectionType,
+    UserDataType,
+)
+from dl_core.exc import EntityUsageNotAllowed
+from dl_core.us_connection_base import ConnectionBase
+from dl_core.us_dataset import Dataset
+
+
+class FieldTypeInfoSchema(Schema):
+    name = ma_fields.String()
+    aggregations = ma_fields.List(ma_fields.String())
+
+
+class GetFieldTypeCollectionResponseSchema(Schema):
+    types = ma_fields.Nested(FieldTypeInfoSchema, many=True)
+
+
+class BasePublicityCheckerResponseSchema(Schema):
+    allowed = ma_fields.Boolean()
+    reason = ma_fields.String()
+
+
+class DatasetsPublicityCheckerRequestSchema(Schema):
+    datasets = ma_fields.List(ma_fields.String())
+
+
+class DatasetsPublicityCheckerResponseSchema(Schema):
+    class DatasetResponseSchema(BasePublicityCheckerResponseSchema):
+        dataset_id = ma_fields.String()
+
+    result = ma_fields.Nested(DatasetResponseSchema, many=True)
+
+
+class ConnectionsPublicityCheckerRequestSchema(Schema):
+    connections = ma_fields.List(ma_fields.String())
+
+
+class ConnectionsPublicityCheckerResponseSchema(Schema):
+    class ConnectionResponseSchema(BasePublicityCheckerResponseSchema):
+        connection_id = ma_fields.String()
+
+    result = ma_fields.Nested(ConnectionResponseSchema, many=True)
+
+
+ns = API.namespace("Info", path="/info")
+
+
+@ns.route("/field_types")
+class FieldTypeCollection(BIResource):
+    @schematic_request(ns=ns, responses={200: ("Success", GetFieldTypeCollectionResponseSchema())})
+    def get(self):  # type: ignore  # TODO: fix
+        return {
+            "types": [
+                {"name": k.name, "aggregations": [x.name for x in v]}
+                for k, v in BI_TYPE_AGGREGATIONS.items()
+                if k
+                not in (
+                    UserDataType.uuid,
+                    UserDataType.markup,
+                    UserDataType.datetimetz,
+                    UserDataType.datetime,
+                    UserDataType.unsupported,
+                )
+            ]
+        }
+
+
+@ns.route("/datasets_publicity_checker")
+class DatasetsPublicityChecker(BIResource):
+    @schematic_request(
+        ns=ns,
+        body=DatasetsPublicityCheckerRequestSchema(),
+        responses={200: ("Success", DatasetsPublicityCheckerResponseSchema())},
+    )
+    def post(self, body: typing.Mapping[str, typing.Any]) -> typing.Mapping[str, typing.Any]:
+        ds_ids = body["datasets"]
+        responses = []
+        us_manager = self.get_us_manager()
+        reason = None
+
+        public_usage_checker = PublicEnvEntityUsageChecker()
+
+        for ds in self.get_us_manager().get_collection(
+            Dataset, raise_on_broken_entry=True, include_data=True, ids=ds_ids
+        ):
+            try:
+                us_manager.load_dependencies(ds)
+                localizer = self.get_service_registry().get_localizer()
+                public_usage_checker.ensure_dataset_can_be_used(
+                    rci=self.get_current_rci(),
+                    dataset=ds,
+                    us_manager=us_manager,
+                    localizer=localizer,
+                )
+            except EntityUsageNotAllowed as exc:
+                allowed = False
+                reason = exc.message
+            else:
+                allowed = True
+
+            responses.append(
+                {
+                    "dataset_id": ds.uuid,
+                    "allowed": allowed,
+                    "reason": reason,
+                }
+            )
+
+        return {"result": responses}
+
+
+@ns.route("/connections_publicity_checker")
+class ConnectionsPublicityChecker(BIResource):
+    @schematic_request(
+        ns=ns,
+        body=ConnectionsPublicityCheckerRequestSchema(),
+        responses={200: ("Success", ConnectionsPublicityCheckerResponseSchema())},
+    )
+    def post(self, body: typing.Mapping[str, typing.Any]) -> typing.Mapping[str, typing.Any]:
+        conn_ids = body["connections"]
+        responses = []
+        reason = None
+
+        public_usage_checker = PublicEnvEntityUsageChecker()
+
+        for conn in self.get_us_manager().get_collection(
+            ConnectionBase, raise_on_broken_entry=True, include_data=True, ids=conn_ids
+        ):
+            try:
+                public_usage_checker.ensure_data_connection_can_be_used(
+                    rci=self.get_current_rci(),
+                    conn=conn,
+                )
+            except EntityUsageNotAllowed as exc:
+                allowed = False
+                reason = exc.message
+            else:
+                allowed = True
+
+            responses.append(
+                {
+                    "connection_id": conn.uuid,
+                    "allowed": allowed,
+                    "reason": reason,
+                }
+            )
+
+        return {"result": responses}
+
+
+@ns.route("/connectors")
+class AvailableConnectorsCollection(BIResource):
+    def get(self) -> dict:
+        conn_availability = self.get_service_registry().get_connector_availability()
+        localizer = self.get_service_registry().get_localizer()
+        return conn_availability.get_available_connectors(localizer=localizer, tenant=self.get_current_rci().tenant)
+
+
+@ns.route("/connectors/forms/<string:conn_type>/<string:form_mode>")
+class ConnectorForm(BIResource):
+    @schematic_request(
+        ns=ns,
+        responses={
+            400: ("Failed", BadRequestResponseSchema()),
+        },
+        query=ConnectionFormQuerySchema(),
+    )
+    def get(self, conn_type: str, form_mode: str, query: dict) -> dict:
+        if not conn_type or conn_type not in ConnectionType:
+            raise BadConnectionType(f"Not a valid connection type for this environment: {conn_type}")
+        ct = ConnectionType(conn_type)
+
+        try:
+            mode = ConnectionFormMode(form_mode)
+        except ValueError:
+            raise UnsupportedForEntityType(f"Unknown form mode: {form_mode}") from None
+
+        try:
+            form_factory_cls = get_connection_form_factory_cls(ct)
+        except NoForm:
+            return {"form": None}
+
+        localizer = self.get_service_registry().get_localizer()
+
+        conn_id = query.get("conn_id", None)
+        exports_history_url_path = self.get_service_registry().get_exports_history_url_path()
+        user_id = self.get_current_rci().user_id
+
+        form_params = FormConfigParams(
+            user_id=user_id,
+            conn_id=conn_id,
+            exports_history_url_path=exports_history_url_path,
+        )
+
+        form_factory = form_factory_cls(mode=mode, localizer=localizer, form_params=form_params)
+        form_factory.preprocess_form_params(service_registry=self.get_service_registry())
+
+        form_config = form_factory.get_form_config(
+            connector_settings=self.get_service_registry().get_connectors_settings(ct),
+            tenant=self.get_current_rci().tenant,
+        )
+
+        return {
+            "form": form_config.as_dict(),
+        }
+
+
+@ns.route("/internal/pseudo_workbook/<path:us_path>")
+class WorkbookInfo(BIResource):
+    @schematic_request(ns=ns)
+    def get(self, us_path: str) -> dict:
+        usm = self.get_us_manager()
+        all_entries = usm.load_get_entries_at_path(us_path)
+
+        return dict(
+            connections={
+                conn_dict["key"].split("/")[-1]: dict(
+                    id=conn_dict["entryId"],
+                    type=conn_dict["type"],
+                )
+                for conn_dict in all_entries
+                if conn_dict["scope"] == "connection"
+            },
+            datasets={
+                ds_dict["key"].split("/")[-1]: dict(
+                    id=ds_dict["entryId"],
+                )
+                for ds_dict in all_entries
+                if ds_dict["scope"] == "dataset"
+            },
+            charts={
+                chart_dict["key"].split("/")[-1]: dict(
+                    id=chart_dict["entryId"],
+                )
+                for chart_dict in all_entries
+                if chart_dict["scope"] == "widget"
+            },
+            dashboards={
+                dash["key"].split("/")[-1]: dict(
+                    id=dash["entryId"],
+                )
+                for dash in all_entries
+                if dash["scope"] == "dash"
+            },
+        )
+
+
+@ns.route("/connectors/icons")
+class ConnectorIconsList(BIResource):
+    @schematic_request(ns=ns)
+    def get(self) -> dict:
+        conn_availability = self.get_service_registry().get_connector_availability()
+        return dict(icons=conn_availability.list_icons())
+
+
+@ns.route("/connectors/icons/<string:conn_type>")
+class ConnectorIcon(BIResource):
+    @schematic_request(ns=ns)
+    def get(self, conn_type: str) -> dict:
+        conn_availability = self.get_service_registry().get_connector_availability()
+        return dict(icon=conn_availability.get_icon(conn_type=conn_type))

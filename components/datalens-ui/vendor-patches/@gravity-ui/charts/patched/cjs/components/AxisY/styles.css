@@ -1,0 +1,35 @@
+.gcharts-y-axis__domain {
+  stroke: #000000;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+.gcharts-y-axis__label {
+  fill: #000000;
+  stroke: none;
+  dominant-baseline: text-after-edge;
+  text-rendering: optimizeSpeed;
+  font-weight: 400;
+}
+.gcharts-y-axis__tick {
+  stroke: none;
+  shape-rendering: crispEdges;
+}
+.gcharts-y-axis__tick path {
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+.gcharts-y-axis__outer-tick {
+  stroke: #000000;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+.gcharts-y-axis__title text {
+  fill: #000000;
+  stroke: none;
+  text-rendering: optimizeSpeed;
+  font-weight: 400;
+}
+.gcharts-y-axis__title tspan {
+  fill: #000000;
+  stroke: none;
+}

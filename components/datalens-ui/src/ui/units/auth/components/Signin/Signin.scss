@@ -1,0 +1,78 @@
+@use '../../../../styles/mixins.scss' as *;
+
+/* Фон страницы и карточка — переменные темы (светлая тема: нейтральный фон, не серый). */
+.dl-signin {
+    $class: &;
+    height: 100%;
+    background-color: var(--g-color-base-misc-light);
+
+    &__form-container {
+        background-color: var(--g-color-base-background);
+        border-radius: var(--g-border-radius-l);
+        width: 440px;
+        min-height: 200px;
+        padding: 48px;
+    }
+
+    &__branding {
+        margin-bottom: 8px;
+    }
+
+    /* Сдвиги < ~1px на многих экранах почти не видны (округление субпикселей). Для заметного сдвига используйте 2px и больше. */
+
+    /* Лого: фиксированный блок 160px; сдвиг по горизонтали */
+    &__logo {
+        flex-shrink: 0;
+        width: 160px !important;
+        height: 160px !important;
+        min-width: 160px;
+        min-height: 160px;
+        object-fit: contain;
+        margin-left: 0;
+        transform: translate(5.5px, -16.9px) !important;
+    }
+
+    /* Заголовок «Aeronavigator BI» — сдвиг по горизонтали, размер 24px */
+    &__title {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        line-height: 1.2;
+        --g-text-body-font-size: 24px;
+        margin-top: 0;
+        transform: translate(5.2px, -22.9px) !important;
+    }
+
+    /* Режим EnableDLRebranding: один Icon на всю ширину — те же сдвиги, что у &__logo */
+    &__rebranding-logo {
+        display: block;
+        transform: translate(5.5px, -16.9px) !important;
+    }
+
+    &__link {
+        color: var(--g-color-text-link);
+        text-decoration: none;
+
+        &:visited {
+            color: var(--g-color-text-link);
+        }
+
+        &:hover {
+            color: var(--g-color-text-link-hover);
+        }
+    }
+
+    /* Кнопка «Войти» — светло-синий бренд (как в YDL OS) */
+    .g-button_view_action {
+        --g-color-base-brand: #3a94d0;
+        --g-color-base-brand-hover: #2d7ab8;
+    }
+
+    &_rebranding {
+        background-color: unset;
+
+        #{$class}__form-container {
+            border-radius: 32px;
+            box-shadow: 0 30px 100px 0 rgba(0, 0, 0, 0.25);
+        }
+    }
+}

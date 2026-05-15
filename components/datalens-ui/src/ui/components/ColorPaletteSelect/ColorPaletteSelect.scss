@@ -1,0 +1,9 @@
+@use '../../styles/mixins.scss' as *;
+
+.color-palette-select {
+    width: 100%;
+
+    &__popup {
+        @include dl-select-popup;
+    }
+}

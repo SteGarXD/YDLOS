@@ -1,0 +1,27 @@
+services:
+  # COMPENG
+  db-postgres-13:
+    build:
+      context: docker-compose
+      dockerfile: Dockerfile.db-postgres-13
+    environment:
+      POSTGRES_DB: "test_data"
+      POSTGRES_USER: "datalens"
+      POSTGRES_PASSWORD: "qwerty"
+    ports:
+     - "52302:5432"
+
+  # INFRA
+  pg-us:
+    extends:
+      file: ../testenv-common/docker-compose.common.yml
+      service: pg-us
+    ports:
+      - "51910:5432"
+
+  us:
+    extends:
+      file: ../testenv-common/docker-compose.common.yml
+      service: us
+    ports:
+      - "51911:8080"

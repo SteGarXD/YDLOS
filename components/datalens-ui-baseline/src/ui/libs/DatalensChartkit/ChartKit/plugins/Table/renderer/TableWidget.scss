@@ -1,0 +1,15 @@
+.chartkit-table-widget {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: auto;
+    width: 100%;
+
+    &__number-column {
+        text-align: right;
+    }
+
+    .chartkit-table-paginator {
+        background-color: initial;
+    }
+}

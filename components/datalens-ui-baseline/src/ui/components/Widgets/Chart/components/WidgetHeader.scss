@@ -1,0 +1,162 @@
+@import '~@gravity-ui/uikit/styles/mixins';
+@import '../../../../styles/mixins.scss';
+
+.widget-header {
+    $class: &;
+    $headerHeight: 48px;
+
+    &__back-icon {
+        position: absolute;
+        top: 16px;
+        left: 14px;
+    }
+
+    &__icons {
+        position: absolute;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        top: 4px;
+        right: 44px;
+        z-index: 10;
+    }
+
+    &__filters-controls {
+        background-color: var(--g-color-base-background);
+        padding: 2px;
+        border-radius: var(--g-border-radius-l);
+        box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.05);
+        margin-left: 8px;
+    }
+
+    &__icon-filter-clear {
+        color: var(--g-color-text-primary);
+    }
+
+    &__chart-info-icon {
+        margin-left: 8px;
+        color: var(--g-color-base-danger-heavy);
+    }
+
+    &__chart-info-tooltip {
+        &_hidden {
+            display: none;
+        }
+    }
+
+    .gc-adaptive-tabs {
+        --gc-tabs-space-between: 14px;
+        --gc-tabs-height: 44px;
+        --gc-tabs-color-text-inactive: var(--g-color-text-primary);
+
+        @include dl-adaptive-tabs;
+    }
+
+    &__tabs {
+        display: flex;
+        padding: 0 65px 0 16px;
+        font-size: 15px;
+
+        &_no-controls {
+            padding: 0 35px 0 16px;
+        }
+
+        &_edit-mode.dl-draggable-handle-element {
+            cursor: move;
+
+            .gc-adaptive-tabs__tab {
+                cursor: move;
+            }
+        }
+
+        // TODO: remove after https://github.com/gravity-ui/components/issues/26 will be resolved
+        .gc-adaptive-tabs__tabs-as-select-control {
+            #{$class}__tab {
+                opacity: 1;
+            }
+        }
+    }
+
+    &__tab {
+        display: inline-flex;
+        width: 100%;
+        margin: 0 15px 0 0;
+        color: inherit;
+        cursor: pointer;
+        opacity: 0.5;
+        position: relative;
+
+        &:hover,
+        &_active {
+            opacity: 1;
+        }
+    }
+
+    &__mobile-title {
+        @include text-subheader-3();
+        color: var(--g-color-text-primary);
+        text-decoration: none;
+        width: 100%;
+        padding: 10px 50px 10px 16px;
+        overflow: visible;
+        white-space: normal;
+        word-break: break-word;
+        hyphens: auto;
+
+        &_with-hint {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    &__mobile-title_with-hint &__chart-title-hint {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    &__mobile-title_with-hint &__chart-title-hint {
+        margin-left: 3px;
+
+        & > * {
+            display: inline-flex;
+            align-items: center;
+        }
+    }
+
+    &_mobile {
+        #{$class}__tabs {
+            @include text-subheader-3();
+        }
+
+        &#{$class}_fullscreen #{$class}__filters-controls {
+            top: 50px;
+            right: 16px;
+        }
+    }
+
+    &_fullscreen {
+        #{$class}__mobile-title {
+            line-height: $headerHeight;
+            padding: 0 50px 0 45px;
+            height: $headerHeight;
+        }
+
+        #{$class}__mobile-title-wrap {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        &#{$class}_btns-full #{$class}__mobile-title {
+            padding-right: 94px;
+        }
+
+        &#{$class}_btns-partly #{$class}__mobile-title {
+            padding-right: 67px;
+        }
+    }
+
+    &:has(+ .chartkit-loader) {
+        z-index: 5;
+    }
+}

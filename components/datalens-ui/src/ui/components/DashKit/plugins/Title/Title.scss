@@ -1,0 +1,128 @@
+@use '../mixins.scss' as *;
+
+.dashkit-plugin-title-container {
+    $class: &;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+
+    &_relative {
+        position: relative;
+    }
+
+    &_absolute {
+        width: 100%;
+    }
+
+    &_with-auto-height {
+        [data-plugin-root-el='title'] {
+            height: fit-content;
+        }
+    }
+
+    [data-plugin-root-el='title'] {
+        width: 100%;
+    }
+
+    &_with-color {
+        .dashkit-plugin-title {
+            padding: 5px 10px;
+            align-items: center;
+        }
+
+        #{$class}__anchor {
+            padding-block: 5px;
+        }
+
+        #{$class}__extra-elements-container {
+            padding-bottom: 0;
+
+            &_absolute {
+                padding-left: 0;
+            }
+        }
+    }
+
+    &_with-inline-extra-elements {
+        display: flex;
+
+        .dashkit-plugin-title {
+            padding-right: 0;
+        }
+    }
+
+    &__extra-elements-container {
+        display: flex;
+        padding: 0 5px 5px;
+        right: 0;
+        z-index: 1;
+
+        &_absolute {
+            position: absolute;
+        }
+    }
+
+    &__extra-elements-container {
+        display: flex;
+        padding: 0 5px 5px;
+        right: 0;
+        z-index: 1;
+
+        &_absolute {
+            position: absolute;
+        }
+    }
+
+    &__anchor {
+        opacity: 0;
+        padding-left: 5px;
+        position: relative;
+        height: fit-content;
+        text-decoration: none;
+        color: var(--g-color-text-link);
+        z-index: 1;
+
+        &:focus-visible {
+            opacity: 1;
+        }
+
+        &:hover {
+            color: var(--g-color-text-link-hover);
+        }
+    }
+
+    &__hint {
+        display: flex;
+        align-items: center;
+    }
+
+    &_with-absolute-hint {
+        [data-plugin-root-el='title'] {
+            @include text-with-fade-effect(45px);
+        }
+    }
+
+    &_with-absolute-anchor {
+        &:has(#{$class}__anchor:focus-visible) {
+            [data-plugin-root-el='title'] {
+                @include text-with-fade-effect(40px);
+            }
+        }
+    }
+
+    &_with-absolute-hint-and-anchor {
+        [data-plugin-root-el='title'] {
+            @include text-with-fade-effect(70px);
+        }
+    }
+}
+
+.dashkit-grid-item.resizing {
+    .dashkit-plugin-title-container {
+        // hide hint when resizing container
+        &__extra-elements-container {
+            opacity: 0;
+        }
+    }
+}

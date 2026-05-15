@@ -1,0 +1,125 @@
+﻿[
+    {
+        "Id": "sha256:64820b925c63499de4df7ec55cbe7dbf9c786a8e8966db131d963f4c5f50c6ad",
+        "RepoTags": [
+            "ghcr.io/datalens-tech/datalens-temporal:1.27.2"
+        ],
+        "RepoDigests": [
+            "ghcr.io/datalens-tech/datalens-temporal@sha256:64820b925c63499de4df7ec55cbe7dbf9c786a8e8966db131d963f4c5f50c6ad"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2025-11-26T23:22:26.413603328+03:00",
+        "Config": {
+            "User": "temporal",
+            "ExposedPorts": {
+                "6933/tcp": {},
+                "6934/tcp": {},
+                "6935/tcp": {},
+                "6939/tcp": {},
+                "7233/tcp": {},
+                "7234/tcp": {},
+                "7235/tcp": {},
+                "7239/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "TEMPORAL_HOME=/etc/temporal",
+                "TEMPORAL_SHA=ed81e7c8a77866c9c5f3ef3b34cbb3c8b8c6fc2",
+                "TCTL_SHA=d31f5204538c534d72aeddeb2a08722dda0c8b5",
+                "TEMPORAL_PORT=7233",
+                "DB=postgres12",
+                "NUM_HISTORY_SHARDS=512",
+                "DEFAULT_NAMESPACE_RETENTION=24h",
+                "SKIP_NAMESPACES_CREATION=false",
+                "NAMESPACES=meta-manager",
+                "POSTGRES_HOST=postgres",
+                "POSTGRES_PORT=5432",
+                "POSTGRES_USER=pg-user",
+                "POSTGRES_DB=pg-temporal-db",
+                "POSTGRES_DB_VISIBILITY=pg-temporal-visibility-db",
+                "POSTGRES_TLS_ENABLED=false",
+                "POSTGRES_TLS_DISABLE_HOST_VERIFICATION=true",
+                "POSTGRES_TLS_CA_FILE=",
+                "POSTGRES_CONNECT_ATTRIBUTES="
+            ],
+            "Entrypoint": [
+                "/etc/temporal/init-temporal.sh"
+            ],
+            "WorkingDir": "/etc/temporal",
+            "Labels": {
+                "org.opencontainers.image.created": "2025-02-20T23:39:46.492Z",
+                "org.opencontainers.image.description": "Workflow as Code (TM) to build and operate resilient applications",
+                "org.opencontainers.image.licenses": "MIT",
+                "org.opencontainers.image.revision": "8306e2dbba922ed718c6da576c263f11e50e950f",
+                "org.opencontainers.image.source": "https://github.com/temporalio/temporal",
+                "org.opencontainers.image.title": "server",
+                "org.opencontainers.image.url": "https://github.com/temporalio/temporal",
+                "org.opencontainers.image.version": "1.15.11"
+            },
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "/etc/temporal/healthcheck.sh"
+                ],
+                "Interval": 5000000000,
+                "StartPeriod": 5000000000,
+                "Retries": 10
+            },
+            "Shell": [
+                "/bin/bash",
+                "-c"
+            ]
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 189057416,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:08000c18d16dadf9553d747a58cf44023423a9ab010aab96cf263d2216b8b350",
+                "sha256:b3b48826bd2b349dd835eb52f777da05acc66e82befdae143544b66099188cb0",
+                "sha256:99a4abd5773413dd614b25c7b60848612cebbe0496aa7989e327ce72faaaf971",
+                "sha256:d007e3e4b788210b21a1b71aa24cb91c9f4dff091e22369cad62cffb81685a5f",
+                "sha256:79c8ef1432d2580df372bbaa8030c09e4d22953f80383406a22bbe08177cdc5d",
+                "sha256:997dd13dba6a256c21627ae75914589167c87db2849d9121df0f33141ff91494",
+                "sha256:18841afd9ed352ce72340af918e19c24b709fb9653b5bc742b093798281ff99d",
+                "sha256:0a4c5c8bc881940d2b2121b4930fc2064d07beea7c7e499e7068b35af5880909",
+                "sha256:76d64e6850d1d5087f1730cc0eaed2b50f35fdf572e4471b571c4739519559e8",
+                "sha256:9102f3fa196c3102b7ca3ca2cdf9906701490b63dbea6219d7f0bc0068b70004",
+                "sha256:24c462d5660edd5189c6703f9c82b88a5e415d92a338ec4dcc35ea15a3f5223c",
+                "sha256:a52c7574d94199e2414c9fb63cf0a3eb8683a7592195bf7becf543cb8053a881",
+                "sha256:8e5915bd64a654a14cc129472346c6dfedcf49aba9a3933003311fd4edd310df",
+                "sha256:421c2366fa608c223ab668a28c04f4d5349cea93f57ab6f3154ca2685afdec55",
+                "sha256:d6fc1f30ec5fe03cef833582fd36953a85cd6405e7f90a9d608783f4d379bf65",
+                "sha256:f3dcc118e1953f4b4d683781ff419ddf068033be14f8d173ab2fca0d49cce3aa",
+                "sha256:eee89dd3163b2bcced57558ca253d98a2f1c770ce874b05a00620ee53ce13a9e",
+                "sha256:07f57236c918994ffa2f3e77a46a84dec51a26bc012ed660e786afa40159f952",
+                "sha256:57fe44e1ce221e3f88f43a776cb209be55866be96e7bd78cfe37390f8affb3dd",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:82fad3af2a27ac8591c9d50e4501f0d1a64f55e45d783e6129db833f96f89a2e",
+                "sha256:8d6de00619a7229e65b21296ae0cd5277434bdf9a94c1996c5d3aa6a6d27ca41",
+                "sha256:c588971fc80a34dbf9168ffac813cff8c58631f26168eb1f087e9635600dc739",
+                "sha256:078bc9b1044f80b3ca2fbe612cdb317bd090d5b6b72c68aaef3fd8135f407d07",
+                "sha256:bd266253ac37b09bcaf12fe0e065da14163c2040a6ddd8c8c8d847426d69d89d",
+                "sha256:f811af7aaacc40c3dd84fa758c3bb38bb65b7141ed7cb61a6d70c7d386cc0cb0",
+                "sha256:41c04a264557106ff1e6ac15c6897a5e80d99c769c37345857c65a54d5231e72",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-03-17T21:47:05.432748986Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:64820b925c63499de4df7ec55cbe7dbf9c786a8e8966db131d963f4c5f50c6ad",
+            "size": 1609
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "ghcr.io/datalens-tech/datalens-temporal"
+                }
+            ]
+        }
+    }
+]

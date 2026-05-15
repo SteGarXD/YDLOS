@@ -1,0 +1,258 @@
+﻿[
+    {
+        "Id": "0710259e07a7dbc4adc937ded5ad64169eb1cc31a7955568c3b67598634ffadf",
+        "Created": "2026-03-21T15:39:48.723399635Z",
+        "Path": "/etc/service/dl_api/run",
+        "Args": [],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 819,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-04-07T09:33:32.750198447Z",
+            "FinishedAt": "2026-04-07T09:31:05.55899957Z"
+        },
+        "Image": "sha256:a85b2bdc739b4297964a9b1178b0ac71ff3e67d517dd6ced93fc3d23aeed1665",
+        "ResolvConfPath": "/var/lib/docker/containers/0710259e07a7dbc4adc937ded5ad64169eb1cc31a7955568c3b67598634ffadf/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/0710259e07a7dbc4adc937ded5ad64169eb1cc31a7955568c3b67598634ffadf/hostname",
+        "HostsPath": "/var/lib/docker/containers/0710259e07a7dbc4adc937ded5ad64169eb1cc31a7955568c3b67598634ffadf/hosts",
+        "LogPath": "/var/lib/docker/containers/0710259e07a7dbc4adc937ded5ad64169eb1cc31a7955568c3b67598634ffadf/0710259e07a7dbc4adc937ded5ad64169eb1cc31a7955568c3b67598634ffadf-json.log",
+        "Name": "/datalens-data-api-prod",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "datalens_default",
+            "PortBindings": {
+                "8080/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "8020"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": [
+                "host.docker.internal:host-gateway"
+            ],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "0710259e07a7",
+            "Domainname": "",
+            "User": "app",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "RQE_SECRET_KEY=",
+                "DL_CRY_ACTUAL_KEY_ID=KEY",
+                "AUTH__JWT_KEY=-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA+HICDZMfimMIiGdd0dPr\\n2N3zxHOJqiVXuvUj/aBBS7c8760rJUh4344sP/0Gid558yH/v1MtzZ0R9w09v6gb\\nSNrSiNwIUNGPhbnm9Jf+kMezsI/rkcIdoVm3KJ8CFUYy6MRPzW7iJmIVRHBb82v1\\nmAYCCQFU6IRtFIa9hQ8wedWwxqXZekSNS+6NB37dmmQB9kz2E3MY+KRLigOh4i3p\\nCZ1ti3HVvMa9Rlgk9FmoWExzub5ECChqwm+vn8yFXjYW7kUSClcV2xx4nbQWqjrR\\nyyLk6W2BNOuCFVvz0j+5XkpLAt7tljtVZc+572HBEKpF2mAdmAip5NzeDhKqucJ+\\nZQIDAQAB\\n-----END PUBLIC KEY-----",
+                "RQE_FORCE_OFF=1",
+                "BI_COMPENG_PG_URL=postgres://pg-user:postgres@postgres:5432/pg-compeng-db",
+                "MUTATIONS_CACHES_ON=0",
+                "CACHES_ON=0",
+                "AUTH__TYPE=NONE",
+                "AUTH__JWT_ALGORITHM=PS256",
+                "GUNICORN_WORKERS_COUNT=5",
+                "US_MASTER_TOKEN=us-master-token",
+                "COMMON_TIMEOUT_SEC=120",
+                "DL_CRY_KEY_VAL_ID_KEY=ZGF0YWxlbnN1bnNlY3VyZWZlcm5ldGNyeXB0b2tleQo=",
+                "US_HOST=http://us:8080",
+                "BI_COMPENG_PG_ON=1",
+                "PATH=/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "container=docker",
+                "LD_LIBRARY_PATH=:/usr/lib/x86_64-linux-gnu/odbc",
+                "REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt",
+                "VIRTUAL_ENV=/venv",
+                "CONFIG_PATH=/etc/backend-configs/api.yaml",
+                "GUNICORN_LOG_CONFIG=/code/gunicorn_logging.ini",
+                "GUNICORN_CONFIG=/code/gunicorn_config.py"
+            ],
+            "Cmd": null,
+            "Image": "akrasnov87/datalens-data-api:0.2396.0",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/etc/service/dl_api/run"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "3280ae9dc77eaae13b85d8a3f20f6e280c80e81e4d1470e59cad035f101fe98e",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "postgres:service_healthy:false",
+                "com.docker.compose.image": "sha256:a85b2bdc739b4297964a9b1178b0ac71ff3e67d517dd6ced93fc3d23aeed1665",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "datalens",
+                "com.docker.compose.project.config_files": "D:\\YDLOS\\datalens\\docker-compose.yaml,D:\\YDLOS\\datalens\\docker-compose.demo.yaml",
+                "com.docker.compose.project.working_dir": "D:\\YDLOS\\datalens",
+                "com.docker.compose.replace": "datalens-data-api-prod",
+                "com.docker.compose.service": "data-api",
+                "com.docker.compose.version": "5.1.0",
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "24.04"
+            },
+            "StopTimeout": 1
+        },
+        "NetworkSettings": {
+            "SandboxID": "8dd3d4580e0e5d849678add965e0e013fb2f26d85e8076889486e33633d6c41c",
+            "SandboxKey": "/var/run/docker/netns/8dd3d4580e0e",
+            "Ports": {
+                "8080/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "8020"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "8020"
+                    }
+                ]
+            },
+            "Networks": {
+                "datalens_default": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "datalens-data-api-prod",
+                        "data-api"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "e89f59f24bbc4bad570dee90f3a149228b7f73d788439d2002f2b5e06dc808e2",
+                    "EndpointID": "fa11ddbce5847deae0086196d1671593a8e4af0d071406dce5e5f7c499fb2be1",
+                    "Gateway": "172.19.0.1",
+                    "IPAddress": "172.19.0.8",
+                    "MacAddress": "06:54:83:ac:ff:62",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "datalens-data-api-prod",
+                        "data-api",
+                        "0710259e07a7"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:61e6a3ac718c470ef6e9c4773d78ea177a2b8dca53c4bbf6aaa801e25a7247d2",
+            "size": 6336,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    }
+]

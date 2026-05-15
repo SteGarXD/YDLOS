@@ -1,0 +1,60 @@
+@import '~@gravity-ui/uikit/styles/mixins';
+
+.dl-workbook-page {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 100%;
+
+    &__layout {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+    }
+
+    &__container {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+    }
+
+    &__title-content {
+        display: flex;
+        margin: 28px 0 0;
+    }
+
+    &__title {
+        @include text-header-2();
+        margin: 0 8px 0 0;
+    }
+
+    &__description {
+        margin-top: 20px;
+    }
+
+    &__content {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        margin: 18px 0 28px;
+    }
+
+    &__action-bar-group-left {
+        flex-basis: 50%;
+        max-width: 50%;
+    }
+
+    &__action-bar-left-item {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+    }
+
+    &__breadcrumbs_is-mobile {
+        max-width: 150px;
+    }
+
+    &__return-button {
+        margin-right: 8px;
+    }
+}

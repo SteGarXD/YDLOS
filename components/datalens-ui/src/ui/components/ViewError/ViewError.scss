@@ -1,0 +1,24 @@
+.dl-view-error {
+    $class: &;
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    &__btn-retry {
+        margin-right: 12px;
+    }
+
+    &__actions_mobile {
+        margin-top: 0;
+        flex-direction: column;
+        width: 100%;
+
+        #{$class}__btn-retry {
+            margin-bottom: 16px;
+            margin-right: 0;
+        }
+    }
+}

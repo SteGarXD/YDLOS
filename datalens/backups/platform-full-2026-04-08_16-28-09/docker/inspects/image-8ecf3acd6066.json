@@ -1,0 +1,76 @@
+﻿[
+    {
+        "Id": "sha256:8ecf3acd60665c798b5f578935fef09995839bf7c85e69a04c982347498d314a",
+        "RepoTags": [
+            "akrasnov87/datalens-us:0.413.0"
+        ],
+        "RepoDigests": [
+            "akrasnov87/datalens-us@sha256:8ecf3acd60665c798b5f578935fef09995839bf7c85e69a04c982347498d314a"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-03-19T10:35:17.516628402Z",
+        "Config": {
+            "User": "app",
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "TZ=Etc/UTC",
+                "APP_VERSION=",
+                "TMPDIR=/tmp",
+                "NODE_ENV=production",
+                "APP_PORT=8080"
+            ],
+            "Entrypoint": [
+                "/opt/app/scripts/preflight.sh"
+            ],
+            "WorkingDir": "/opt/app",
+            "Labels": {
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 187652599,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:f2a7f072635332d307212e318e07284948b89f4167fce5c4d7c9cfb7590b74b6",
+                "sha256:c284703fae790e872a60cd869387115c2457260bb32503c503594df565e4d6ad",
+                "sha256:e197267830c304b24caa45f141ddcf74c610f0e8eb40bb70c4690549954f45a2",
+                "sha256:00f4e65e1b95bcfc6ed94bd165695e271073c48e8cc1ccec95843e9e553d442e",
+                "sha256:51d834bb05f00bd49f04ed1e51914752cbe800a5cce2149b21892c81ac230845",
+                "sha256:7fe15f6e5ec799bddc8eac1fcfc0d79780f55a4e4fb7ccab989dacdebf8a6263",
+                "sha256:4dd3edcd791f9663fd120221378ecc846bea66001008621191b6e6ae2baa53da",
+                "sha256:cc5c7486d668168635becd7de20d51011d2e34fac5236e2a25056a77bc914d91",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:71798ae01373d461b183caccf8ec236c82704f1cee8578fb2d87fec01af8946a",
+                "sha256:9aaede54c72478a9effeb1f3588be4be05ee7d4736139b8bd7e4532283bcee67",
+                "sha256:b2b561be6f36572c22fb99f6f1c139dc906985062c46780c6eaac4a1faea58bf",
+                "sha256:bfde6d974897a73d420cd64b2fc7a816e091a5fc3d6bbbe361cd475294737595",
+                "sha256:39bbe73aed0ea7ba00b237d4705854d00eb5b64ce8204d57fe70df25b8b3187a",
+                "sha256:acf92afa5eef2c92f6a5141f12cd2647abf20ebe9af76d351cf12df18c55ad68",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-03-19T10:35:19.687012383Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:8ecf3acd60665c798b5f578935fef09995839bf7c85e69a04c982347498d314a",
+            "size": 856
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "j0fqc5bkpztwev5tywka9sqsv",
+                    "CreatedAt": "2026-03-19T10:35:23.151370964Z"
+                }
+            ]
+        }
+    }
+]

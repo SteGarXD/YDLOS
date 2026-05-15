@@ -1,0 +1,56 @@
+# Copyright (c) 2023 YANDEX LLC <datalens-opensource@yandex-team.ru>
+# This file is distributed under the same license as the DataLens package.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: datalens-opensource@yandex-team.ru\n"
+"POT-Creation-Date: 2023-09-22 08:16+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "label_connector-trino"
+msgstr "Trino"
+
+msgid "field_auth-type"
+msgstr "Authentication type"
+
+msgid "value_auth-type-none"
+msgstr "No auth"
+
+msgid "value_auth-type-password"
+msgstr "Password"
+
+msgid "value_auth-type-jwt"
+msgstr "JWT"
+
+msgid "field_password"
+msgstr "Password"
+
+msgid "field_jwt"
+msgstr "JWT"
+
+msgid "field_listing-sources"
+msgstr "Request table list"
+
+msgid "label_listing-sources-tooltip"
+msgstr ""
+"Disable if loading the table list from the source takes too long or causes "
+"errors — in this case, add tables via SQL queries"
+
+msgid "value_listing-sources-off"
+msgstr "Off"
+
+msgid "value_listing-sources-on"
+msgstr "On"
+
+msgid "label_trino-ssl-enabled-tooltip"
+msgstr ""
+"When this option is enabled, connections to Trino use the HTTPS protocol; "
+"when disabled - HTTP."
+
+msgid "source_templates-label-trino_catalog"
+msgstr "Catalog name"
+
+msgid "db_name-label"
+msgstr "Catalog"

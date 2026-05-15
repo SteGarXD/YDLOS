@@ -1,0 +1,71 @@
+[tool.poetry]
+authors = ["DataLens Team <datalens-opensource@yandex-team.ru>"]
+description = ""
+license = "Apache 2.0"
+name = "dl-formula-ref"
+packages = [{include = "dl_formula_ref"}]
+readme = "README.md"
+version = "0.0.0"
+
+[tool.poetry.dependencies]
+attrs = "*"
+dl-db-testing = {path = "../dl_db_testing"}
+dl-formula = {path = "../dl_formula"}
+dl-formula-testing = {path = "../dl_formula_testing"}
+dl-i18n = {path = "../dl_i18n"}
+dl-utils = {path = "../dl_utils"}
+dynamic-enum = {path = "../dynamic_enum"}
+jinja2 = "*"
+python = ">=3.10, <3.13"
+sqlalchemy = "*"
+tabulate = "*"
+typing-extensions = "*"
+
+[tool.poetry.group.tests.dependencies]
+dl-connector-clickhouse = {path = "../dl_connector_clickhouse"}
+dl-testing = {path = "../dl_testing"}
+pytest = "*"
+
+[tool.poetry.plugins]
+
+[tool.poetry.plugins."dl_formula_ref.plugins"]
+default = "dl_formula_ref.plugins.default.plugin:DefaultFormulaRefPlugin"
+
+[tool.poetry.scripts]
+dl-formula-ref-doc = "dl_formula_ref.scripts.formula_doc:main"
+dl-formula-ref-exdata = "dl_formula_ref.scripts.example_data:main"
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_untyped_defs = true
+exclude = ["dl_formula_ref_tests"]
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+minversion = "6.0"
+testpaths = []
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]
+
+[datalens.i18n.domains]
+dl_formula_ref_dl_formula_ref = [
+  {path = "dl_formula_ref"},
+]
+
+[datalens.pytest.db]
+root_dir = "dl_formula_ref_tests/"
+target_path = "db"
+
+[datalens.pytest.unit]
+labels = ["no_compose"]
+root_dir = "dl_formula_ref_tests/"
+skip_compose = "true"
+target_path = "unit"

@@ -1,0 +1,127 @@
+$labelHeight: 20px;
+$labelMargin: 8px;
+
+.revisions-list {
+    $class: &;
+
+    &__label {
+        display: inline-block;
+        vertical-align: top;
+        padding: 0 8px;
+        margin: 0 0 $labelMargin 20px;
+        box-sizing: border-box;
+        border: 1px solid transparent;
+        background-color: var(--g-color-base-background);
+        border-radius: 4px;
+        line-height: $labelHeight;
+        color: var(--g-color-text-secondary);
+        font-size: var(--g-text-body-1-font-size);
+        position: relative;
+
+        &:after {
+            content: '';
+            position: absolute;
+            border-left: 1px solid var(--g-color-line-generic-accent);
+            width: 0;
+            height: $labelMargin;
+            top: calc(#{$labelHeight} + 1px);
+            left: 12px;
+        }
+    }
+
+    &__content {
+        margin: 0;
+        padding: 0;
+    }
+
+    &__row {
+        list-style: none;
+        margin: 0;
+        padding: 8px 20px 8px 50px;
+        position: relative;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        z-index: 1;
+        cursor: pointer;
+        transition: background-color 0.21s ease-out;
+        color: var(--g-color-text-complementary);
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 33px;
+            border-left: 1px solid var(--g-color-line-generic-accent);
+            z-index: 1;
+        }
+
+        &:hover {
+            background-color: var(--g-color-base-simple-hover);
+        }
+        &_disabled,
+        &_disabled:hover {
+            background-color: initial;
+            opacity: 0.5;
+        }
+
+        &_current,
+        &_current:hover {
+            background-color: var(--g-color-base-selection);
+        }
+    }
+
+    &__row-actions {
+        margin-inline: auto 0;
+        visibility: hidden;
+    }
+
+    &__row:hover &__row-actions {
+        visibility: visible;
+    }
+
+    &__row &__point-wrap {
+        position: absolute;
+        left: 26px;
+        top: 14px;
+        z-index: 1;
+    }
+
+    &__text {
+        margin-top: 6px;
+        color: var(--g-color-text-primary);
+        font-size: var(--g-text-body-1-font-size);
+        line-height: var(--g-text-body-1-line-height);
+    }
+
+    &__block:last-child &__row:last-child {
+        margin-bottom: 0;
+
+        &:before {
+            bottom: calc(#{$labelHeight} + 2px);
+        }
+    }
+
+    &__block + &__block &__label {
+        margin-top: $labelMargin;
+
+        &:before {
+            content: '';
+            position: absolute;
+            border-left: 1px solid var(--g-color-line-generic-accent);
+            width: 0;
+            height: $labelMargin;
+            top: calc(-#{$labelMargin} - 1px);
+            left: 12px;
+        }
+    }
+
+    &__avatar {
+        margin-right: 18px;
+    }
+
+    &__point-tooltip {
+        padding: var(--g-spacing-2) var(--g-spacing-3);
+    }
+}

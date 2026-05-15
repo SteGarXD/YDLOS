@@ -1,0 +1,2 @@
+﻿NAME                STATUS              CONFIG FILES
+datalens            running(8)          D:\YDLOS\datalens\docker-compose.yaml,D:\YDLOS\datalens\docker-compose.demo.yaml

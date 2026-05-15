@@ -1,0 +1,837 @@
+from __future__ import annotations
+
+from contextlib import (
+    AsyncExitStack,
+    asynccontextmanager,
+)
+import functools
+import logging
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    AsyncIterable,
+    Callable,
+    ClassVar,
+    Collection,
+    Coroutine,
+    Optional,
+)
+
+from aiohttp import web
+from requests import HTTPError
+
+from dl_api_commons.aiohttp.aiohttp_wrappers import RequiredResourceCommon
+from dl_api_lib import utils
+from dl_api_lib.api_common.data_serialization import (
+    DataRequestResponseSerializer,
+    get_fields_data_serializable,
+)
+from dl_api_lib.api_common.dataset_loader import (
+    DatasetApiLoader,
+    DatasetUpdateInfo,
+)
+from dl_api_lib.api_common.update_dataset_mutation_key import UpdateDatasetMutationKey
+from dl_api_lib.app.data_api.resources.base import (
+    BaseView,
+    requires,
+)
+import dl_api_lib.common_models.data_export as data_export_models
+from dl_api_lib.dataset.view import DatasetView
+from dl_api_lib.query.formalization.block_formalizer import BlockFormalizer
+from dl_api_lib.query.formalization.legend_formalizer import (
+    DistinctLegendFormalizer,
+    LegendFormalizer,
+    PivotLegendFormalizer,
+    PreviewLegendFormalizer,
+    RangeLegendFormalizer,
+    ResultLegendFormalizer,
+)
+from dl_api_lib.request_model.data import (
+    Action,
+    DataRequestModel,
+    FieldAction,
+)
+from dl_api_lib.service_registry.service_registry import ApiServiceRegistry
+from dl_app_tools.profiling_base import (
+    GenericProfiler,
+    generic_profiler,
+    generic_profiler_async,
+)
+from dl_constants.enums import (
+    DataSourceRole,
+    FieldRole,
+    RLSSubjectType,
+)
+from dl_core.components.accessor import DatasetComponentAccessor
+from dl_core.data_source.base import DataSource
+from dl_core.data_source.collection import DataSourceCollectionFactory
+from dl_core.dataset_capabilities import DatasetCapabilities
+from dl_core.exc import USObjectNotFoundException
+from dl_core.us_dataset import Dataset
+from dl_core.us_manager.mutation_cache.engine_factory import CacheInitializationError
+from dl_core.us_manager.mutation_cache.mutation_key_base import MutationKey
+from dl_core.us_manager.mutation_cache.usentry_mutation_cache import (
+    RedisCacheEngine,
+    USEntryMutationCache,
+)
+from dl_core.us_manager.us_manager_async import AsyncUSManager
+from dl_query_processing.compilation.specs import ParameterValueSpec
+from dl_query_processing.enums import QueryType
+from dl_query_processing.execution.exec_info import QueryExecutionInfo
+from dl_query_processing.legend.block_legend import BlockSpec
+from dl_query_processing.legend.field_legend import ParameterRoleSpec
+from dl_query_processing.merging.merger import DataStreamMerger
+from dl_query_processing.merging.primitives import MergedQueryDataStream
+from dl_query_processing.pagination.paginator import QueryPaginator
+from dl_query_processing.postprocessing.postprocessor import DataPostprocessor
+from dl_query_processing.postprocessing.primitives import (
+    PostprocessedQuery,
+    PostprocessedQueryBlock,
+    PostprocessedQueryUnion,
+    PostprocessedRow,
+)
+from dl_utils.task_runner import ConcurrentTaskRunner
+
+
+if TYPE_CHECKING:
+    from dl_api_lib.query.formalization.raw_specs import RawQuerySpecUnion
+
+
+LOGGER = logging.getLogger(__name__)
+
+
+@requires(RequiredResourceCommon.US_MANAGER)
+class DatasetDataBaseView(BaseView):
+    STORED_DATASET_REQUIRED: ClassVar[bool] = True
+
+    profiler_prefix: ClassVar[str]
+
+    dataset: Dataset
+    ds_accessor: DatasetComponentAccessor
+
+    @property
+    def dataset_id(self) -> Optional[str]:
+        return self.request.match_info.get("ds_id")
+
+    @property
+    def allow_query_cache_usage(self) -> bool:
+        """
+        Indicates if query cache may be used for request.
+         Now only config flag but in future - may be special header.
+        """
+        return self.dl_request.app_wrapper.allow_query_cache_usage
+
+    @property
+    def allow_notifications(self) -> bool:
+        """
+        Indicates if may be returned in response.
+        Now only config flag but in future - may be more complex logic
+        """
+        return self.dl_request.app_wrapper.allow_notifications
+
+    @property
+    def api_service_registry(self) -> ApiServiceRegistry:
+        service_registry = self.dl_request.services_registry
+        assert isinstance(service_registry, ApiServiceRegistry)
+        return service_registry
+
+    @property
+    def rev_id(self) -> Optional[str]:
+        return self.request.query.get("rev_id")
+
+    @asynccontextmanager  # type: ignore  # TODO: fix
+    async def default_query_execution_cm_stack(
+        self,
+        exec_info: QueryExecutionInfo,
+        body: dict,
+        profiling_code: str = "query-execute",
+    ) -> AsyncIterable[AsyncExitStack]:
+        """
+        See also:
+        `dl_api_lib.app.data_api.resources.dashsql.DashSQLView.enrich_logging_context`
+        """
+        async with AsyncExitStack() as stack:
+            if self.dl_request.log_ctx_controller:
+                try:
+                    target_connections = exec_info.target_connections
+                    assert len(target_connections) == 1
+                    target_conn = target_connections[0]
+                    self.dl_request.log_ctx_controller.put_to_context("conn_id", target_conn.uuid)
+                    self.dl_request.log_ctx_controller.put_to_context("conn_type", target_conn.conn_type.name)
+
+                    sr = self.dl_request.services_registry
+                    try:
+                        ce_cls_str = (
+                            sr.get_conn_executor_factory().get_async_conn_executor_cls(target_conn).__qualname__
+                        )
+                        self.dl_request.log_ctx_controller.put_to_context("conn_exec_cls", ce_cls_str)
+                    except Exception:  # noqa
+                        LOGGER.exception("Can not get CE class for connection %s", target_conn.uuid)
+
+                except Exception:  # noqa
+                    LOGGER.exception("Can not save connection info to logging context")
+
+            stack.enter_context(GenericProfiler(f"{self.profiler_prefix}-{profiling_code}"))  # type: ignore  # TODO: fix
+            stack.enter_context(utils.query_execution_context(dataset_id=self.dataset.uuid, version="draft", body=body))
+            yield stack
+
+    def resolve_dataset_source_role(self, dataset: Dataset, log_reasons: bool = False) -> DataSourceRole:
+        dsrc_coll_factory = DataSourceCollectionFactory(us_entry_buffer=self.dl_request.us_manager.get_entry_buffer())
+        capabilities = DatasetCapabilities(dataset=dataset, dsrc_coll_factory=dsrc_coll_factory)
+        return capabilities.resolve_source_role(log_reasons=log_reasons)
+
+    @generic_profiler_async("resolve-entities")  # type: ignore  # TODO: fix
+    async def resolve_entities(self) -> None:
+        us_manager = self.dl_request.us_manager
+
+        if self.dl_request.log_ctx_controller:
+            self.dl_request.log_ctx_controller.put_to_context("dataset_id", self.dataset_id)
+
+        params: dict[str, str] | None = None
+        if self.rev_id is not None:
+            params = {"revId": self.rev_id}
+
+        if self.dataset_id is None:
+            if self.STORED_DATASET_REQUIRED:
+                raise ValueError(f"View {self} requires stored dataset, but no ID found in match info")
+
+            dataset = Dataset.create_from_dict(
+                Dataset.DataModel(name=""),  # TODO: Remove name - it's not used, but is required
+                us_manager=us_manager,  # type: ignore  # TODO: fix # WTF??? sync or async??
+            )
+        else:
+            try:
+                dataset = await us_manager.get_by_id(self.dataset_id, Dataset, params=params)
+            except USObjectNotFoundException as e:
+                raise web.HTTPNotFound(reason="Entity not found") from e
+
+            await us_manager.load_dependencies(dataset)
+
+        self.dataset = dataset
+        self.ds_accessor = DatasetComponentAccessor(dataset=dataset)
+
+    async def _apply_updates_to_dataset(
+        self,
+        req_model: DataRequestModel,
+        us_manager: AsyncUSManager,
+        allow_rls_change: bool,
+        allow_settings_change: bool,
+        cached_dataset: Optional[Dataset],
+    ) -> DatasetUpdateInfo:
+        services_registry = self.dl_request.services_registry
+        assert isinstance(services_registry, ApiServiceRegistry)
+        loader = DatasetApiLoader(service_registry=services_registry)
+
+        update_info = loader.update_dataset_from_body(
+            dataset=self.dataset,
+            us_manager=us_manager,
+            dataset_data=req_model.dataset,
+            allow_rls_change=allow_rls_change,
+            allow_settings_change=allow_settings_change,
+        )
+
+        await self.resolve_rls_groups_for_dataset(req_model, services_registry)
+        await self.check_for_notifications(services_registry, us_manager)
+
+        if cached_dataset:
+            return update_info
+
+        # Apply updates
+        dataset_validator_factory = services_registry.get_dataset_validator_factory()
+        ds_validator = dataset_validator_factory.get_dataset_validator(
+            ds=self.dataset,
+            us_manager=us_manager,
+            is_data_api=True,
+        )
+        executor = services_registry.get_compute_executor()
+        await executor.execute(lambda: ds_validator.apply_batch(action_batch=req_model.updates))
+
+        return update_info
+
+    async def _prepare_dataset_from_cache_without_dataset_id(
+        self,
+        req_model: DataRequestModel,
+        allow_rls_change: bool = False,
+        allow_settings_change: bool = False,
+    ) -> DatasetUpdateInfo:
+        us_manager = self.dl_request.us_manager
+
+        if self.STORED_DATASET_REQUIRED:
+            raise ValueError(f"View {self} requires stored dataset, but no ID found in match info")
+
+        dataset = Dataset.create_from_dict(
+            Dataset.DataModel(name=""),  # TODO: Remove name - it's not used, but is required
+            us_manager=us_manager,  # type: ignore  # TODO: fix # WTF??? sync or async??
+        )
+
+        # Validate revision from request
+        self._check_dataset_revision_id(dataset.revision_id, req_model)
+
+        with GenericProfiler("dataset-prepare"):
+            # Empty dataset, possibly can't be in cache
+            self.dataset = dataset
+
+            await us_manager.load_dependencies(self.dataset)
+
+            self.ds_accessor = DatasetComponentAccessor(dataset=self.dataset)
+
+            update_info = await self._apply_updates_to_dataset(
+                req_model,
+                us_manager,
+                allow_rls_change,
+                allow_settings_change,
+                cached_dataset=None,
+            )
+
+            enable_mutation_caching = self.dl_request.services_registry.get_mutation_cache_factory() is not None
+
+            if enable_mutation_caching:
+                mutation_cache = self.try_get_cache(allow_slave=False)
+                mutation_key = self.try_get_mutation_key_for_dataset(
+                    self.dataset_id, dataset.revision_id, req_model.updates
+                )
+
+                await self.try_save_dataset_to_cache(mutation_cache, mutation_key, self.dataset)  # noqa
+
+        return update_info
+
+    async def _prepare_dataset_from_cache_with_dataset_id(
+        self,
+        req_model: DataRequestModel,
+        allow_rls_change: bool = False,
+        allow_settings_change: bool = False,
+    ) -> DatasetUpdateInfo:
+        us_manager = self.dl_request.us_manager
+
+        params: dict[str, str] | None = None
+        if self.rev_id is not None:
+            params = {"revId": self.rev_id}
+
+        try:
+            assert self.dataset_id is not None
+            us_resp = await us_manager.get_by_id_raw(self.dataset_id, params=params)
+        except USObjectNotFoundException as e:
+            raise web.HTTPNotFound(reason="Entity not found") from e
+
+        # TODO: Try using partial deserialization instead of direct dict lookup if possible
+        assert us_resp is not None
+        revision_id = us_resp["data"].get("revision_id", None)
+        permissions = us_resp.get("permissions", None)
+        permissions_mode = us_resp.get("permissions_mode", None)
+
+        # Validate revision from request
+        self._check_dataset_revision_id(revision_id, req_model)
+
+        enable_mutation_caching = self.dl_request.services_registry.get_mutation_cache_factory() is not None
+
+        with GenericProfiler("dataset-prepare"):
+            # Try from cache
+            cached_dataset = None
+            if enable_mutation_caching:
+                mutation_cache = self.try_get_cache(allow_slave=False)
+                # TODO consider: ^ analyze profiling & maybe use allow_slave=True when reading from cache
+                mutation_key = self.try_get_mutation_key_for_dataset(self.dataset_id, revision_id, req_model.updates)
+                cached_dataset = await self.try_get_dataset_from_cache_by_id(
+                    self.dataset_id,
+                    revision_id,
+                    mutation_cache,
+                    mutation_key,
+                )
+
+            if cached_dataset:
+                self.dataset = cached_dataset
+                self.dataset.permissions = permissions
+                self.dataset.permissions_mode = permissions_mode
+            else:
+                dataset = await us_manager.deserialize_us_resp(us_resp, Dataset)
+                assert isinstance(dataset, Dataset)
+
+                self.dataset = dataset
+
+            await us_manager.load_dependencies(self.dataset)
+
+            self.ds_accessor = DatasetComponentAccessor(dataset=self.dataset)
+
+            update_info = await self._apply_updates_to_dataset(
+                req_model,
+                us_manager,
+                allow_rls_change,
+                allow_settings_change,
+                cached_dataset=cached_dataset,
+            )
+
+            if enable_mutation_caching and cached_dataset is None:
+                await self.try_save_dataset_to_cache(mutation_cache, mutation_key, self.dataset)
+
+        return update_info
+
+    @generic_profiler_async("prepare-dataset-with-mutation-cache")  # type: ignore  # TODO: fix
+    async def prepare_dataset_with_mutation_cache(
+        self,
+        req_model: DataRequestModel,
+        allow_rls_change: bool = False,
+        allow_settings_change: bool = False,
+    ) -> DatasetUpdateInfo:
+        """Try take dataset from mutation cache to avoid double deserialization"""
+        if self.dl_request.log_ctx_controller:
+            self.dl_request.log_ctx_controller.put_to_context("dataset_id", self.dataset_id)
+
+        if self.dataset_id is None:
+            return await self._prepare_dataset_from_cache_without_dataset_id(
+                req_model=req_model,
+                allow_rls_change=allow_rls_change,
+                allow_settings_change=allow_settings_change,
+            )
+        return await self._prepare_dataset_from_cache_with_dataset_id(
+            req_model=req_model,
+            allow_rls_change=allow_rls_change,
+            allow_settings_change=allow_settings_change,
+        )
+
+    @staticmethod
+    def _updates_only_fields(updates: list[Action]) -> bool:
+        # Checks if updates has only field updates
+        return all([isinstance(upd, FieldAction) for upd in updates])
+
+    def try_get_mutation_key(self, updates: list[Action]) -> Optional[MutationKey]:
+        return self.try_get_mutation_key_for_dataset(self.dataset_id, self.dataset.revision_id, updates)
+
+    @staticmethod
+    def try_get_mutation_key_for_dataset(
+        dataset_id: Optional[str], revision_id: Optional[str], updates: list[Action]
+    ) -> Optional[MutationKey]:
+        # Cheat: replace None revision_id with empty string to allow caching
+        if revision_id is None:
+            revision_id = ""
+
+        if dataset_id is not None:
+            if DatasetDataBaseView._updates_only_fields(updates):
+                return UpdateDatasetMutationKey.create(revision_id, updates)  # type: ignore  # 2024-01-30 # TODO: Argument 2 to "create" of "UpdateDatasetMutationKey" has incompatible type "list[Action]"; expected "list[FieldAction]"  [arg-type]
+        return None
+
+    @generic_profiler("mutation-cache-init")
+    def try_get_cache(self, allow_slave: bool) -> Optional[USEntryMutationCache]:
+        try:
+            mc_factory = self.dl_request.services_registry.get_mutation_cache_factory()
+            if mc_factory is None:
+                LOGGER.debug("Mutation cache is disabled")
+                return None
+            mce_factory = self.dl_request.services_registry.get_mutation_cache_engine_factory(RedisCacheEngine)
+            cache_engine = mce_factory.get_cache_engine(allow_slave)
+            mutation_cache = mc_factory.get_mutation_cache(
+                usm=self.dl_request.us_manager,
+                engine=cache_engine,
+            )
+            return mutation_cache
+        except CacheInitializationError:  # Error creating factory with redis cache engine or something
+            LOGGER.error("Mutation cache error", exc_info=True)
+            return None
+
+    async def try_get_dataset_from_cache(
+        self,
+        mutation_cache: Optional[USEntryMutationCache],
+        mutation_key: Optional[MutationKey],
+    ) -> Optional[Dataset]:
+        cached_dataset = await self.try_get_dataset_from_cache_by_id(
+            self.dataset_id,
+            self.dataset.revision_id,
+            mutation_cache,
+            mutation_key,
+        )
+
+        if cached_dataset is None:
+            return None
+
+        LOGGER.info("Found dataset in mutation cache")
+        cached_dataset.permissions_mode = self.dataset.permissions_mode
+        cached_dataset.permissions = self.dataset.permissions
+
+        return cached_dataset
+
+    @staticmethod  # type: ignore  # TODO: fix
+    @generic_profiler_async("mutation-cache-get")
+    async def try_get_dataset_from_cache_by_id(
+        dataset_id: Optional[str],
+        revision_id: Optional[str],
+        mutation_cache: Optional[USEntryMutationCache],
+        mutation_key: Optional[MutationKey],
+    ) -> Optional[Dataset]:
+        if mutation_key is None or mutation_cache is None:
+            return None
+        if dataset_id is None:
+            return None
+
+        # Cheat: replace None revision_id with empty string to allow caching
+        if revision_id is None:
+            revision_id = ""
+
+        cached_dataset = await mutation_cache.get_mutated_entry_from_cache(
+            Dataset,
+            dataset_id,
+            revision_id,
+            mutation_key,
+        )
+        if cached_dataset is None:
+            return None
+
+        LOGGER.info("Found dataset in mutation cache")
+
+        assert isinstance(cached_dataset, Dataset)
+
+        return cached_dataset
+
+    @generic_profiler_async("mutation-cache-save")  # type: ignore  # TODO: fix
+    async def try_save_dataset_to_cache(
+        self,
+        mutation_cache: Optional[USEntryMutationCache],
+        mutation_key: Optional[MutationKey],
+        dataset: Dataset,
+    ) -> None:
+        if mutation_key is None:
+            return None
+        if mutation_cache is None:
+            return None
+        await mutation_cache.save_mutation_cache(dataset, mutation_key)
+
+    async def resolve_rls_groups_for_dataset(
+        self,
+        req_model: DataRequestModel,
+        services_registry: ApiServiceRegistry,
+    ) -> None:
+        if not any(item.subject.subject_type == RLSSubjectType.group for item in self.dataset.rls.items):
+            return  # no groups in the RLS config, no need to resolve
+
+        subject_resolver = await services_registry.get_subject_resolver()
+        try:
+            subject_groups = await subject_resolver.get_groups_by_subject(services_registry.rci)
+        except HTTPError as exc:
+            if exc.response.status_code == 404:
+                raise web.HTTPNotFound(reason="Cannot find RLS groups for subject")
+            LOGGER.error(f"Error while resolving RLS groups: {str(exc)}", exc_info=True)
+            raise exc
+        LOGGER.info(f"Subject groups for RLS: {subject_groups}")
+        self.dataset.rls.allowed_groups = set(subject_groups)
+
+    async def prepare_dataset_for_request(
+        self,
+        req_model: DataRequestModel,
+        allow_rls_change: bool = False,
+        allow_settings_change: bool = False,
+        enable_mutation_caching: bool = False,
+    ) -> DatasetUpdateInfo:
+        us_manager = self.dl_request.us_manager
+
+        services_registry = self.dl_request.services_registry
+        assert isinstance(services_registry, ApiServiceRegistry)
+        loader = DatasetApiLoader(service_registry=services_registry)
+
+        cached_dataset: Optional[Dataset] = None
+        with GenericProfiler("dataset-prepare"):
+            if enable_mutation_caching:
+                mutation_cache = self.try_get_cache(allow_slave=False)
+                # TODO consider: ^ analyze profiling & maybe use allow_slave=True when reading from cache
+                mutation_key = self.try_get_mutation_key(req_model.updates)
+                cached_dataset = await self.try_get_dataset_from_cache(mutation_cache, mutation_key)
+                if cached_dataset:
+                    self.dataset = cached_dataset
+
+            update_info = loader.update_dataset_from_body(
+                dataset=self.dataset,
+                us_manager=us_manager,
+                dataset_data=req_model.dataset,
+                allow_rls_change=allow_rls_change,
+                allow_settings_change=allow_settings_change,
+            )
+            await self.resolve_rls_groups_for_dataset(req_model, services_registry)
+
+            if cached_dataset:
+                await self.check_for_notifications(services_registry, us_manager)
+                return update_info
+
+            await us_manager.load_dependencies(self.dataset)
+
+            services_registry = self.dl_request.services_registry
+            assert isinstance(services_registry, ApiServiceRegistry)
+
+            await self.check_for_notifications(services_registry, us_manager)
+
+            dataset_validator_factory = services_registry.get_dataset_validator_factory()
+            ds_validator = dataset_validator_factory.get_dataset_validator(
+                ds=self.dataset,
+                us_manager=us_manager,
+                is_data_api=True,
+            )
+            executor = services_registry.get_compute_executor()
+            await executor.execute(lambda: ds_validator.apply_batch(action_batch=req_model.updates))
+            if enable_mutation_caching:
+                await self.try_save_dataset_to_cache(mutation_cache, mutation_key, self.dataset)  # noqa
+
+        return update_info
+
+    def _get_parameter_value_specs(
+        self,
+        raw_query_spec_union: RawQuerySpecUnion,
+    ) -> list[ParameterValueSpec]:
+        legend_formalizer = self.make_legend_formalizer(query_type=raw_query_spec_union.meta.query_type)
+        legend = legend_formalizer.make_legend(raw_query_spec_union=raw_query_spec_union)
+
+        result: list[ParameterValueSpec] = []
+        for legend_parameter_spec in legend.list_for_role(FieldRole.parameter):
+            parameter_role_spec = legend_parameter_spec.role_spec
+            assert isinstance(parameter_role_spec, ParameterRoleSpec)
+            field_id = legend_parameter_spec.id
+
+            parameter_value_spec = ParameterValueSpec(field_id=field_id, value=parameter_role_spec.value)
+            result.append(parameter_value_spec)
+
+        return result
+
+    async def check_for_notifications(self, services_registry: ApiServiceRegistry, us_manager: AsyncUSManager) -> None:
+        ds_lc_manager = us_manager.get_lifecycle_manager(self.dataset)
+        for conn_id in set(ds_lc_manager.collect_links().values()):
+            try:
+                conn = us_manager.get_loaded_us_connection(conn_id)
+            except Exception:
+                LOGGER.info("Failed to get loaded us connection %s", conn_id, exc_info=True)
+            else:
+                conn_notifications = conn.check_for_notifications()
+                if not conn_notifications:
+                    continue
+
+                reporting_registry = services_registry.get_reporting_registry()
+                for notification_record in conn_notifications:
+                    reporting_registry.save_reporting_record(notification_record)
+
+    def make_legend_formalizer(self, query_type: QueryType, autofill_legend: bool = False) -> LegendFormalizer:
+        legend_formalizer_cls: type[LegendFormalizer]
+        if query_type == QueryType.pivot:
+            legend_formalizer_cls = PivotLegendFormalizer
+        elif query_type == QueryType.result:
+            legend_formalizer_cls = ResultLegendFormalizer
+        elif query_type == QueryType.preview:
+            legend_formalizer_cls = PreviewLegendFormalizer
+        elif query_type == QueryType.distinct:
+            legend_formalizer_cls = DistinctLegendFormalizer
+        elif query_type == QueryType.value_range:
+            legend_formalizer_cls = RangeLegendFormalizer
+        else:
+            raise ValueError(f"Legend formalization is not supported for {query_type.name} query type")
+        return legend_formalizer_cls(
+            dataset=self.dataset,
+            autofill_legend=autofill_legend,
+        )
+
+    def make_block_formalizer(self) -> BlockFormalizer:
+        return BlockFormalizer(
+            dataset=self.dataset,
+            reporting_registry=self.dl_request.services_registry.get_reporting_registry(),
+        )
+
+    async def _call_post_exec_async_hook(self, target_connection_ids: set[str]) -> None:
+        for connection_id in target_connection_ids:
+            connection = self.dl_request.us_manager.get_loaded_us_connection(connection_id)
+            lifecycle_manager = self.dl_request.us_manager.get_lifecycle_manager(
+                entry=connection,
+                service_registry=self.dl_request.services_registry,
+            )
+            await lifecycle_manager.post_exec_async_hook()
+
+    async def execute_query(
+        self,
+        block_spec: BlockSpec,
+        possible_data_lengths: Optional[Collection] = None,
+        profiling_postfix: str = "",
+        parameter_value_specs: list[ParameterValueSpec] | None = None,
+    ) -> PostprocessedQuery:
+        # TODO: Move to a separate class
+
+        us_manager = self.dl_request.us_manager
+
+        ds_view = DatasetView(
+            ds=self.dataset,
+            us_manager=us_manager,
+            block_spec=block_spec,
+            rci=self.dl_request.rci,
+            parameter_value_specs=parameter_value_specs,
+        )
+
+        with GenericProfiler(f"{self.profiler_prefix}-query-build{profiling_postfix}"):
+            exec_info = ds_view.build_exec_info()
+
+        async with self.default_query_execution_cm_stack(exec_info, body=self.dl_request.json):
+            executed_query = await ds_view.get_data_async(
+                exec_info=exec_info,
+                allow_cache_usage=self.allow_query_cache_usage,
+            )
+            if possible_data_lengths is not None:
+                assert len(executed_query.rows) in possible_data_lengths
+
+        postprocessor = DataPostprocessor(profiler_prefix=self.profiler_prefix)
+        postprocessed_query = postprocessor.get_postprocessed_data(
+            executed_query=executed_query,
+            block_spec=block_spec,
+        )
+
+        return postprocessed_query
+
+    async def execute_all_queries(
+        self,
+        raw_query_spec_union: RawQuerySpecUnion,
+        autofill_legend: bool,
+        call_post_exec_async_hook: bool = False,
+    ) -> MergedQueryDataStream:
+        # TODO: Move to a separate class
+
+        legend_formalizer = self.make_legend_formalizer(
+            query_type=raw_query_spec_union.meta.query_type, autofill_legend=autofill_legend
+        )
+        legend = legend_formalizer.make_legend(raw_query_spec_union=raw_query_spec_union)
+
+        block_legend = self.make_block_formalizer().make_block_legend(
+            raw_query_spec_union=raw_query_spec_union,
+            legend=legend,
+        )
+        paginator = QueryPaginator()
+        pre_paginator = paginator.get_pre_paginator()
+        post_paginator = paginator.get_post_paginator()
+        block_legend = pre_paginator.pre_paginate(block_legend=block_legend)
+
+        runner = ConcurrentTaskRunner()
+        for block_spec in block_legend.blocks:
+            await runner.schedule(
+                self.execute_query(
+                    block_spec=block_spec,
+                    parameter_value_specs=self._get_parameter_value_specs(raw_query_spec_union=raw_query_spec_union),
+                )
+            )
+        executed_queries = await runner.finalize()
+        postprocessed_query_blocks = [
+            PostprocessedQueryBlock.from_block_spec(block_spec, postprocessed_query=postprocessed_query)
+            for block_spec, postprocessed_query in zip(block_legend.blocks, executed_queries, strict=True)
+        ]
+
+        postprocessed_query_union = PostprocessedQueryUnion(
+            blocks=postprocessed_query_blocks,
+            legend=legend,
+            limit=block_legend.meta.limit,
+            offset=block_legend.meta.offset,
+        )
+        merged_stream = DataStreamMerger().merge(postprocessed_query_union=postprocessed_query_union)
+        merged_stream = post_paginator.post_paginate(merged_stream=merged_stream)
+
+        if call_post_exec_async_hook:
+            await self._call_post_exec_async_hook(merged_stream.meta.target_connection_ids)
+
+        return merged_stream
+
+    def _make_response_v1(
+        self,
+        req_model: DataRequestModel,
+        merged_stream: MergedQueryDataStream,
+        totals_query: Optional[str] = None,
+        totals: Optional[PostprocessedRow] = None,
+    ) -> dict[str, Any]:
+        add_fields_data = req_model.add_fields_data
+        fields_data: Optional[list[dict[str, Any]]] = None
+        if add_fields_data:
+            fields_data = get_fields_data_serializable(self.dataset, for_result=True)
+            LOGGER.info("Field schema data", extra=dict(fields=fields_data))
+
+        data_export_info = self.get_data_export_info()
+
+        response_json = DataRequestResponseSerializer.make_data_response_v1(
+            merged_stream=merged_stream,
+            totals=totals,
+            totals_query=totals_query,
+            data_export_info=data_export_info,
+            fields_data=fields_data,
+        )
+        return response_json
+
+    def _make_response_v2(self, merged_stream: MergedQueryDataStream) -> dict[str, Any]:
+        data_export_info = self.get_data_export_info()
+
+        result = DataRequestResponseSerializer.make_data_response_v2(
+            merged_stream=merged_stream,
+            reporting_registry=self.dl_request.services_registry.get_reporting_registry()
+            if self.allow_notifications
+            else None,
+            data_export_info=data_export_info,
+        )
+        return result
+
+    def get_data_export_info(self) -> data_export_models.DataExportInfo:
+        tenant = self.dl_request.rci.tenant
+        assert tenant
+
+        data_export_conn_info = self.get_data_export_info_for_connection()
+
+        return data_export_models.DataExportInfo(
+            enabled_in_conn=data_export_conn_info.enabled_in_conn,
+            enabled_in_ds=not self.dataset.data_export_forbidden,
+            enabled_in_tenant=tenant.is_data_export_enabled,
+            allowed_in_conn_type=data_export_conn_info.allowed_in_conn_type,
+            background_allowed_in_tenant=tenant.is_background_data_export_allowed,
+        )
+
+    def get_data_export_info_for_connection(self) -> data_export_models.DataExportConnInfo:
+        is_data_export_allowed_in_conn = True
+        is_data_export_allowed_in_conn_type = True
+
+        role = self.resolve_dataset_source_role(dataset=self.dataset)
+        avatar_ids = [avatar.id for avatar in self.ds_accessor.get_avatar_list()]
+        dsrc_coll_factory = DataSourceCollectionFactory(us_entry_buffer=self.dl_request.us_manager.get_entry_buffer())
+        dataset_parameter_values = self.ds_accessor.get_parameter_values()
+        dataset_template_enabled = self.ds_accessor.get_template_enabled()
+
+        for avatar_id in avatar_ids:
+            avatar = self.ds_accessor.get_avatar_strict(avatar_id=avatar_id)
+            dsrc_coll_spec = self.ds_accessor.get_data_source_coll_spec_strict(source_id=avatar.source_id)
+            dsrc_coll = dsrc_coll_factory.get_data_source_collection(
+                spec=dsrc_coll_spec,
+                dataset_parameter_values=dataset_parameter_values,
+                dataset_template_enabled=dataset_template_enabled,
+            )
+
+            dsrc: DataSource
+            if DataSourceRole.origin in dsrc_coll:
+                dsrc = dsrc_coll.get_strict(role=DataSourceRole.origin)
+            else:
+                dsrc = dsrc_coll.get_strict(role)
+
+            if dsrc.data_export_forbidden:
+                is_data_export_allowed_in_conn = False
+
+            if not dsrc.data_export_allowed_for_conn_type:
+                is_data_export_allowed_in_conn_type = False
+
+        return data_export_models.DataExportConnInfo(
+            enabled_in_conn=is_data_export_allowed_in_conn,
+            allowed_in_conn_type=is_data_export_allowed_in_conn_type,
+        )
+
+    def check_dataset_revision_id(self, req_model: DataRequestModel) -> None:
+        self._check_dataset_revision_id(
+            dataset_revision_id=self.dataset.revision_id,
+            req_model=req_model,
+        )
+
+    @staticmethod
+    def _check_dataset_revision_id(dataset_revision_id: Optional[str], req_model: DataRequestModel) -> None:
+        req_dataset_revision_id = req_model.dataset_revision_id
+        if req_dataset_revision_id is not None and req_dataset_revision_id != dataset_revision_id:
+            LOGGER.warning(
+                f"Dataset revision id mismatch: got {req_dataset_revision_id} from the request, "
+                f"but found {dataset_revision_id} in the current dataset"
+            )
+
+    @staticmethod
+    def with_dataset_us_context(
+        coro: Callable[..., Coroutine[Any, Any, Any]]
+    ) -> Callable[..., Coroutine[Any, Any, Any]]:
+        @functools.wraps(coro)
+        async def wrapper(self: "DatasetDataBaseView", *args: Any, **kwargs: Any) -> Any:
+            self.dl_request.us_manager.set_dataset_context(self.dataset_id)
+            return await coro(self, *args, **kwargs)
+
+        return wrapper

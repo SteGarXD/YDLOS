@@ -1,0 +1,24 @@
+.palette-color-control {
+    margin-bottom: var(--g-spacing-1);
+
+    &__color-control-wrapper {
+        display: flex;
+    }
+
+    & &__color-control-button {
+        width: 24px;
+        height: 24px;
+        margin-right: var(--g-spacing-1);
+        margin-block: 2px;
+
+        &.palette-item:hover::before {
+            content: none;
+        }
+    }
+
+    &__palette {
+        border-radius: 8px;
+        background-color: var(--g-color-base-background);
+        padding: var(--g-spacing-4);
+    }
+}

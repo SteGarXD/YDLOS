@@ -1,0 +1,25 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.wizard-app {
+    height: 100%;
+    min-width: 1100px;
+
+    &__main {
+        height: calc(100% - 70px);
+    }
+
+    &__main_aside {
+        height: 100%;
+    }
+
+    .dnd-container {
+        min-height: 53px;
+        padding-top: 8px;
+
+        .item-icon {
+            display: inline-block;
+            margin-right: 8px;
+        }
+    }
+}

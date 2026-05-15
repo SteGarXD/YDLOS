@@ -1,0 +1,116 @@
+﻿[
+    {
+        "Id": "sha256:12c872cda5bd56eab64a308e6b0a6373938efe2aacde75f2bce2a7fed6200bfb",
+        "RepoTags": [
+            "aeronavigatorbi/datalens-postgres:16"
+        ],
+        "RepoDigests": [
+            "aeronavigatorbi/datalens-postgres@sha256:12c872cda5bd56eab64a308e6b0a6373938efe2aacde75f2bce2a7fed6200bfb"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-03-18T08:21:25.913676113Z",
+        "Config": {
+            "ExposedPorts": {
+                "5432/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/postgresql/16/bin",
+                "GOSU_VERSION=1.19",
+                "LANG=en_US.utf8",
+                "PG_MAJOR=16",
+                "PG_VERSION=16.13-1.pgdg13+1",
+                "PGDATA=/var/lib/postgresql/data",
+                "PYTHONUNBUFFERED=1",
+                "POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=en_US.utf8 --lc-ctype=en_US.utf8",
+                "HC=0",
+                "POSTGRES_HOST=localhost",
+                "POSTGRES_PORT=5432",
+                "POSTGRES_USER=pg-user",
+                "POSTGRES_DB_COMPENG=pg-compeng-db",
+                "POSTGRES_DB_AUTH=pg-auth-db",
+                "POSTGRES_DB_US=pg-us-db",
+                "POSTGRES_DB_DEMO=pg-demo-db",
+                "POSTGRES_DB_META_MANAGER=pg-meta-manager-db",
+                "POSTGRES_DB_TEMPORAL=pg-temporal-db",
+                "POSTGRES_DB_TEMPORAL_VISIBILITY=pg-temporal-visibility-db",
+                "POSTGRES_DUMP_FORMAT=custom",
+                "POSTGRES_DUMP_SKIP_CONFLICT=true",
+                "POSTGRES_DUMP_CLEAR_META=false",
+                "INIT_DB_DEMO=true",
+                "INIT_DB_AUTH=true",
+                "INIT_DB_META_MANAGER=true",
+                "INIT_DB_TEMPORAL=true",
+                "DEMO_DATA_SLEEP=3",
+                "DEMO_DATA_NAME=OpenSource Demo",
+                "DEMO_PROJECT_ID=datalens-demo",
+                "INIT_DEMO_DATA=true",
+                "INIT_EXTERNAL_POSTGRES=false"
+            ],
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "Cmd": [
+                "postgres"
+            ],
+            "Volumes": {
+                "/var/lib/postgresql/data": {}
+            },
+            "StopSignal": "SIGINT"
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 195147562,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:188c9b34dfbe022075d01fc4f5a305412909ef97de440783c15043e68e1b1913",
+                "sha256:ce93141e68cc3207956bb3df5933af36344e8274c6d0fbd37dc872b1daed828a",
+                "sha256:0dcddad9ecdafc0212f8180badde34151a5a5fd5808577dcb8304ab352af9620",
+                "sha256:bbb745d32abb3ecb7056cda7ba9b4a352bd8c91049ec39c596c3b596d5603dfb",
+                "sha256:d7c7a78e03bdd021051bb4dcf8707aa4409781b18168697e791fed8af7377abf",
+                "sha256:65650400e976c48b10300aa6cfab2fc44d6aff39637a24bfb111ab0c21d76f86",
+                "sha256:d348fe033ea62de445c393815a92e9f8eac9ce74721b4bc50d3d8fc297479a86",
+                "sha256:ddedf19277ee6197b5a8050636c00f5d59c54d719078e77c082fac11d553c99f",
+                "sha256:ef516e76a3128c8abfea33c10333b4c11c7a279cc2151d2a7d9353e4363f6015",
+                "sha256:5593d722012889613823f3258c70756a16bcf8be8c90f57dc10635a37654ad25",
+                "sha256:a0c9f61c797e495e7405b7dde727c00ac520acf0f386635519f776415092659f",
+                "sha256:06b22e0e61c1bd34903738199278219c4d889aeb35a9da4747fce3e13a3c6f60",
+                "sha256:39f86da8cf83e43d2099450ad7f6584b3d7e6ec31c3140b7701693378b471073",
+                "sha256:5ed0fb2bf560dcd72c3d78f81e6ca613f0f5c254eccafe83ab0976e700e7a3bd",
+                "sha256:d107fd01bd392596384e5bea4ba3ed2cec943937961af1c921ddfd990e7dd7af",
+                "sha256:4c9dd203878e2b3cf40c99b34af8ed920e7bc6f683bca4523b187b129085a3b5",
+                "sha256:8d41bf570776e6ea14f4611b73313e3ad4bd94be6880629494b9bee7f5d04471",
+                "sha256:0b5dde7170bee5f0bd5f2266ded77719b725f68cef224fd3f44117356dfa11b0",
+                "sha256:144ffd0f07cde1e2662a3ce934f4e1289de2e983429f54b4e98091eac85d0c82",
+                "sha256:3c45dc3a6ae85d8d9a3ede28f5f2fa26fc3ef94907f88c502f52bb6092930af5",
+                "sha256:2fbd7fe0424d695acb36d3b4bc164e4c94b72df3350439484cb6a102fc0103cf",
+                "sha256:cb20c442e9283e08c964721e929725ec6226c28c0968e858c93b310462d837c2",
+                "sha256:7fff3a37ee0ffde09cdcd7bf4b9e8a38dde108b3c52795f9c8e925e4b783654e",
+                "sha256:b4a1ab1072cb15d60f95d1e6d3001a7c82d023c55e1cb11119dbdb635c73170f",
+                "sha256:ac8d2536862372e36b18ebb0baa3d284b70cd79630e478242558dcd2846f14ee",
+                "sha256:703fb064212a0efceaa54bd82ed6b5e4a1844d01f00ca0746d62956bde11e822",
+                "sha256:29cb994c7d3992623c1106e5537841b9a5bd929f83480a0be6ad03289e496420",
+                "sha256:be77f78008bfd272d0d5e5381f07c456d9de1fa3ee195733eb0f231847eff4aa",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:b612750ac313b7f4ceaf16a6aa5e8f3091af07bc419cd7ba096a619d7e0183ad",
+                "sha256:a2effd45f6c5a857f9a6a3eb2bfbcc0f218fc601f60390632406017ec0ab6c8b"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-03-18T08:21:26.822019496Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:12c872cda5bd56eab64a308e6b0a6373938efe2aacde75f2bce2a7fed6200bfb",
+            "size": 856
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "wdty87hsoiciz6f1jcdnqlw29",
+                    "CreatedAt": "2026-03-18T08:21:27.709208838Z"
+                }
+            ]
+        }
+    }
+]

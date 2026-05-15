@@ -1,0 +1,12 @@
+@use '~@gravity-ui/uikit/styles/mixins' as *;
+
+.dialog-column-settings {
+    &__subheader {
+        @include text-subheader-2();
+        margin-right: 4px;
+    }
+
+    &__help-mark {
+        vertical-align: text-bottom;
+    }
+}

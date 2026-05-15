@@ -1,0 +1,103 @@
+@import '~@gravity-ui/uikit/styles/mixins';
+
+$monospaceFontFamily: 'Consolas', 'Menlo', 'Ubuntu Mono', monospace;
+
+.chartkit-control-item {
+    $class: &;
+
+    &__control {
+        display: inline-flex;
+        vertical-align: bottom;
+        align-items: center;
+        position: relative;
+
+        &_mobile {
+            align-items: flex-start;
+            flex-direction: column;
+
+            #{$class}__title {
+                @include text-subheader-2();
+                margin-bottom: 5px;
+            }
+
+            #{$class}__yc-select {
+                border-radius: 10px;
+            }
+        }
+
+        &_without-label {
+            flex-direction: row;
+            align-items: center;
+        }
+
+        &_vertical {
+            flex-direction: column;
+            align-items: flex-start;
+
+            #{$class}__title {
+                margin-right: 0;
+                margin-bottom: 8px;
+            }
+        }
+    }
+
+    &__title {
+        margin-right: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        white-space: nowrap;
+        display: flex;
+
+        &_vertical {
+            max-width: 100%;
+        }
+    }
+
+    &__title-text {
+        @include overflow-ellipsis();
+    }
+
+    &__component,
+    &__yc-select {
+        flex-grow: 1;
+        overflow: hidden;
+    }
+
+    &__component {
+        &_vertical {
+            width: 100%;
+        }
+    }
+
+    &__textarea {
+        .textarea__control {
+            font-family: $monospaceFontFamily;
+        }
+    }
+
+    &__overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        z-index: 1;
+
+        &_move {
+            cursor: move;
+        }
+    }
+
+    &__component {
+        &_accent_info {
+            --g-text-input-background-color: var(--g-color-base-info-light);
+        }
+    }
+    &__yc-select {
+        &_accent_info {
+            --yc-select-badge-color: var(--g-color-base-selection-hover);
+            --yc-select-background-color: var(--g-color-base-info-light);
+            --yc-select-background-color-hover: var(--g-color-base-info-light-hover);
+        }
+    }
+}

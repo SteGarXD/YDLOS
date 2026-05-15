@@ -1,0 +1,54 @@
+.color-picker-input {
+    --_--preview-size: 16px;
+
+    &__preview-container {
+        margin: 0 var(--g-spacing-1);
+        overflow: hidden;
+        position: relative;
+        width: var(--_--preview-size);
+        height: var(--_--preview-size);
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0px;
+            border: 1px solid var(--g-color-line-generic);
+        }
+
+        &,
+        &::before {
+            border-radius: 2px;
+        }
+    }
+
+    &__preview {
+        width: var(--_--preview-size);
+        height: var(--_--preview-size);
+    }
+
+    &__palette {
+        cursor: pointer;
+        opacity: 0;
+        width: calc(100% + 8px);
+        height: calc(100% + 10px);
+        position: absolute;
+        left: -8px;
+        top: 0;
+    }
+
+    &__palette_size-l {
+        width: calc(100% + 8px);
+        height: calc(100% + 12px);
+    }
+
+    &__opacity-input {
+        width: 54px;
+        margin-inline-end: -1px;
+        border-inline-start: 1px solid var(--g-color-line-generic);
+        padding-inline-start: var(--g-spacing-1);
+    }
+
+    &__opacity-end-content {
+        margin-inline: var(--g-spacing-1);
+    }
+}

@@ -1,0 +1,75 @@
+@mixin yc-chartkit-theme-common {
+    // loader
+    --ck-loader-active: var(--g-color-base-brand);
+
+    // loader vail
+    --ck-veil-background: var(--g-color-sfx-fade);
+
+    // navigator
+    --highcarts-navigator-border: var(--g-color-line-generic);
+    --highcarts-navigator-track: var(--g-color-base-generic);
+    --highcarts-navigator-body: var(--g-color-scroll-handle);
+
+    // chart
+    --highcharts-series-border: var(--g-color-base-background);
+
+    --highcharts-grid-line: var(--g-color-line-generic);
+    --highcharts-axis-line: var(--g-color-line-generic);
+    --highcharts-tick: var(--g-color-line-generic);
+
+    --highcharts-title: var(--g-color-text-primary);
+    --highcharts-axis-labels: var(--g-color-text-secondary);
+    --highcharts-data-labels: var(--g-color-text-complementary);
+    --highcharts-plot-line-label: var(--g-color-text-complementary);
+
+    --highcharts-legend-item: var(--g-color-text-secondary);
+    --highcharts-legend-item-hover: var(--g-color-text-primary);
+    --highcharts-legend-item-hidden: var(--g-color-text-hint);
+
+    // for "floating" elements, for example, legends and tooltip
+    --highcharts-floating-bg: var(--g-color-infographics-tooltip-bg);
+
+    // tooltip
+    --highcharts-tooltip-text: var(--g-color-text-primary);
+    --highcharts-tooltip-bg: var(--highcharts-floating-bg);
+    --highcharts-tooltip-alternate-bg: var(--g-color-base-generic);
+    --highcharts-tooltip-text-complementary: var(--g-color-text-complementary);
+
+    // party stripe
+    --highcharts-holiday-band: var(--g-color-base-generic);
+
+    // table (Widget Table, Paginator, etc.)
+    --data-table-color-base: var(--g-color-base-background);
+    --data-table-color-stripe: var(--g-color-base-generic);
+    --data-table-border-color: var(--g-color-line-generic-solid);
+    --data-table-color-hover-area: var(--g-color-base-simple-hover);
+    --data-table-color-footer-area: var(--data-table-color-base);
+}
+
+// Apply themed styles to chartkit ymap contents
+
+.g-root .chartkit .chartkit-ymap {
+    & .chartkit-map-ground-pane {
+        filter: var(--dl-filter-ymap-background);
+    }
+
+    & [class*='map-bg'] {
+        background: var(--dl-color-ymap-background);
+    }
+
+    & [class*='zoom__plus'],
+    & [class*='zoom__minus'],
+    & [class*='zoom__runner'] {
+        background-color: var(--g-color-base-background);
+    }
+
+    & [class*='zoom__icon'] {
+        filter: var(--dl-filter-zoom-control);
+    }
+}
+
+.g-root .chartkit .chartkit-ymap-legend {
+    & .chartkit-ymap-legend-layer__color-preview_default-heatmap {
+        filter: var(--dl-filter-ymap-heatmap);
+    }
+}

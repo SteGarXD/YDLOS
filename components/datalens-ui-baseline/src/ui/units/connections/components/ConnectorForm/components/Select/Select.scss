@@ -1,0 +1,14 @@
+.conn-form-select {
+    &__option {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        height: 50px;
+    }
+
+    &__option_disabled,
+    &__description {
+        color: var(--g-color-text-secondary);
+    }
+}

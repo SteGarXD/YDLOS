@@ -1,0 +1,114 @@
+import type { BaseTextStyle } from './base';
+export interface ChartLegend {
+    enabled?: boolean;
+    /**
+     * Different types for different color schemes.
+     * If the color scheme is continuous, a gradient legend will be drawn.
+     * Otherwise, samples for different point values
+     *
+     * @default 'discrete'
+     */
+    type?: 'discrete' | 'continuous';
+    /**
+     * The position of the legend relative to the chart area.
+     * - 'bottom' (default): horizontal legend below the chart
+     * - 'right': vertical panel on the right side of the chart
+     *
+     * @default bottom
+     */
+    position?: 'bottom' | 'right';
+    /**
+     * The horizontal alignment of the legend box within the chart area.
+     *
+     * @default center
+     * */
+    align?: 'left' | 'center' | 'right';
+    /**
+     * Defines how items should be positioned in the legend when overflowing (moving to the next line).
+     *
+     * @default center
+     * */
+    justifyContent?: 'start' | 'center';
+    /**
+     * Defines the pixel distance between each legend item
+     *
+     * @default 20
+     * */
+    itemDistance?: number;
+    /** CSS styles for each legend item */
+    itemStyle?: BaseTextStyle;
+    /**
+     * The space between the legend and the axis labels or chart area.
+     *
+     * @default 15
+     */
+    margin?: number;
+    title?: {
+        text?: string;
+        /** CSS styles for the title */
+        style?: Partial<BaseTextStyle>;
+        /** The distance(in pixels) between the main content of the legend and its title
+         *
+         * Defaults to 4 for horizontal axes, 8 for vertical.
+         * */
+        margin?: number;
+        /** The horizontal alignment of the title. */
+        align?: 'left' | 'center' | 'right';
+    };
+    colorScale?: {
+        stops?: number[];
+        colors: string[];
+        domain?: number[];
+    };
+    width?: number;
+    /**
+     * Allows to use any html-tags to display the content.
+     *
+     * @default false
+     * */
+    html?: boolean;
+}
+export interface BaseLegendSymbol {
+    /**
+     * The pixel padding between the legend item symbol and the legend item text.
+     *
+     * @default 5
+     * */
+    padding?: number;
+}
+export interface RectLegendSymbolOptions extends BaseLegendSymbol {
+    /**
+     * The pixel width of the symbol for series types that use a rectangle in the legend
+     *
+     * @default 10
+     * */
+    width?: number;
+    /**
+     * The pixel width of the symbol for series types that use a rectangle in the legend
+     *
+     * @default 10
+     * */
+    height?: number;
+    /**
+     * The border radius of the symbol for series types that use a rectangle in the legend.
+     *
+     * Defaults to half the symbolHeight, effectively creating a circle.
+     */
+    radius?: number;
+}
+export interface PathLegendSymbolOptions extends BaseLegendSymbol {
+    /**
+     * The pixel width of the symbol for series types that use a path in the legend
+     *
+     * @default 16
+     * */
+    width?: number;
+}
+export interface SymbolLegendSymbolOptions extends BaseLegendSymbol {
+    /**
+     * The pixel width of the symbol for series types that use a symbol in the legend
+     *
+     * @default 8
+     * */
+    width?: number;
+}

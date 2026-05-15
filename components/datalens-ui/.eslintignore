@@ -1,0 +1,7 @@
+dist
+dist-out
+node_modules
+src/i18n/keysets
+tests/dist
+build/
+vendor-patches

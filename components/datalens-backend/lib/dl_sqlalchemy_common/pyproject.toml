@@ -1,0 +1,43 @@
+[tool.poetry]
+authors = ["DataLens Team <datalens-opensource@yandex-team.ru>"]
+description = "BI SQLAlchemy dialects common additions"
+license = "Apache 2.0"
+name = "dl-sqlalchemy-common"
+packages = [{include = "dl_sqlalchemy_common"}]
+readme = "README.rst"
+version = "0.2"
+
+[tool.poetry.dependencies]
+python = ">=3.10, <3.13"
+sqlalchemy = "*"
+
+[tool.poetry.group.tests.dependencies]
+dl-sqlalchemy-chyt = {path = "../dl_sqlalchemy_chyt"}
+dl-sqlalchemy-clickhouse = {path = "../dl_sqlalchemy_clickhouse"}
+dl-sqlalchemy-mssql = {path = "../dl_sqlalchemy_mssql"}
+dl-sqlalchemy-oracle = {path = "../dl_sqlalchemy_oracle"}
+dl-sqlalchemy-postgres = {path = "../dl_sqlalchemy_postgres"}
+pytest = "*"
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_untyped_defs = true
+ignore_errors = true # ignore mypy in entire module
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+minversion = "6.0"
+testpaths = ["dl_sqlalchemy_common_tests/unit"]
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]
+
+[datalens.meta.mypy]
+targets = [] # ignore mypy in entire module

@@ -1,0 +1,78 @@
+@use './theme' as *;
+
+.chartkit-theme_common {
+    @include yc-chartkit-theme-common;
+}
+
+.chartkit-scrollable-node {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 100%;
+
+    .chartkit-metric & {
+        max-height: none;
+    }
+}
+
+.chartkit {
+    height: 100%;
+    width: 100%;
+
+    &_mobile {
+        // here transfer the remaining styles with redefinition while refactor and transfer of spreadsheet and yfm styles
+
+        .chartkit-scrollable-node {
+            max-height: 3000px;
+        }
+
+        --ck-split-pane-background: var(--dl-color-widget-background, var(--g-color-base-float));
+    }
+}
+
+.chartkit-graph,
+.chartkit-tooltip {
+    .yfm {
+        display: inline-block;
+
+        img {
+            max-width: unset;
+        }
+    }
+}
+
+.gcharts-tooltip {
+    & &__content-row {
+        font-size: 13px;
+    }
+}
+
+.dl-chart-tooltip-content {
+    font-size: 13px;
+    padding: 0 14px;
+
+    &_mobile {
+        padding: var(--g-spacing-3);
+        font-size: 13px;
+    }
+
+    &__row {
+        display: flex;
+    }
+
+    &__color {
+        align-self: center;
+        border-radius: 1px;
+        display: inline-block;
+        height: 6px;
+        width: 12px;
+    }
+
+    &__block {
+        display: flex;
+        padding: 0 4px;
+        max-width: 400px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}

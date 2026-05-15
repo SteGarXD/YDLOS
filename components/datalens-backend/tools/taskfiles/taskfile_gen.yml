@@ -1,0 +1,32 @@
+version: '3'
+
+vars:
+  PACKAGE_NAME:
+    sh: basename {{.USER_WORKING_DIR}}
+
+tasks:
+  antlr:
+    dir: ../docker_build
+    cmds:
+      - ./run-project-bake gen_antlr --set *.platform=linux/amd64 --progress=plain
+
+  i18n-po:
+    deps:
+    dir: ../docker_build
+    cmds:
+      - ./run-project-bake update-po
+        --set update-po.args.PACKAGE_NAME={{.PACKAGE_NAME}}
+        --set update-po.contexts.src={{.USER_WORKING_DIR}}
+        --set update-po.output="type=local,dest={{.USER_WORKING_DIR}}/{{.PACKAGE_NAME}}"
+        --set *.platform=linux/amd64
+        --progress=plain
+
+  i18n-binaries:
+    dir: ../docker_build
+    cmds:
+      - ./run-project-bake msgfmt
+        --set msgfmt.args.PACKAGE_NAME={{.PACKAGE_NAME}}
+        --set msgfmt.contexts.src={{.USER_WORKING_DIR}}
+        --set msgfmt.output="type=local,dest={{.USER_WORKING_DIR}}/{{.PACKAGE_NAME}}"
+        --set *.platform=linux/amd64
+        --progress=plain

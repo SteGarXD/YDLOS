@@ -1,0 +1,4 @@
+# Скопируйте строки в корневой .gitattributes репозитория после `git lfs install`,
+# затем уберите маску *.tar.gz из корневого .gitignore для этого каталога (осторожно с размером).
+
+exports/platform-state/volume-snapshots/pgdata-*.tar.gz filter=lfs diff=lfs merge=lfs -text

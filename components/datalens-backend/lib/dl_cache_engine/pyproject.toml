@@ -1,0 +1,52 @@
+[tool.poetry]
+authors = ["DataLens Team <datalens-opensource@yandex-team.ru>"]
+description = ""
+license = "Apache 2.0"
+name = "dl-cache-engine"
+packages = [{include = "dl_cache_engine"}]
+readme = "README.md"
+version = "0.0.1"
+
+[tool.poetry.dependencies]
+attrs = "*"
+dl-app-tools = {path = "../dl_app_tools"}
+dl-constants = {path = "../dl_constants"}
+dl-model-tools = {path = "../dl_model_tools"}
+dl-utils = {path = "../dl_utils"}
+lz4 = "*"
+python = ">=3.10, <3.13"
+redis_cache_lock = {path = "../redis-cache-lock"}
+typing-extensions = "*"
+
+[tool.poetry.group.tests.dependencies]
+pytest = "*"
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_untyped_defs = true
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = [
+  "lz4.*",
+]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+minversion = "6.0"
+testpaths = []
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]
+
+[datalens.pytest.unit]
+labels = ["no_compose"]
+root_dir = "dl_cache_engine_tests/unit"
+skip_compose = "true"

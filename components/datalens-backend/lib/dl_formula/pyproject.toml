@@ -1,0 +1,73 @@
+[tool.poetry]
+authors = ["DataLens Team <datalens-opensource@yandex-team.ru>"]
+description = ""
+license = "Apache 2.0"
+name = "dl-formula"
+packages = [{include = "dl_formula"}]
+readme = "README.md"
+version = "7.47.0"
+
+[tool.poetry.dependencies]
+antlr4-python3-runtime = "*"
+attrs = "*"
+ciso8601 = "*"
+dl-utils = {path = "../dl_utils"}
+dynamic-enum = {path = "../dynamic_enum"}
+graphviz = "*"
+python = ">=3.10, <3.13"
+pytz = "*"
+sqlalchemy = "*"
+
+[tool.poetry.group.tests.dependencies]
+dl-formula-testing = {path = "../dl_formula_testing"}
+pytest = "*"
+
+[tool.poetry.scripts]
+bi-formula-cli = "dl_formula.scripts.formula_cli:main"
+
+[tool.deptry.package_module_name_map]
+antlr4-python3-runtime = "antlr4"
+
+[tool.deptry.per_rule_ignores]
+DEP001 = ["DataLensParser"]
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_untyped_defs = true
+exclude = ["dl_formula_tests/"]
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = [
+  "antlr4.*",
+  "ciso8601",
+  "graphviz.*",
+  "pytest.*",
+  "pytz.tzinfo.*",
+  "sqlalchemy",
+]
+
+[[tool.mypy.overrides]]
+ignore_errors = true
+module = "dl_formula.parser.antlr.gen.*"
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+minversion = "6.0"
+testpaths = []
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]
+
+[datalens.pytest.unit]
+labels = ["no_compose"]
+root_dir = "dl_formula_tests/"
+skip_compose = "true"
+target_path = "unit"

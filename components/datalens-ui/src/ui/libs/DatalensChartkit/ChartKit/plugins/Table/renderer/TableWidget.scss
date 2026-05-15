@@ -1,0 +1,34 @@
+.chartkit-table-widget {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    /* Иначе flex/grid ячейка дашборда не сжимает виджет — таблица с max-content уезжает за карточку */
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    /*
+     * Горизонтальный скролл и край таблицы — на внутреннем .chartkit-scrollable-node (snapter).
+     * Глобальный ChartKit.scss задаёт тем же классу overflow-x: hidden — это режет широкую CSS-grid
+     * таблицу: справа виден фон дашборда («белая полоса»), будто закрывает Итого.
+     */
+    overflow-x: visible;
+    overflow-y: auto;
+    width: 100%;
+
+    .chartkit-scrollable-node {
+        flex: 1 1 auto;
+        min-height: 0;
+        min-width: 0;
+        overflow-x: auto;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    &__number-column {
+        text-align: right;
+    }
+
+    .chartkit-table-paginator {
+        background-color: initial;
+    }
+}

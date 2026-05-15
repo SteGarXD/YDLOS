@@ -1,0 +1,333 @@
+﻿[
+    {
+        "Id": "7f0677a719147fd664c589c82d3d47fa331dd6570a6468532d13b56ecc97566e",
+        "Created": "2026-03-19T20:17:28.815470634Z",
+        "Path": "docker-entrypoint.sh",
+        "Args": [
+            "postgres"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 853,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-04-07T09:33:32.77530318Z",
+            "FinishedAt": "2026-04-07T09:31:05.559673333Z",
+            "Health": {
+                "Status": "healthy",
+                "FailingStreak": 0,
+                "Log": [
+                    {
+                        "Start": "2026-04-08T13:28:21.414127771Z",
+                        "End": "2026-04-08T13:28:21.509638329Z",
+                        "ExitCode": 0,
+                        "Output": "/var/run/postgresql:5432 - accepting connections\n"
+                    },
+                    {
+                        "Start": "2026-04-08T13:28:28.770123231Z",
+                        "End": "2026-04-08T13:28:28.839812323Z",
+                        "ExitCode": 0,
+                        "Output": "/var/run/postgresql:5432 - accepting connections\n"
+                    },
+                    {
+                        "Start": "2026-04-08T13:28:38.840303018Z",
+                        "End": "2026-04-08T13:28:38.900582153Z",
+                        "ExitCode": 0,
+                        "Output": "/var/run/postgresql:5432 - accepting connections\n"
+                    },
+                    {
+                        "Start": "2026-04-08T13:28:48.901800821Z",
+                        "End": "2026-04-08T13:28:48.96139772Z",
+                        "ExitCode": 0,
+                        "Output": "/var/run/postgresql:5432 - accepting connections\n"
+                    },
+                    {
+                        "Start": "2026-04-08T13:28:56.234185307Z",
+                        "End": "2026-04-08T13:28:56.293331741Z",
+                        "ExitCode": 0,
+                        "Output": "/var/run/postgresql:5432 - accepting connections\n"
+                    }
+                ]
+            }
+        },
+        "Image": "sha256:7b140a8079b34fbbfa125788abb368880dd0afd6d4879ff0e971b33e0bc6c224",
+        "ResolvConfPath": "/var/lib/docker/containers/7f0677a719147fd664c589c82d3d47fa331dd6570a6468532d13b56ecc97566e/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/7f0677a719147fd664c589c82d3d47fa331dd6570a6468532d13b56ecc97566e/hostname",
+        "HostsPath": "/var/lib/docker/containers/7f0677a719147fd664c589c82d3d47fa331dd6570a6468532d13b56ecc97566e/hosts",
+        "LogPath": "/var/lib/docker/containers/7f0677a719147fd664c589c82d3d47fa331dd6570a6468532d13b56ecc97566e/7f0677a719147fd664c589c82d3d47fa331dd6570a6468532d13b56ecc97566e-json.log",
+        "Name": "/datalens-postgres-prod",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "datalens-volume-prod:/var/lib/postgresql/data:rw"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "datalens_default",
+            "PortBindings": {
+                "5432/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "5432"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "datalens-volume-prod",
+                "Source": "/var/lib/docker/volumes/datalens-volume-prod/_data",
+                "Destination": "/var/lib/postgresql/data",
+                "Driver": "local",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+        "Config": {
+            "Hostname": "7f0677a71914",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "5432/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "POSTGRES_PASSWORD=postgres",
+                "INIT_EXTERNAL_POSTGRES=0",
+                "POSTGRES_DB_AUTH=pg-auth-db",
+                "POSTGRES_DB_US=pg-us-db",
+                "POSTGRES_DB_TEMPORAL=pg-temporal-db",
+                "POSTGRES_DB_DEMO=pg-demo-db",
+                "INIT_DB_DEMO=1",
+                "POSTGRES_PORT=5432",
+                "POSTGRES_DB_META_MANAGER=pg-meta-manager-db",
+                "INIT_DB_META_MANAGER=1",
+                "INIT_DEMO_DATA=1",
+                "POSTGRES_HOST=localhost",
+                "POSTGRES_DB_COMPENG=pg-compeng-db",
+                "HC=0",
+                "US_ENDPOINT=http://us:8080",
+                "POSTGRES_DB_TEMPORAL_VISIBILITY=pg-temporal-visibility-db",
+                "INIT_DB_AUTH=1",
+                "CONTROL_API_CRYPTO_KEY=ZGF0YWxlbnN1bnNlY3VyZWZlcm5ldGNyeXB0b2tleQo=",
+                "INIT_DB_TEMPORAL=1",
+                "POSTGRES_USER=pg-user",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/postgresql/16/bin",
+                "GOSU_VERSION=1.17",
+                "LANG=en_US.utf8",
+                "PG_MAJOR=16",
+                "PG_VERSION=16.8-1.pgdg120+1",
+                "PGDATA=/var/lib/postgresql/data",
+                "PYTHONUNBUFFERED=1",
+                "POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=en_US.utf8 --lc-ctype=en_US.utf8",
+                "POSTGRES_DUMP_FORMAT=custom",
+                "POSTGRES_DUMP_SKIP_CONFLICT=true",
+                "POSTGRES_DUMP_CLEAR_META=false",
+                "DEMO_DATA_SLEEP=3",
+                "DEMO_DATA_NAME=OpenSource Demo"
+            ],
+            "Cmd": [
+                "postgres"
+            ],
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "pg_isready",
+                    "-d",
+                    "pg-us-db",
+                    "-U",
+                    "pg-user"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 3000000000,
+                "Retries": 6
+            },
+            "Image": "akrasnov87/datalens-postgres:16",
+            "Volumes": {
+                "/var/lib/postgresql/data": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "5990bbc25c6e3130214c53914400716b2471308257c38e8c1c20dbae84a516ce",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "",
+                "com.docker.compose.image": "sha256:7b140a8079b34fbbfa125788abb368880dd0afd6d4879ff0e971b33e0bc6c224",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "datalens",
+                "com.docker.compose.project.config_files": "D:\\YDLOS\\datalens\\docker-compose.yaml,D:\\YDLOS\\datalens\\docker-compose.demo.yaml",
+                "com.docker.compose.project.working_dir": "D:\\YDLOS\\datalens",
+                "com.docker.compose.replace": "datalens-postgres-prod",
+                "com.docker.compose.service": "postgres",
+                "com.docker.compose.version": "5.1.0"
+            },
+            "StopSignal": "SIGINT",
+            "StopTimeout": 1
+        },
+        "NetworkSettings": {
+            "SandboxID": "f36ec0207ae9ee4730bd3af6352b13df0e45cb921239a9acf6a1c29e20fc0187",
+            "SandboxKey": "/var/run/docker/netns/f36ec0207ae9",
+            "Ports": {
+                "5432/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "5432"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "5432"
+                    }
+                ]
+            },
+            "Networks": {
+                "datalens_default": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "datalens-postgres-prod",
+                        "postgres"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "e89f59f24bbc4bad570dee90f3a149228b7f73d788439d2002f2b5e06dc808e2",
+                    "EndpointID": "4e9ccd372dda678d76c5b7988a3f739561ff71e9d0559c3ac1dfb6817b07b38a",
+                    "Gateway": "172.19.0.1",
+                    "IPAddress": "172.19.0.9",
+                    "MacAddress": "06:c5:75:8e:17:68",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "datalens-postgres-prod",
+                        "postgres",
+                        "7f0677a71914"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "digest": "sha256:7b140a8079b34fbbfa125788abb368880dd0afd6d4879ff0e971b33e0bc6c224",
+            "size": 6366,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    }
+]

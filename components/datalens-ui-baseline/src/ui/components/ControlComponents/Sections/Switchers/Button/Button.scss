@@ -1,0 +1,8 @@
+.control-switchers-button {
+    display: grid;
+
+    &__btn {
+        display: flex;
+        overflow: hidden;
+    }
+}

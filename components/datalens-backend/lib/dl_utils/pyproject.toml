@@ -1,0 +1,35 @@
+[tool.poetry]
+authors = ["DataLens Team <datalens-opensource@yandex-team.ru>"]
+description = ""
+license = "Apache 2.0"
+name = "dl-utils"
+packages = [{include = "dl_utils"}]
+version = "0.0.1"
+
+[tool.poetry.dependencies]
+async-timeout = "*"
+attrs = "*"
+python = ">=3.10, <3.13"
+
+[tool.poetry.group.tests.dependencies]
+pytest = "*"
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_untyped_defs = true
+exclude = ["dl_utils_tests"]
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+minversion = "6.0"
+testpaths = ["dl_utils_tests/unit"]
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]

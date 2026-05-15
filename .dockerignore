@@ -1,0 +1,6 @@
+# при сборке образов (build/Dockerfile.*) не копировать тяжёлые/генерируемые каталоги
+components/datalens-ui/node_modules
+components/datalens-ui/dist
+components/datalens-backend/**/__pycache__
+.git
+*.md

@@ -1,0 +1,56 @@
+@use '../../styles/variables' as vars;
+
+$topExpandablePanelMargin: var(--g-spacing-2);
+
+.action-panel {
+    &__wrapper {
+        position: relative;
+        height: vars.$actionPanelHeight;
+        min-height: vars.$actionPanelHeight;
+    }
+
+    &__container {
+        position: fixed;
+        z-index: 10;
+        right: 0;
+        box-sizing: border-box;
+        height: vars.$actionPanelHeight;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        padding: 0 vars.$actionPanelHorizontalPadding;
+        border-bottom: 1px solid var(--g-color-line-generic);
+        background: var(--g-color-base-background);
+
+        &_mobile {
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+    }
+
+    &__create-widget-btn {
+        margin-left: auto;
+        margin-right: 10px;
+    }
+
+    &__action-btn {
+        width: 132px;
+        flex: 0 0 132px;
+    }
+
+    &__expandable-panel {
+        position: fixed;
+        right: var(--g-spacing-2);
+        top: calc(#{vars.$actionPanelHeight} + #{$topExpandablePanelMargin});
+        height: calc(100vh - #{vars.$actionPanelHeight} - 2 * #{$topExpandablePanelMargin});
+    }
+
+    &__revisions-panel + &__expandable-panel {
+        top: calc(
+            #{vars.$actionPanelHeight} + #{$topExpandablePanelMargin} + #{vars.$revisionPanelHeight}
+        );
+        height: calc(
+            100vh - #{vars.$actionPanelHeight} - 2 * #{$topExpandablePanelMargin} - #{vars.$revisionPanelHeight}
+        );
+    }
+}

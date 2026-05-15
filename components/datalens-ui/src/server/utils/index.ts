@@ -1,0 +1,217 @@
+import fs from 'fs';
+import type {IncomingHttpHeaders} from 'http';
+
+import type {Request} from '@gravity-ui/expresskit';
+import type {AppContext} from '@gravity-ui/nodekit';
+import type {AxiosResponse} from 'axios';
+import axios from 'axios';
+import pick from 'lodash/pick';
+
+import {
+    AuthHeader,
+    DL_CONTEXT_HEADER,
+    FORWARDED_FOR_HEADER,
+    PROJECT_ID_HEADER,
+    REQUEST_ID_HEADER,
+    REQUEST_SOURCE_HEADER,
+    RPC_AUTHORIZATION,
+    RequestSourceHeaderValue,
+    SERVICE_USER_ACCESS_TOKEN_HEADER,
+    SuperuserHeader,
+    TENANT_ID_HEADER,
+    US_MASTER_TOKEN_HEADER,
+    makeTenantIdFromOrgId,
+} from '../../shared';
+import {isOpensourceInstallation} from '../app-env';
+import {PUBLIC_API_VERSION_HEADER} from '../components/public-api/constants';
+import {PUBLIC_API_ORG_ID_HEADER} from '../constants/public-api';
+
+import {isGatewayError} from './gateway';
+import {shouldAttachUsMasterToken} from './us-master-token';
+
+class Utils {
+    static getName(key = '') {
+        return key.split('/').filter(Boolean).pop();
+    }
+
+    static pickServiceHeaders(headers: IncomingHttpHeaders, req: Request) {
+        const {folderId: folderIdHeader, subjectToken: subjectTokenHeader} =
+            req.ctx.config.headersMap;
+
+        let headersList = [
+            AuthHeader.Cookie,
+            AuthHeader.Authorization,
+            folderIdHeader,
+            TENANT_ID_HEADER,
+            PROJECT_ID_HEADER,
+            RPC_AUTHORIZATION,
+            subjectTokenHeader,
+        ];
+
+        if (isOpensourceInstallation) {
+            headersList = [];
+        }
+
+        return pick(headers, headersList);
+    }
+
+    static pickZitadelHeaders(req: Request) {
+        return {
+            authorization: 'Bearer ' + req.user?.accessToken,
+            [SERVICE_USER_ACCESS_TOKEN_HEADER]: req.serviceUserAccessToken,
+        };
+    }
+
+    static pickAuthHeaders(req: Request) {
+        return {
+            [AuthHeader.Authorization]: 'Bearer ' + req.ctx.get('user')?.accessToken,
+        };
+    }
+
+    static pickSuperuserHeaders(headers: IncomingHttpHeaders) {
+        return pick(headers, [SuperuserHeader.XDlSudo, SuperuserHeader.XDlAllowSuperuser]);
+    }
+
+    static pickDlContextHeaders(headers: IncomingHttpHeaders) {
+        return pick(headers, DL_CONTEXT_HEADER);
+    }
+
+    static pickForwardHeaders(headers: IncomingHttpHeaders) {
+        return pick(headers, FORWARDED_FOR_HEADER);
+    }
+
+    static pickRpcAuthorizationHeaders(headers: IncomingHttpHeaders) {
+        return pick(headers, RPC_AUTHORIZATION);
+    }
+
+    static pickHeaders(req: Request) {
+        const masterToken =
+            (req.ctx.config.usMasterToken as string) ||
+            process.env.US_MASTER_TOKEN ||
+            'us-master-token';
+
+        return {
+            ...Utils.pickServiceHeaders(req.headers, req),
+            ...Utils.pickSuperuserHeaders(req.headers),
+            ...Utils.pickDlContextHeaders(req.headers),
+            ...Utils.pickForwardHeaders(req.headers),
+            ...Utils.pickRpcAuthorizationHeaders(req.headers),
+            ...(req.ctx.config.isZitadelEnabled ? {...Utils.pickZitadelHeaders(req)} : {}),
+            ...(req.ctx.config.isAuthEnabled ? {...Utils.pickAuthHeaders(req)} : {}),
+            [REQUEST_ID_HEADER]: req.id,
+            ...(req.ctx.config.isZitadelEnabled ? {...Utils.pickZitadelHeaders(req)} : {}),
+            /**
+             * Opensource + кастомный вход: US appAuth не читает x-rpc-authorization, только JWT или master.
+             * Без master все прямые вызовы US (дашборд, getPreview, entries) дают 401/500.
+             * Условия как в gateway proxyHeaders (не только APP_INSTALLATION=opensource).
+             */
+            ...(shouldAttachUsMasterToken(req.ctx) ? {[US_MASTER_TOKEN_HEADER]: masterToken} : {}),
+        };
+    }
+
+    static pickRpcHeaders(req: Request) {
+        const headersMap = req.ctx.config.headersMap;
+
+        const orgId = req.headers[PUBLIC_API_ORG_ID_HEADER];
+        const tenantId = orgId && !Array.isArray(orgId) ? makeTenantIdFromOrgId(orgId) : undefined;
+
+        return {
+            ...pick(req.headers, [AuthHeader.Authorization, headersMap.subjectToken]),
+            ...Utils.pickForwardHeaders(req.headers),
+            [TENANT_ID_HEADER]: tenantId,
+        };
+    }
+
+    static pickPublicApiHeaders(req: Request) {
+        const headersMap = req.ctx.config.headersMap;
+
+        const orgId = req.headers[PUBLIC_API_ORG_ID_HEADER];
+        const tenantId = orgId && !Array.isArray(orgId) ? makeTenantIdFromOrgId(orgId) : undefined;
+
+        return {
+            ...pick(req.headers, [
+                AuthHeader.Authorization,
+                headersMap.subjectToken,
+                PUBLIC_API_VERSION_HEADER,
+            ]),
+            ...Utils.pickForwardHeaders(req.headers),
+            [TENANT_ID_HEADER]: tenantId,
+            [REQUEST_SOURCE_HEADER]: RequestSourceHeaderValue.PublicApi,
+        };
+    }
+
+    static pickUsMasterToken(req: Request) {
+        const token = req.headers[US_MASTER_TOKEN_HEADER];
+        if (typeof token !== 'string') {
+            return null;
+        }
+
+        return token;
+    }
+
+    static getErrorMessage(error: unknown) {
+        if (axios.isAxiosError(error)) {
+            return error.response?.data.message || error.message;
+        } else if (error instanceof Error) {
+            return error.message;
+        } else if (isGatewayError(error)) {
+            return error.error.message;
+        } else {
+            return 'Unknown error';
+        }
+    }
+
+    static getErrorDetails(error: unknown) {
+        if (axios.isAxiosError(error)) {
+            return error.response?.data.details;
+        }
+        return undefined;
+    }
+
+    static getErrorCode(error: unknown) {
+        if (axios.isAxiosError(error)) {
+            return error.response?.data.code;
+        } else if (isGatewayError(error)) {
+            return error.error.code;
+        }
+        return undefined;
+    }
+
+    static getErrorStatus(error: unknown) {
+        if (axios.isAxiosError(error)) {
+            return error.response?.status;
+        }
+        return undefined;
+    }
+
+    static getFormattedLogin(login: string | undefined) {
+        let formattedLogin = login;
+        if (typeof formattedLogin === 'string' && !formattedLogin.includes('@')) {
+            formattedLogin = formattedLogin.replace(/\./g, '-');
+        }
+        return formattedLogin;
+    }
+
+    static isDevelopment(ctx: AppContext) {
+        return ctx.config.appEnv === 'development';
+    }
+
+    static getResponseData(response: AxiosResponse) {
+        return response.data;
+    }
+
+    static getEnvVariable(envVariableName: string) {
+        const valueFromEnv = process.env[envVariableName];
+        if (valueFromEnv) {
+            return valueFromEnv;
+        }
+        const FILE_PATH_POSTFIX = '_FILE_PATH';
+        const filePath = process.env[`${envVariableName}${FILE_PATH_POSTFIX}`];
+        if (filePath) {
+            return fs.readFileSync(filePath, 'utf8') as string;
+        }
+        return undefined;
+    }
+}
+
+export default Utils;

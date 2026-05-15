@@ -1,0 +1,7 @@
+﻿EXPORT_TIMESTAMP=2026-03-26T00:31:55+03:00
+POSTGRES_CONTAINER=datalens-postgres-prod
+POSTGRES_VERSION=16.8 (Debian 16.8-1.pgdg120+1)
+SANITIZE_MODE=strict
+MINIMAL=false
+MANIFEST_JSON=MANIFEST.json
+NOTE=See exports/platform-state/README.md for full scope and restore.

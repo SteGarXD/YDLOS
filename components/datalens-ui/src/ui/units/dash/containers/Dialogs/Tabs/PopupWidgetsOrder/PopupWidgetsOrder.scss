@@ -1,0 +1,48 @@
+.widgets-order-popup {
+    &__header {
+        padding: 20px 32px 10px;
+    }
+
+    &__body {
+        padding: 10px 32px;
+        box-sizing: border-box;
+        min-width: 350px;
+
+        & + .g-dialog-footer {
+            padding: 28px 32px;
+        }
+    }
+
+    &__list {
+        max-height: 320px;
+        overflow: auto;
+    }
+
+    &__group-list {
+        margin-bottom: 32px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &__row {
+        padding: 8px;
+    }
+
+    &__controls-bottom {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    &__popover {
+        min-width: 460px;
+        max-width: 38vw;
+    }
+
+    &__widget-title {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+}

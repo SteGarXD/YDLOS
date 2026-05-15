@@ -1,0 +1,23 @@
+.markdown-help-popover {
+    margin-left: 4px;
+    vertical-align: top;
+    align-self: center;
+
+    &__content {
+        max-height: calc(100vh - 34px);
+        overflow: hidden;
+    }
+
+    &__tooltip {
+        max-width: 300px;
+
+        &_hidden {
+            display: none;
+        }
+    }
+
+    &_mobile svg {
+        width: 18px;
+        height: 18px;
+    }
+}

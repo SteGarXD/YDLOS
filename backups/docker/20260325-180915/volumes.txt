@@ -1,0 +1,2 @@
+﻿DRIVER    VOLUME NAME
+local     datalens-volume-prod

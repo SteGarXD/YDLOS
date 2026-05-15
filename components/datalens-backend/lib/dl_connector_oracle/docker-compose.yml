@@ -1,0 +1,61 @@
+services:
+  db-oracle:
+    labels:
+      datalens.ci.service: db-oracle
+    ports:
+     - "51800:1521"
+    # image: "ghcr.io/gvenzl/oracle-xe:21.3.0-slim-faststart"
+    image: "ghcr.io/gvenzl/oracle-xe:18-slim-faststart@sha256:ee0d7b8ac3665fb80219cbcb5a080cc202cc970120e1fbef592d7592274cef22"
+    environment:
+      ORACLE_PASSWORD: "qwerty"
+      APP_USER: "datalens"
+      APP_USER_PASSWORD: "qwerty"
+
+  db-oracle-ssl:
+    labels:
+      datalens.ci.service: db-oracle-ssl
+    ports:
+     - "51801:1522"
+    build:
+      context: docker-compose
+      dockerfile: Dockerfile.db-oracle-ssl
+    depends_on:
+      - ssl-provider
+    environment:
+      ORACLE_PASSWORD: "qwerty"
+      APP_USER: "datalens"
+      APP_USER_PASSWORD: "qwerty"
+      CERT_SERVER_URL: "http://ssl-provider"
+
+  # INFRA
+  ssl-provider:
+    extends:
+      file: ../testenv-common/docker-compose.common.yml
+      service: ssl-provider
+    build:
+      args:
+        CERTIFIED_DOMAIN: "db-oracle-ssl"
+    ports:
+      - "8080:80"
+
+  pg-us:
+    extends:
+      file: ../testenv-common/docker-compose.common.yml
+      service: pg-us
+    ports:
+     - "51810:5432"
+
+  us:
+    extends:
+      file: ../testenv-common/docker-compose.common.yml
+      service: us
+    ports:
+     - "51811:8080"
+
+  redis-caches:
+    # image: "bitnami/redis:5.0.8"
+    image: "bitnami/redis:5.0.8@sha256:3127620da977815556439a9dc347fff89432a79b6bb6e93a16f20ac4a34ce337"
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+     - "51812:6379"

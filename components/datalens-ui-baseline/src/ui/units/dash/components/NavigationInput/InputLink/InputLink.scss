@@ -1,0 +1,25 @@
+.input-link {
+    position: relative;
+    width: 100%;
+    display: flex;
+
+    &__input {
+        width: var(--dl-dropdown-navigation-width, 100%);
+        display: flex;
+    }
+
+    &__buttons-container {
+        display: flex;
+    }
+
+    &__button {
+        &:not(:last-child) {
+            margin-right: var(--g-spacing-2);
+        }
+    }
+
+    &__error {
+        color: var(--g-color-text-danger);
+        padding: var(--g-spacing-2);
+    }
+}

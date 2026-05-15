@@ -1,0 +1,46 @@
+﻿[
+    {
+        "Id": "sha256:a4f4213abb84c497377b8544c81b3564f313746700372ec4fe84653e4fb03805",
+        "RepoTags": [
+            "alpine:3.20"
+        ],
+        "RepoDigests": [
+            "alpine@sha256:a4f4213abb84c497377b8544c81b3564f313746700372ec4fe84653e4fb03805"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-01-28T01:18:16.507489867Z",
+        "Config": {
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/sh"
+            ],
+            "WorkingDir": "/"
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 3638715,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:f5b2c0456bf1080bb3f0617295df9721aa4aa27a536bba8e301c3af8d530c9cb"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-03-23T18:48:39.503805541Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:a4f4213abb84c497377b8544c81b3564f313746700372ec4fe84653e4fb03805",
+            "size": 9218
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "docker.io/library/alpine"
+                }
+            ]
+        }
+    }
+]

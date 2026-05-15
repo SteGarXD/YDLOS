@@ -1,0 +1,40 @@
+﻿docker : WARNING: This output is designed for human readability. For machine-readable output, please use --format.
+D:\YDLOS\datalens\scripts\docker-full-backup.ps1:92 знак:1
++ docker images -a 2>&1 | Out-File -FilePath (Join-Path $outDir "docker ...
++ ~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (WARNING: This o...e use --format.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+IMAGE                                            ID             DISK USAGE   CONTENT SIZE   EXTRA
+aeronavigatorbi/datalens-auth:0.2.6              2dbea1babcbf        713MB          179MB   U    
+aeronavigatorbi/datalens-control-api:0.2396.0    93c3b33a5589        732MB          184MB   U    
+aeronavigatorbi/datalens-data-api:0.2396.0       a85b2bdc739b        733MB          184MB   U    
+aeronavigatorbi/datalens-meta-manager:0.50.0     eb8051de708a       1.13GB          256MB   U    
+aeronavigatorbi/datalens-postgres:16             12c872cda5bd        757MB          195MB        
+aeronavigatorbi/datalens-temporal:1.27.2         ce1b9bcd799e        634MB          189MB        
+aeronavigatorbi/datalens-ui:0.3498.0             ba32ae6f66b0       6.61GB         1.47GB        
+aeronavigatorbi/datalens-us:0.413.0              4f778de188b1        822MB          182MB        
+aeronavigatorbi/dl-ui:local                      ba32ae6f66b0       6.61GB         1.47GB        
+akrasnov87/datalens-auth:0.2.6                   2dbea1babcbf        713MB          179MB   U    
+akrasnov87/datalens-control-api:0.2396.0         93c3b33a5589        732MB          184MB   U    
+akrasnov87/datalens-data-api:0.2396.0            a85b2bdc739b        733MB          184MB   U    
+akrasnov87/datalens-meta-manager:0.50.0          eb8051de708a       1.13GB          256MB   U    
+akrasnov87/datalens-postgres:16                  7b140a8079b3        810MB          202MB   U    
+akrasnov87/datalens-ui:0.3498.0                  4d9dbdf78c8c       4.69GB         1.15GB   U    
+akrasnov87/datalens-us:0.413.0                   8ecf3acd6066        841MB          188MB   U    
+ghcr.io/datalens-tech/datalens-temporal:1.27.2   64820b925c63        634MB          189MB   U    
+ghcr.io/datalens-tech/temporal-ui:2.34.0         cb17ea423d76        163MB         48.1MB        
+<untagged>                                       ee64e7e46cb9       6.61GB         1.47GB        
+<untagged>                                       7cd353332d58       5.25GB         1.26GB        
+<untagged>                                       57204623cca2       6.61GB         1.47GB        
+<untagged>                                       31209c093cc5       6.61GB         1.47GB        
+<untagged>                                       7ed41f6382ec       6.61GB         1.47GB        
+<untagged>                                       2a70b62ee80f       6.61GB         1.47GB        
+<untagged>                                       5bd5c3450a3d       6.61GB         1.47GB        
+<untagged>                                       c8799b714bf7       6.61GB         1.47GB        
+<untagged>                                       bdf668d7c15a       6.61GB         1.47GB        
+<untagged>                                       cc189c9b5a22       6.61GB         1.47GB        
+<untagged>                                       c874ccea7512       6.61GB         1.47GB        
+<untagged>                                       b342c55b808b       6.61GB         1.47GB        
+<untagged>                                       53655153f23d       6.61GB         1.47GB        
+<untagged>                                       02ce243fe263       6.61GB         1.47GB        

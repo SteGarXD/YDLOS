@@ -1,0 +1,74 @@
+﻿[
+    {
+        "Id": "sha256:4f778de188b1e48a7e61de1135dbca87d348232dc1c1067e8c5e2615e861e6a4",
+        "RepoTags": [
+            "aeronavigatorbi/datalens-us:0.413.0"
+        ],
+        "RepoDigests": [
+            "aeronavigatorbi/datalens-us@sha256:4f778de188b1e48a7e61de1135dbca87d348232dc1c1067e8c5e2615e861e6a4"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2025-12-30T09:19:09.732520522+03:00",
+        "Config": {
+            "User": "app",
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "TZ=Etc/UTC",
+                "APP_VERSION=",
+                "TMPDIR=/tmp",
+                "NODE_ENV=production",
+                "APP_PORT=8080"
+            ],
+            "Entrypoint": [
+                "/opt/app/scripts/preflight.sh"
+            ],
+            "WorkingDir": "/opt/app",
+            "Labels": {
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 181524551,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:e8bce0aabd687e9ee90e0bada33884f40b277196f72aac9934357472863a80ae",
+                "sha256:3e401f9c4f69fe68091600ba795974f75c25fb9b2ab335369f9f4c1693e4a62d",
+                "sha256:4cafe0efe8e4b165aa29cf8de15b8b35842862325c960e8acd3b5c54e5521668",
+                "sha256:d699e061e7bbbf4286d80943fa82f907b6271585123c1d20d44cf12734e030a0",
+                "sha256:450bd41ab8db1c0e3efbbb0a95fa06639f8c3be41300576beb331d2be4f0eb14",
+                "sha256:24cd86668f7e5446c3237eadcc9f871c41c4a7bb33c46963f729e75f6854a9fe",
+                "sha256:a42bb896908288a8f19555ab4ec7133c672ba5d78ac50474f42df4311423bd81",
+                "sha256:e39987744d38623b227d3518fd697050a3679dfd82f05b503d22a87482256df3",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:112b62798be12425769d32d7fd266a80a40367d50f0db78a9460fae74792d12b",
+                "sha256:8a894a685267adb9e464c3d132572dc43aa1d5ffb79a351548c28bb72f432e68",
+                "sha256:3b5dc0b44e273b936f44baf18c37b7b588577e01fbccd150ee5613f22bdbba76",
+                "sha256:2742c46421ed731b464b483d6e692ebb6263818d4fb696ad0e053d964c7d4825",
+                "sha256:29cda4ca97049f20c373f4a9513ffb4ac0d514ff179ff5cac378b50cf1002665",
+                "sha256:c373e46336ce2c84f9abf7fd485a4b325209f26cc389a5641ed939241a4e179d"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-03-18T08:25:28.648569073Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "digest": "sha256:4f778de188b1e48a7e61de1135dbca87d348232dc1c1067e8c5e2615e861e6a4",
+            "size": 3458
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "docker.io/akrasnov87/datalens-us"
+                }
+            ]
+        }
+    }
+]

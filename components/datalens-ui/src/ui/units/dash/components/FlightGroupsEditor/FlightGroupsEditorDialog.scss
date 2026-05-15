@@ -1,0 +1,512 @@
+/* Эталон: #f0f0f0 фон, квадратные углы, без жирного шрифта */
+$fg-bg: #f0f0f0;
+/* Рамки списков и полей ввода (не у внешней карточки модалки) */
+$fg-border: #8a8d91;
+$fg-shuttle-bg: #e1e1e1;
+$fg-shuttle-fg: #606060;
+$fg-btn-bg: #e1e1e1;
+$fg-select: #0078d7;
+$fg-label: #1a1a1a;
+
+.flight-groups-editor-dialog {
+    --g-dialog-width: min(722px, 96vw) !important;
+    --fg-content-max-width: 688px;
+    --fg-flight-col: minmax(86px, 148px) !important;
+    --fg-groups-col: minmax(136px, 1.56fr) !important;
+    --_--side-padding: 0 !important;
+    max-height: 90vh;
+    background: $fg-bg !important;
+    border: none;
+    border-radius: 0;
+    color: $fg-label;
+    font-weight: 400;
+    :global(.g-dialog-body) {
+        background: $fg-bg !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex;
+        flex-direction: column;
+    }
+
+    :global(.g-dialog) {
+        background: $fg-bg !important;
+    }
+
+    /* Жестко фиксируем белый фон всех текстовых полей внутри модалки */
+    :global(.g-text-input) {
+        --g-text-input-background-color: #fff !important;
+        --_--background-color: #fff !important;
+    }
+
+    :global(.g-text-input .g-text-input__content),
+    :global(.g-text-input.g-text-input_view_normal .g-text-input__content),
+    :global(.g-text-input.g-text-input_view_clear .g-text-input__content),
+    :global(.g-text-input .g-text-input__control),
+    :global(.g-text-input input.g-text-input__control) {
+        background: #fff !important;
+        background-color: #fff !important;
+        background-image: none !important;
+        opacity: 1 !important;
+    }
+
+    &__modal {
+        :global(.g-modal__content) {
+            border: none !important;
+            border-radius: 0 !important;
+            clip-path: none !important;
+            overflow: hidden !important;
+            background: $fg-bg !important;
+            position: relative;
+        }
+
+        :global(.g-modal__content::before) {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: #fff;
+            pointer-events: none;
+            z-index: 0;
+        }
+    }
+
+    &__body-inner {
+        background: $fg-bg !important;
+        padding: 0 12px 20px !important;
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__title-strip {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+        width: 100%;
+        margin: -9px 0 11px !important;
+        min-height: 26px;
+        padding: 2px 6px !important;
+        background: #fff !important;
+        border: none !important;
+        border-radius: 0 !important;
+        position: relative;
+        z-index: 1;
+    }
+
+    &__title-text {
+        font-size: 15px;
+        font-weight: 400;
+        color: $fg-label;
+        line-height: 1.3;
+        padding-top: 0;
+        padding-left: 13px;
+        transform: translateY(0);
+    }
+
+    &__title-close {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        margin: 0;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        color: $fg-label;
+        border-radius: 0;
+        transform: translateY(0);
+        margin-right: 7px;
+
+        &:hover {
+            background: #e8e8e8;
+        }
+    }
+
+    &__toolbar {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 10px !important;
+        align-items: center;
+        margin-bottom: 7px !important;
+        width: min(var(--fg-content-max-width), 100%);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &__name-field {
+        flex: 0 1 248px;
+        min-width: 150px;
+        max-width: 300px;
+        background: #fff !important;
+
+        :global(.g-text-input) {
+            --g-text-input-background-color: #fff;
+            --g-text-input-border-radius: 0;
+            --g-text-input-border-color: #{$fg-border};
+            --g-text-input-border-color-hover: #{$fg-border};
+            --g-text-input-border-color-active: #{$fg-border};
+            background-color: #fff !important;
+            border-radius: 0 !important;
+        }
+
+        :global(.g-text-input),
+        :global(.g-text-input__content),
+        :global(.g-text-input__control),
+        :global(input.g-text-input__control) {
+            background: #fff !important;
+            background-color: #fff !important;
+            opacity: 1 !important;
+            background-image: none !important;
+        }
+
+        :global(.g-text-input__content) {
+            background-color: #fff !important;
+            border-radius: 0 !important;
+            border: 1px solid $fg-border !important;
+            min-height: 24px;
+        }
+
+        :global(.g-text-input__label) {
+            background: #fff !important;
+        }
+
+        :global(.g-text-input_view_normal .g-text-input__content),
+        :global(.g-text-input_view_clear .g-text-input__content) {
+            background: #fff !important;
+            background-color: #fff !important;
+        }
+
+        :global(.g-text-input__control) {
+            background-color: #fff !important;
+            border-radius: 0 !important;
+            font-weight: 400;
+            min-height: 22px;
+            box-shadow: inset 0 0 0 1000px #fff;
+        }
+
+        :global(input.g-text-input__control) {
+            background-color: #fff !important;
+            box-shadow: inset 0 0 0 1000px #fff;
+        }
+    }
+
+    &__toolbar-actions {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 8px;
+        align-items: center;
+        flex: 0 0 auto;
+    }
+
+    &__main-grid {
+        display: grid;
+        grid-template-columns: var(--fg-groups-col) var(--fg-flight-col) 36px var(--fg-flight-col) !important;
+        grid-template-rows: auto 1fr auto;
+        gap: 6px 6px !important;
+        column-gap: 7px !important;
+        min-height: 220px;
+        align-items: stretch;
+        margin-top: 9px;
+        width: min(var(--fg-content-max-width), 100%);
+        margin-left: auto;
+        margin-right: auto;
+        grid-template-areas:
+            'headsp1 headin headmid headout'
+            'groups listin shuttle listout'
+            'footsp1 filtin footmid filout';
+    }
+
+    &__head-spacer {
+        grid-area: headsp1;
+
+        &_mid {
+            grid-area: headmid;
+        }
+    }
+
+    &__head-title {
+        font-size: 13px;
+        font-weight: 400;
+        color: $fg-label;
+        line-height: 1.25;
+        margin: 0;
+        padding: 1px 0 1px 4px;
+
+        &_in {
+            grid-area: headin;
+        }
+
+        &_out {
+            grid-area: headout;
+        }
+    }
+
+    &__pane-groups,
+    &__pane-in,
+    &__pane-out {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        min-height: 0;
+    }
+
+    &__pane-groups {
+        grid-area: groups;
+        margin-right: 10px !important;
+        /* Чуть сужаем окно групп справа, не двигая левый край */
+        padding-right: 7px;
+        box-sizing: border-box;
+    }
+
+    &__pane-in {
+        grid-area: listin;
+    }
+
+    &__pane-out {
+        grid-area: listout;
+    }
+
+    &__list {
+        flex: 1;
+        min-height: 160px;
+        max-height: 280px;
+        overflow: auto;
+        border: 1px solid $fg-border !important;
+        border-radius: 0 !important;
+        background: #fff !important;
+        scrollbar-color: $fg-shuttle-bg #fff;
+
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: #fff;
+            border-left: 1px solid $fg-border;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: $fg-shuttle-bg;
+            border: 1px solid #999;
+        }
+    }
+
+    &__list-item {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 3px 8px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: 1.28;
+        font-weight: 400;
+        color: #000;
+
+        &:hover {
+            background: #e8e8e8;
+        }
+
+        &_active {
+            background: $fg-select;
+            color: #fff;
+            font-weight: 400;
+
+            &:hover {
+                background: $fg-select;
+            }
+        }
+    }
+
+    &__shuttle {
+        grid-area: shuttle;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 13px;
+        /* Вверху колонки списков, как в десктопном эталоне, а не по центру высоты */
+        align-self: start;
+        padding-top: 30px !important;
+    }
+
+    &__shuttle-btn {
+        box-sizing: border-box;
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        min-height: 32px;
+        padding: 0;
+        margin: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1;
+        color: $fg-shuttle-fg;
+        background: $fg-shuttle-bg !important;
+        border: 1px solid #999 !important;
+        border-radius: 0;
+        cursor: pointer;
+        transform: translateY(20px);
+
+        &:disabled {
+            opacity: 0.45;
+            cursor: default;
+        }
+
+        &:not(:disabled):hover {
+            filter: brightness(0.95);
+        }
+    }
+
+    &__foot-spacer {
+        grid-area: footsp1;
+
+        &_mid {
+            grid-area: footmid;
+        }
+    }
+
+    &__foot-filter {
+        display: flex;
+        flex-direction: row;
+        gap: 4px;
+        align-items: center;
+        min-width: 0;
+
+        &_in {
+            grid-area: filtin;
+        }
+
+        &_out {
+            grid-area: filout;
+        }
+    }
+
+    &__filter-input {
+        flex: 1;
+        min-width: 0;
+        background: #fff !important;
+
+        :global(.g-text-input) {
+            --g-text-input-background-color: #fff;
+            --g-text-input-border-radius: 0;
+            --g-text-input-border-color: #{$fg-border};
+            --g-text-input-border-color-hover: #{$fg-border};
+            --g-text-input-border-color-active: #{$fg-border};
+            background-color: #fff !important;
+            border-radius: 0 !important;
+        }
+
+        :global(.g-text-input),
+        :global(.g-text-input__content),
+        :global(.g-text-input__control),
+        :global(input.g-text-input__control) {
+            background: #fff !important;
+            background-color: #fff !important;
+            opacity: 1 !important;
+            background-image: none !important;
+        }
+
+        :global(.g-text-input__content) {
+            background-color: #fff !important;
+            border-radius: 0 !important;
+            border: 1px solid $fg-border !important;
+            min-height: 22px;
+        }
+
+        :global(.g-text-input__label) {
+            background: #fff !important;
+        }
+
+        :global(.g-text-input_view_normal .g-text-input__content),
+        :global(.g-text-input_view_clear .g-text-input__content) {
+            background: #fff !important;
+            background-color: #fff !important;
+        }
+
+        :global(.g-text-input__control) {
+            background-color: #fff !important;
+            border-radius: 0 !important;
+            min-height: 20px;
+            box-shadow: inset 0 0 0 1000px #fff;
+        }
+
+        :global(input.g-text-input__control) {
+            background-color: #fff !important;
+            box-shadow: inset 0 0 0 1000px #fff;
+        }
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px !important;
+        padding-right: 6px;
+        padding-bottom: 1px;
+        background: $fg-bg !important;
+        width: min(var(--fg-content-max-width), 100%);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &__footer :global(.g-button) {
+        transform: translateY(17px) translateX(-2px);
+    }
+
+    &__btn-close {
+        transform: translateY(17px) translateX(2px) !important;
+    }
+
+    &__btn-toolbar {
+        --g-button-border-radius: 0;
+        background: $fg-btn-bg !important;
+        border: 1px solid #999 !important;
+        border-radius: 0 !important;
+        color: #000 !important;
+        font-weight: 400 !important;
+        box-shadow: none !important;
+
+        :global(.g-button__text) {
+            border-radius: 0 !important;
+        }
+
+        &:hover:not(:disabled) {
+            filter: brightness(0.97);
+        }
+    }
+
+    &__btn-clear {
+        --g-button-border-radius: 0;
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
+        padding: 0 !important;
+        background: $fg-btn-bg !important;
+        border: 1px solid #999 !important;
+        border-radius: 0 !important;
+        color: $fg-shuttle-fg !important;
+
+        :global(.g-button__text) {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0 !important;
+            line-height: 1;
+            transform: translateY(-1px);
+        }
+
+        &:hover:not(:disabled) {
+            filter: brightness(0.97);
+        }
+    }
+}

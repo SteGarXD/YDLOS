@@ -1,0 +1,136 @@
+$rebrandingRoot: '.dl-root_rebranding';
+
+$backgroundMenu: #fbfbfb;
+
+// Sizes
+$headerHeight: 70px;
+$actionPanelHeight: 40px;
+$actionPanelHorizontalPadding: 20px;
+$revisionPanelHeight: 52px;
+$normalOffset: 20px;
+$userSize: 42px;
+$sideMenuCompactWidth: 56px;
+$sideMenuFullWidth: 220px;
+$groupOperationsHeight: 73px;
+$menuIconSize: 16px;
+$menuIconMarginRight: 4px;
+$footerHeight: 40px;
+
+// Layers
+$primaryLayoutLayer: 100;
+$secondaryLayoutLayer: 50;
+$notificationLayer: 200;
+
+// Fonts
+$defaultFontFamily: 'Arial', 'HelveticaNeue', 'Helvetica', sans-serif;
+$titleFontFamily: 'Arial', 'HelveticaNeue', 'Helvetica', sans-serif;
+$monospaceFontFamily: 'Consolas', 'Menlo', 'Ubuntu Mono', monospace;
+
+.g-root {
+    --dl-navigation-breadcrumbs-height: 28px;
+
+    --dl-color-border: var(--g-color-line-generic);
+    --dl-color-border-solid: var(--g-color-line-generic-solid);
+    --dl-color-progress-bar: var(--g-color-text-info);
+    --dl-color-progress-bar-failed: var(--g-color-base-danger-heavy);
+
+    --dl-color-field-dimenson: var(--g-color-base-positive-light);
+    --dl-color-field-dimenson-hover: var(--g-color-base-positive-light-hover);
+    --dl-color-field-measure: var(--g-color-base-info-light);
+    --dl-color-field-measure-hover: var(--g-color-base-info-light-hover);
+    --dl-color-field-dimenson-solid: var(--g-color-text-positive);
+    --dl-color-field-measure-solid: var(--g-color-text-info);
+
+    --dl-color-entity-chart-wizard: #5282ff;
+    --dl-color-entity-chart-ql: #9f6fee;
+    /* Оранжевые акценты сущностей платформы → светло-синий; остальные цвета — как в исходном DataLens */
+    --dl-color-entity-chart-editor: #4a9fd4;
+    --dl-color-entity-connection: #9a32a6;
+    --dl-color-entity-dataset: #0abe05;
+    --dl-color-entity-dashboard: #4ca6dc;
+
+    --dl-color-widget-background: var(--g-color-base-float);
+
+    --dl-color-text-workbook-icon: var(--g-color-text-dark-primary);
+
+    --dl-viz-icon-main-color: #3d97f2;
+    --dl-viz-icon-secondary-color: #ff6a59;
+
+    &_theme_light {
+        // this color now is used only in light theme
+        --g-color-private-cool-grey-20-solid: rgb(245, 246, 247);
+
+        --ds-color-relation-line: #d9d9d9;
+        --ds-color-avatar: #ededed;
+        --w-local-item-border: rgba(0, 0, 0, 0.5);
+        --w-dataset-item-border-hover: rgba(0, 0, 0, 0.15);
+        --w-disabled-item-background: rgba(0, 0, 0, 0.07);
+        --dl-color-contrast-4: rgba(0, 0, 0, 0.04);
+        --dl-color-base-workbook-icon: #d1dfff;
+        --dl-filter-ymap-background: none;
+        --dl-filter-ymap-heatmap: none;
+        --dl-color-ymap-background: #fafafa;
+        --dl-filter-zoom-control: none;
+        --dl-color-dashboard-background: var(--g-color-private-cool-grey-20-solid);
+        --dl-color-fixed-header-background: var(--g-color-private-cool-grey-100-solid);
+    }
+
+    &_theme_light-hc {
+        --ds-color-relation-line: #d9d9d9;
+        --ds-color-avatar: #ededed;
+        --w-local-item-border: rgba(0, 0, 0, 0.5);
+        --w-dataset-item-border-hover: rgba(0, 0, 0, 0.15);
+        --w-disabled-item-background: rgba(0, 0, 0, 0.07);
+        --dl-color-contrast-4: rgba(0, 0, 0, 0.04);
+        --dl-color-base-workbook-icon: #a8c3ff;
+        --dl-filter-ymap-background: none;
+        --dl-filter-ymap-heatmap: none;
+        --dl-color-ymap-background: #fafafa;
+        --dl-filter-zoom-control: none;
+        --dl-color-dashboard-background: var(--g-color-private-cool-grey-50-solid);
+        --dl-color-fixed-header-background: var(--g-color-private-cool-grey-150-solid);
+    }
+
+    &_theme_dark {
+        --g-color-private-white-20-solid: rgb(49, 48, 55);
+
+        --ds-color-relation-line: #4c4b51;
+        --ds-color-avatar: #3b3a41;
+        --w-local-item-border: rgba(255, 255, 255, 0.5);
+        --w-dataset-item-border-hover: rgba(255, 255, 255, 0.15);
+        --w-disabled-item-background: rgba(255, 255, 255, 0.07);
+        --dl-color-contrast-4: rgba(255, 255, 255, 0.04);
+        --dl-color-base-workbook-icon: #c2d0f0;
+        --dl-filter-ymap-background: invert(0.9) saturate(0.4) hue-rotate(-30deg);
+        --dl-filter-ymap-heatmap: invert(0.9) saturate(0.4) hue-rotate(-30deg);
+        --dl-color-ymap-background: transparent;
+        --dl-filter-zoom-control: invert(1);
+        --dl-color-dashboard-background: var(--g-color-private-white-20-solid);
+        --dl-color-fixed-header-background: var(--g-color-base-background);
+    }
+
+    &_theme_dark-hc {
+        --g-color-private-white-20-solid: rgb(38, 39, 42);
+
+        --ds-color-relation-line: #4c4b51;
+        --ds-color-avatar: #3b3a41;
+        --w-local-item-border: rgba(255, 255, 255, 0.5);
+        --w-dataset-item-border-hover: rgba(255, 255, 255, 0.15);
+        --w-disabled-item-background: rgba(255, 255, 255, 0.07);
+        --dl-color-contrast-4: rgba(255, 255, 255, 0.04);
+        --dl-color-base-workbook-icon: #c0d3fd;
+        --dl-filter-ymap-background: invert(0.95) saturate(0.4) hue-rotate(-30deg);
+        --dl-filter-ymap-heatmap: invert(0.95) saturate(0.4) hue-rotate(-30deg);
+        --dl-color-ymap-background: transparent;
+        --dl-filter-zoom-control: invert(1);
+        --dl-color-dashboard-background: var(--g-color-private-white-20-solid);
+        --dl-color-fixed-header-background: var(--g-color-base-background);
+    }
+}
+
+.dl-root {
+    &_new-palette {
+        --dl-viz-icon-main-color: #3d97f2;
+        --dl-viz-icon-secondary-color: #ff6a59;
+    }
+}

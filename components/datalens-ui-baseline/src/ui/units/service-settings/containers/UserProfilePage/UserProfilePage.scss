@@ -1,0 +1,17 @@
+.dl-user-profile-page {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr;
+
+    &__content {
+        padding: var(--g-spacing-5);
+    }
+
+    &__breadcrumbs {
+        flex-grow: 1;
+    }
+
+    &__breadcrumbs-item {
+        height: 100%;
+    }
+}

@@ -1,0 +1,42 @@
+.dialog-title {
+    width: 700px;
+
+    &__row {
+        margin-bottom: var(--g-spacing-2);
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &__controls-wrapper {
+        display: flex;
+        align-items: baseline;
+        gap: var(--g-spacing-2);
+    }
+
+    &__checkbox {
+        margin-block-start: var(--g-spacing-2);
+    }
+
+    &__number-input {
+        width: 80px;
+    }
+
+    &__unit-select {
+        margin-inline-end: -1px;
+        border-inline-start: 1px solid var(--g-color-line-generic-accent);
+    }
+
+    &__unit {
+        margin-inline-start: var(--g-spacing-1);
+    }
+
+    &__settings-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 5px;
+        gap: 8px;
+    }
+}

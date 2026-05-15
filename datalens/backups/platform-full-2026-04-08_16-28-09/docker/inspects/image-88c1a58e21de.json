@@ -1,0 +1,96 @@
+﻿[
+    {
+        "Id": "sha256:88c1a58e21dec4b903b31548cb6154ee8da72a49e4616b6ae6857a27cadc80f1",
+        "RepoTags": [
+            "aeronavigatorbi/dl-ui:local"
+        ],
+        "RepoDigests": [
+            "aeronavigatorbi/dl-ui@sha256:88c1a58e21dec4b903b31548cb6154ee8da72a49e4616b6ae6857a27cadc80f1"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-04-08T11:09:41.448474235Z",
+        "Config": {
+            "User": "app",
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "TZ=Etc/UTC",
+                "APP_VERSION=",
+                "TMPDIR=/tmp",
+                "NODE_ENV=production",
+                "APP_BUILDER_CDN=false",
+                "UI_CORE_CDN=false",
+                "APP_MODE=full",
+                "APP_ENV=production",
+                "APP_INSTALLATION=opensource",
+                "APP_PORT=3030"
+            ],
+            "Entrypoint": [
+                "/usr/bin/supervisord",
+                "-c",
+                "/etc/supervisor/supervisord.conf"
+            ],
+            "WorkingDir": "/opt/app",
+            "Labels": {
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "22.04"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 1489996202,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:73974f74b436f39a2fdb6461b1e3f7c3e41c73325776fa71d16b942a5b4a365b",
+                "sha256:84403e2b13e9555e01cefe1ca4729cd70365355022fa6f3de4ddcedb30900a17",
+                "sha256:eb778cf7f9d6ef7aae4e2212b87ac3de7655a15a86df3627ae0a1fcf8583fbb7",
+                "sha256:f507bb54f0d4c59f6d1939fa002c6acfab5a55919af290fe62d9b6b8262c29d6",
+                "sha256:00c7445e801c9836ac2ca5e10b87567afb079d1fedcf842f61fc1e338a072ae7",
+                "sha256:93f533d5f07bb0f8a08563b1262a74266bd88f686df33ea3e64cc80ce1ba14ec",
+                "sha256:350eae8659158588d14bc1b98c0da7146f4273451f4f81a0d825f9a733f70c68",
+                "sha256:a29109fddeca6c0eaa24b0a2a2e3cfac1aa417b312b03a82c005aee8d883fc24",
+                "sha256:5984865fd7bb3400ab28a72ac72344d961e794aa051ab647eb0d72724b3ee8e5",
+                "sha256:6bb37a54ea38143e4289636fb8454b958a5e1ad6a5cf23c5fe1fa6b4064f3a78",
+                "sha256:68a45d6a500283d51cc0132e815dfbfda4a6fe87d452ef7ad9e4873e606d9c3a",
+                "sha256:57e2effffac0a9525e1351745570880c55148a020dea247aa63c7d0e442fee44",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:6c8f88821bb78f9cf890ec84aa7a0172d3798595ddd4f1ae2cb7e72e3434a519",
+                "sha256:666cb68aff331a24dd11c3fe6fe4d6e9f4e631b24c3e1ccfd1e7c63a7d337e7e",
+                "sha256:6dd21b93eb305ad934a19b01f0a54380d349f5d99e98263556f069b5eef417e7",
+                "sha256:2b1f7e1e4d9d65c2f768a59aff019f145ed69d9fa1abc04544aba36275091330",
+                "sha256:c944528b7b433c0cfc2927b8b61bb3f564d7149289e5cd72259eac6ef1854ab0",
+                "sha256:bacdb2c71ab21c2c24cded0fb7517c67975cd2b82d70c1436b03d50cf947f3de",
+                "sha256:0d1bc898dfd4bc10141d90787fa1231414b8e6c3b7ed2a6d6e3757fd8e00fb33",
+                "sha256:3de94f9988b76af6a663df3a0a62d35f59a85d4cf4a42955de1ea3ffa1c4e325",
+                "sha256:2071c647bb98f9d2c1167047b52f19dd1c34057562833e137369116541bd02fc",
+                "sha256:aa16ac5e4effa940b6b0b703c41841f27117dd1feabd70c6aaf7a6606ab1f15a",
+                "sha256:672b8426d9a9214872925ddf9ee9110986fa1a63b7b47d13eb64f82f24b0c960",
+                "sha256:b5432539ecce3c3014f350754f3709fbad5e2ddf7c71dd1860dc1959792f12e9",
+                "sha256:4359ef583d9b2b3d5d99e14fd3e196b586d4054767aa8abde1c833b413bd48f3",
+                "sha256:8e96594172b09d5cd3f76426fb0071d30550ffcaa3984d74f1ad3f99dd2624a6",
+                "sha256:cff49bedde2f2fda5582f53353ef947e4d5a7769fc82a94c11ff8c4a48910d68",
+                "sha256:e2a7d0076f9a230ffc795300b976f12215a10dccaf7a76198df3ba72fb1ba2c0"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-04-08T11:10:34.353870307Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:88c1a58e21dec4b903b31548cb6154ee8da72a49e4616b6ae6857a27cadc80f1",
+            "size": 856
+        },
+        "Identity": {
+            "Build": [
+                {
+                    "Ref": "rsslij5183aoa3jav56ovc2gi",
+                    "CreatedAt": "2026-04-08T11:10:55.440746162Z"
+                }
+            ]
+        }
+    }
+]

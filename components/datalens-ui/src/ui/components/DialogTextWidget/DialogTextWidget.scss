@@ -1,0 +1,23 @@
+@use '~@gravity-ui/uikit/styles/mixins' as *;
+
+.dialog-text {
+    position: relative;
+
+    &__hint {
+        @include text-body-1();
+        color: var(--g-color-text-secondary);
+        margin-top: 10px;
+    }
+
+    &__checkbox {
+        margin-block-start: var(--g-spacing-2);
+    }
+
+    &__row {
+        margin-bottom: var(--g-spacing-2);
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}

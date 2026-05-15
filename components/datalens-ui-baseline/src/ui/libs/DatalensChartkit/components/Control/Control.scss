@@ -1,0 +1,101 @@
+@import '~@gravity-ui/uikit/styles/mixins';
+
+.chartkit-control {
+    $class: &;
+    $yc-control-bottom-padding: 5px;
+
+    $controlDefaultHeight: 28px;
+    $buttonSmallHeight: 24px;
+    $checkboxHeight: 15px;
+
+    padding: 0 5px $yc-control-bottom-padding;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    min-height: 40px;
+    z-index: 0;
+    overflow: auto;
+
+    &_line-breaks_wrap {
+        white-space: normal;
+    }
+
+    &_line-breaks_nowrap:not(&_standalone) {
+        white-space: nowrap;
+    }
+
+    &__controls {
+        &_hidden {
+            visibility: hidden;
+
+            // style below needed to hide datepicker svg clear icon
+            .textinput__clear {
+                display: none;
+            }
+        }
+    }
+
+    &:not(&_standalone) {
+        //border-bottom: 1px solid #e6e6e6;
+        background-color: var(--ck-controls-backgound);
+        max-height: 50%;
+        flex: none;
+    }
+
+    &__loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    &__item {
+        margin-top: 5px;
+        max-width: 100%;
+        width: var(--control-custom-width, 'auto');
+
+        // TODO: move styles to Items.scss after removing old selectors code
+        &_button {
+            padding: ($controlDefaultHeight - $buttonSmallHeight) * 0.5 0;
+        }
+
+        &_checkbox {
+            padding: ($controlDefaultHeight - $checkboxHeight) * 0.5 0;
+        }
+
+        &:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
+
+    &__error {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 10px 16px 6px;
+    }
+
+    &__error-icon {
+        color: var(--g-color-text-danger);
+        flex: 0 0 auto;
+    }
+
+    &_mobile {
+        min-height: 64px;
+
+        #{$class}__controls {
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 6px;
+        }
+
+        #{$class}__item {
+            margin-right: 0;
+            margin-top: 10px;
+        }
+
+        #{$class}__error {
+            @include text-body-2;
+        }
+    }
+}

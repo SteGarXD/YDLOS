@@ -1,0 +1,26 @@
+@use '~@gravity-ui/uikit/styles/mixins' as *;
+
+.dialog-aliases-detail {
+    &__subtitle {
+        @include text-subheader-1();
+        margin-bottom: 8px;
+    }
+
+    &__row {
+        padding: 10px 0;
+    }
+
+    &__info {
+        color: var(--g-color-text-hint);
+    }
+
+    &__content {
+        margin-bottom: 16px;
+        max-height: 160px;
+        overflow: hidden auto;
+    }
+
+    &__error {
+        color: var(--g-color-text-danger);
+    }
+}

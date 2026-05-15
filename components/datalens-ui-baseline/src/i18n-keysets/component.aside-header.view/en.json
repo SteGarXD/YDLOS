@@ -1,0 +1,18 @@
+{
+  "label_about": "About",
+  "label_account": "Account",
+  "label_app-version": "Version",
+  "label_collections": "Collections and workbooks",
+  "label_docs": "Documentation",
+  "label_gallery": "DataLens Gallery",
+  "label_github": "GitHub",
+  "label_logout": "Log out",
+  "label_main": "Help",
+  "label_profile-settings": "Profile settings",
+  "label_settings": "Settings",
+  "switch_collections": "Collections and workbooks",
+  "switch_service-settings": "Service settings",
+  "switch_service-projects": "Projects",
+  "switch_service-roles": "Roles",
+  "switch_service-users": "Users"
+}

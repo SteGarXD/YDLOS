@@ -1,0 +1,80 @@
+﻿[
+    {
+        "Id": "sha256:2dbea1babcbf4e302e4b921db967d7dd68894020a0a0d4f8a9fac4cba019ccd6",
+        "RepoTags": [
+            "aeronavigatorbi/datalens-auth:0.2.6",
+            "akrasnov87/datalens-auth:0.2.6"
+        ],
+        "RepoDigests": [
+            "aeronavigatorbi/datalens-auth@sha256:2dbea1babcbf4e302e4b921db967d7dd68894020a0a0d4f8a9fac4cba019ccd6",
+            "akrasnov87/datalens-auth@sha256:2dbea1babcbf4e302e4b921db967d7dd68894020a0a0d4f8a9fac4cba019ccd6"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2025-10-16T08:32:52.257469106+03:00",
+        "Config": {
+            "User": "dl",
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Entrypoint": [
+                "/bin/bash"
+            ],
+            "Cmd": [
+                "/start-node.sh"
+            ],
+            "WorkingDir": "/app",
+            "Labels": {
+                "author": "Aleksandr Krasnov",
+                "desc": "╨Ю╨▒╤А╨░╨╖ RPC-╤Б╨╡╤А╨▓╨╕╤Б╨░ ╨┤╨╗╤П ╨░╨▓╤В╨╛╤А╨╕╨╖╨░╤Ж╨╕╨╕ ╨▓ Datalens",
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "20.04"
+            },
+            "ArgsEscaped": true
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 179493991,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:470b66ea5123c93b0d5606e4213bf9e47d3d426b640d32472e4ac213186c4bb6",
+                "sha256:50efa697496106d155c4e7f994e95cc618fdda72ce2dcb841e571e86951ae189",
+                "sha256:0583e306a70e4ba32da79ba6231bda555366985dd132ca46668fa883491972e3",
+                "sha256:d6d11d54b00636ae5aa781bb2e433a6351a044b77f2a7f34850cdd09fd8883b7",
+                "sha256:7068542383147944cd5423f98621473baf437b8430bbe0b3b193ca6c554264dd",
+                "sha256:669056e593158c1164e5aac3a1cb93f1d21446a14fec35a523eb5827457a2c6a",
+                "sha256:b3eaf80766f685aa5b57db0271131d3c54917295b11e400dbb1f5e04fde82771",
+                "sha256:3ee60e77e26974dfdb7fecb7ddf2156ff0affb0102cc9feb8e67dc0d775dd22f",
+                "sha256:8dcaaa28a70e873820c48bbcc65af25353fc5f0c6607b797ea1858516bdcb1c5",
+                "sha256:3b3c2540a546453df71134cd50bc00bce08ab2422ffeca50a3435ca5f1c59391",
+                "sha256:7e8991ce22d991ce9c9abf033050365280489ea499e3d81f69d164219319105d",
+                "sha256:3b8531712972d9bf2086c6f04f3b08e6931ffd84689d04c0d824e740f838a6fd",
+                "sha256:f10296fcef0b1894308f910d54cfe5a5ed52e990a7a18cca8b0aa88eeacb9515",
+                "sha256:8767fb433264d8f2f23c65d3c595b32e3ede0e22a02d624afa2343212439d1e7",
+                "sha256:6d1e652fb57fdae9572a1eb30fd024187b49bf254640be5c63de2b1aa7c12b41",
+                "sha256:1869a680d880173029809609d54fa0b5df3d34e5905cdc22afbc01fe11bf3b04",
+                "sha256:ddd9e9b09159c78460259789d6fa25a80386474bea456251a9820a8aeacc0ffd",
+                "sha256:948607e2b97a8810c8fd6d57763378ebfec40625393d47ee0485c8150986a37e",
+                "sha256:74c0b06f8bb28cf97eeb4d054c9dd89c66bb65664c78d8fcd73bcf8762cf98fd",
+                "sha256:c20519c0e5745401b285512fc74aa3c84768283c4c29bf6af1514941f0b8bb3d",
+                "sha256:fb18552a9db59cffcf37989079fc6b3a0a5d89f53ad847b2a3bb99b0bacee719",
+                "sha256:f1074101becface125228d0c3125ebc95a5b36d9b97ece00dcf12a42f64a4b79"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-03-18T08:25:30.174874362Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "digest": "sha256:2dbea1babcbf4e302e4b921db967d7dd68894020a0a0d4f8a9fac4cba019ccd6",
+            "size": 4903
+        },
+        "Identity": {
+            "Pull": [
+                {
+                    "Repository": "docker.io/akrasnov87/datalens-auth"
+                }
+            ]
+        }
+    }
+]

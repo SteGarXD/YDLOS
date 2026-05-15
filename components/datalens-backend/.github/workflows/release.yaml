@@ -1,0 +1,100 @@
+name: "🚀🟢 Release"
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        description: "Version to release, in format 'vX.Y.Z'"
+      make_latest:
+        type: boolean
+        description: "Make latest"
+        default: true
+      draft:
+        type: boolean
+        description: "Is draft"
+        default: false
+
+jobs:
+  push_images:
+    name: "Pull candidate images and push to release"
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    outputs:
+      image-version: ${{ steps.push_image.outputs.image-version }}
+    strategy:
+      matrix:
+        image_name:
+        - "datalens-control-api"
+        - "datalens-data-api"
+    env:
+      cr_url: "ghcr.io/${{ github.repository_owner }}"
+
+    steps:
+    - name: Log in to the Container registry
+      uses: docker/login-action@v2
+      with:
+        registry: ${{ env.cr_url }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Push release tag
+      id: push_image
+      run: |
+        image_version="${version#"v"}"
+
+        image_url_rc="${{ env.cr_url }}/${{ matrix.image_name }}:${image_version}-rc.1"
+        echo "Pulling release candidate image: ${image_url_rc}"
+
+        image_url_release="${{ env.cr_url }}/${{ matrix.image_name }}:${image_version}"
+        echo "Pushing release image: ${image_url_release}"
+        docker buildx imagetools create --tag "${image_url_release}" "${image_url_rc}"
+
+        echo "image-version=${image_version}" >> $GITHUB_OUTPUT
+      env:
+        version: ${{ github.event.inputs.version }}
+
+  run_e2e_tests:
+    name: "Run E2E tests"
+    needs: [ push_images ]
+    uses: datalens-tech/datalens-backend/.github/workflows/run_e2e.yml@main
+    with:
+      image_version: ${{ needs.push_images.outputs.image-version }}
+    secrets: inherit
+
+  release:
+    name: "Create release"
+    needs: [ push_images, run_e2e_tests ]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      branch: "release/${{ github.event.inputs.version }}"
+
+    steps:
+    - name: Checkout code
+      id: checkout
+      uses: actions/checkout@v2
+      with:
+        ref: "${{ env.branch }}"
+        fetch-depth: 0
+
+    - name: Create release
+      id: create_release
+      working-directory: .github/.scripts
+      run: |
+        gh release create \
+          --repo $REPOSITORY_NAME \
+          $VERSION \
+          --target ${{ env.branch }} \
+          ${{ github.event.inputs.make_latest == 'true' && '--latest' || '' }} \
+          ${{ github.event.inputs.draft == 'true' && '--draft' || '' }} \
+          --generate-notes
+      env:
+        VERSION: ${{ github.event.inputs.version }}
+        REPOSITORY_NAME: ${{ github.repository_owner }}/${{ github.event.repository.name }}
+        GH_TOKEN: ${{ github.token }}

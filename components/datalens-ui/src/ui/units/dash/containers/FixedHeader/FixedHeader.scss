@@ -1,0 +1,210 @@
+@use 'sass:math';
+
+@mixin flexReactGridLayout($minHeight: 44px) {
+    & > .react-grid-layout {
+        flex: 1;
+        transition: none;
+        min-height: $minHeight;
+    }
+}
+
+@mixin dashedBorderPositioning {
+    position: absolute;
+    content: '';
+    pointer-events: none;
+    left: var(--dashed-border-offset);
+    right: var(--dashed-border-offset);
+    top: var(--top-divider-offset, var(--dashed-border-offset));
+    bottom: var(--bottom-divider-offset, var(--dashed-border-offset));
+    border-radius: var(--g-border-radius-xl);
+}
+
+@mixin dndHighlight {
+    &_edit-mode {
+        position: relative;
+
+        &::before {
+            @include dashedBorderPositioning;
+            border: var(--outline-dashed-style);
+        }
+
+        &::after {
+            @include dashedBorderPositioning;
+            border: var(--outline-font-color-style);
+        }
+    }
+}
+
+@mixin hiddenSection {
+    &_hidden {
+        display: none;
+        margin: 0;
+    }
+}
+
+.dash-fixed-header {
+    $class: &;
+
+    --fixed-header-background: var(
+        --dl-color-fixed-header-background,
+        var(--g-color-base-background)
+    );
+
+    --dash-current-background: var(--fixed-header-background);
+
+    --dash-inline-padding: var(--g-spacing-6);
+    --fixed-header-block-spacing: var(--g-spacing-4);
+
+    --dashed-border-offset: calc(var(--g-spacing-3) * -1);
+    --hidden-dashed-border-width: 4px;
+
+    --outline-dashed-style: calc(var(--hidden-dashed-border-width) + 1px) dashed
+        var(--g-color-line-generic);
+    --outline-font-color-style: var(--hidden-dashed-border-width) solid
+        var(--fixed-header-background);
+
+    /*
+    Clicked btn shrinks, and small empty space appears between button pinned to the border of the page and the actual page border.
+    This commensation is desired to remove this empty space by moving button out of the border for this value
+    */
+    --btn-click-scale-compensantion: 1px;
+
+    margin-inline: calc(-1 * var(--dash-inline-padding));
+
+    &__wrapper {
+        position: relative;
+        background-color: var(--fixed-header-background);
+
+        &_fixed {
+            position: fixed;
+            top: 40px;
+
+            z-index: 8;
+
+            display: flex;
+            flex-direction: row;
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    &__scrollable-container {
+        padding-inline: var(--dash-inline-padding);
+
+        max-height: 70vh;
+        overflow: auto;
+        flex: 1;
+
+        #{$class}_edit-mode & {
+            max-height: initial;
+            overflow: initial;
+        }
+    }
+
+    &__controls-settings {
+        z-index: 9;
+        width: 36px;
+        position: absolute;
+        right: calc(-1 * var(--btn-click-scale-compensantion));
+        top: var(--fixed-header-block-spacing);
+
+        display: flex;
+        justify-content: flex-end;
+
+        #{$class}_edit-mode & {
+            top: var(--g-spacing-2);
+        }
+
+        #{$class}__controls-settings-wrapper {
+            width: calc(28px + var(--btn-click-scale-compensantion));
+
+            overflow: hidden;
+
+            border-radius: var(--g-border-radius-xl) 0 0 var(--g-border-radius-xl);
+            box-shadow: 0 0 15px var(--g-color-sfx-shadow);
+
+            transition: width 0.1s;
+        }
+
+        &:hover #{$class}__controls-settings-wrapper {
+            width: calc(36px + var(--btn-click-scale-compensantion));
+        }
+    }
+
+    &_edit-mode #{$class}__controls-settings-wrapper {
+        background-color: var(--g-color-base-float);
+        border-radius: var(--g-border-radius-m) 0 0 var(--g-border-radius-m);
+    }
+
+    &__controls {
+        --bottom-divider-offset: calc(
+            var(--fixed-header-block-spacing) / -2 - var(--hidden-dashed-border-width)
+        );
+
+        @include dndHighlight;
+        &::before,
+        &::after {
+            #{$class}:not(#{$class}_collapsed) & {
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+    }
+
+    &__container {
+        --top-divider-offset: calc(var(--fixed-header-block-spacing) / -2);
+        display: flex;
+        flex-direction: row;
+
+        @include dndHighlight;
+        &::before,
+        &::after {
+            border-top: none;
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+        }
+    }
+
+    &__controls-placeholder,
+    &__container-placeholder {
+        display: contents;
+    }
+
+    &__controls,
+    &__container {
+        margin-block: var(--fixed-header-block-spacing);
+
+        @include flexReactGridLayout;
+        @include hiddenSection;
+    }
+
+    &__container-placeholder {
+        position: relative;
+
+        &_collapsed #{$class}__container {
+            overflow: clip;
+            min-height: 0;
+            max-height: 0;
+            padding: 0;
+            margin: 0;
+        }
+    }
+
+    &__empty {
+        position: absolute;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        top: 50%;
+        pointer-events: none;
+        color: var(--g-color-text-hint);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: var(--g-spacing-1);
+    }
+}

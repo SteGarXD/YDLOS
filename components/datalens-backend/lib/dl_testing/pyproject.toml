@@ -1,0 +1,52 @@
+[tool.poetry]
+authors = ["DataLens Team <datalens-opensource@yandex-team.ru>"]
+description = ""
+license = "Apache 2.0"
+name = "dl-testing"
+packages = [{include = "dl_testing"}]
+version = "0.0.1"
+
+[tool.poetry.dependencies]
+aiobotocore = "*"
+aiohttp = "*"
+attrs = "*"
+boto3 = "*"
+botocore = "*"
+dl-api-commons = {path = "../dl_api_commons"}
+dl-configs = {path = "../dl_configs"}
+dl-utils = {path = "../dl_utils"}
+pytest = "*"
+python = ">=3.10, <3.13"
+python-dotenv = "*"
+pyyaml = "*"
+
+[tool.poetry.plugins.env_param_getters]
+direct = "dl_testing.env_params.main:DirectEnvParamGetter"
+osenv = "dl_testing.env_params.main:OsEnvParamGetter"
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_untyped_defs = true
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = ["mypy_boto3_s3.*", "types_aiobotocore_s3.*"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+minversion = "6.0"
+testpaths = []
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]
+
+[datalens.pytest.unit]
+labels = ["no_compose"]
+root_dir = "dl_testing_tests/"
+skip_compose = "true"
+target_path = "unit"

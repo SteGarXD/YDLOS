@@ -1,0 +1,41 @@
+[tool.poetry]
+authors = ["DataLens Team <datalens-opensource@yandex-team.ru>"]
+description = ""
+license = "Apache 2.0"
+name = "dl-pivot-pandas"
+packages = [{include = "dl_pivot_pandas"}]
+readme = "README.md"
+version = "0.0.1"
+
+[tool.poetry.dependencies]
+attrs = "*"
+dl-constants = {path = "../dl_constants"}
+dl-pivot = {path = "../dl_pivot"}
+dl-query-processing = {path = "../dl_query_processing"}
+pandas = "*"
+python = ">=3.10, <3.13"
+
+[tool.poetry.plugins."dl_pivot.pivot_engine_plugins"]
+pandas = "dl_pivot_pandas.pandas.plugin:PandasPivotEnginePlugin"
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_untyped_defs = true
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+minversion = "6.0"
+testpaths = []
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]
+
+[datalens_ci]
+skip_test = true # no tests in package

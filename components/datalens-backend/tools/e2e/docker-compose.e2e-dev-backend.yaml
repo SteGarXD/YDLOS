@@ -1,0 +1,14 @@
+services:
+  us:
+    extra_hosts: !reset null
+
+  control-api:
+    image: ${CONTROL_API_TAG}
+
+  data-api:
+    image: ${DATA_API_TAG}
+
+  datalens-from-image:
+    image: ${DATALENS_UI_TAG}
+    ports:
+      - 8080:8080

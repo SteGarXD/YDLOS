@@ -1,0 +1,26 @@
+@use '~@gravity-ui/uikit/styles/mixins' as *;
+@use '../../../../../../../../../../styles/variables' as vars;
+
+.chartkit-inspector {
+    &__body {
+        max-height: 65vh;
+        overflow: auto;
+        color: var(--g-color-text-primary);
+        font-size: var(--g-text-body-1-font-size);
+        line-height: var(--g-text-body-1-line-height);
+    }
+
+    &__divider {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    &__row {
+        margin-bottom: 26px;
+    }
+
+    &__label {
+        @include text-code-1();
+        margin-left: 5px;
+    }
+}

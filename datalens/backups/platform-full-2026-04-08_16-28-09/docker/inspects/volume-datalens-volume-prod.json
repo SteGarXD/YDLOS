@@ -1,0 +1,16 @@
+﻿[
+    {
+        "CreatedAt": "2026-03-19T13:37:03Z",
+        "Driver": "local",
+        "Labels": {
+            "com.docker.compose.config-hash": "6775cd5172b47facff3ba7f27608a5630bef6399a8c6b1c75c8e8f1ca338e17a",
+            "com.docker.compose.project": "datalens",
+            "com.docker.compose.version": "5.1.0",
+            "com.docker.compose.volume": "db-postgres"
+        },
+        "Mountpoint": "/var/lib/docker/volumes/datalens-volume-prod/_data",
+        "Name": "datalens-volume-prod",
+        "Options": null,
+        "Scope": "local"
+    }
+]

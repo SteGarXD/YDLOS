@@ -1,0 +1,33 @@
+/* Opensource / ChartKit: без глобальных перекрытий темы. Только замена оранжевого акцента UI Kit на светло-синий. */
+
+$ydl-accent-blue: #3a94d0;
+$ydl-accent-blue-hover: #2d7ab8;
+$ydl-accent-blue-press: #256399;
+
+/* Светлая тема: кнопки/ссылки бренда (дефолт Gravity UI — оранжевый). Остальные переменные — из theme.scss / платформы. */
+.g-root_theme_light,
+.g-root_theme_light-hc {
+    --g-color-base-brand: #{$ydl-accent-blue};
+    --g-color-base-brand-hover: #{$ydl-accent-blue-hover};
+    --g-color-base-brand-press: #{$ydl-accent-blue-press};
+    --g-color-base-brand-contrast: #fff;
+    --g-color-text-brand: #{$ydl-accent-blue};
+    --g-color-text-brand-heavy: #{$ydl-accent-blue-hover};
+    --g-color-line-brand: #{$ydl-accent-blue};
+    --g-color-base-selection: rgba(58, 148, 208, 0.15);
+    --g-color-base-selection-hover: rgba(58, 148, 208, 0.28);
+}
+
+/* Тёмная тема */
+.g-root_theme_dark,
+.g-root_theme_dark-hc {
+    --g-color-base-brand: #5cb0e8;
+    --g-color-base-brand-hover: #7ec0f0;
+    --g-color-base-brand-press: #4a9fd4;
+    --g-color-base-brand-contrast: #fff;
+    --g-color-text-brand: #7ec0f0;
+    --g-color-text-brand-heavy: #a8d4f5;
+    --g-color-line-brand: #5cb0e8;
+    --g-color-base-selection: rgba(92, 176, 232, 0.2);
+    --g-color-base-selection-hover: rgba(92, 176, 232, 0.33);
+}

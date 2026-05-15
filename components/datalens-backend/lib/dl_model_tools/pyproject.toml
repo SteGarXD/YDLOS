@@ -1,0 +1,61 @@
+[tool.poetry]
+authors = ["DataLens Team <datalens-opensource@yandex-team.ru>"]
+description = ""
+license = "Apache 2.0"
+name = "dl-model-tools"
+packages = [{include = "dl_model_tools"}]
+readme = "README.md"
+version = "0.0.1"
+
+[tool.poetry.dependencies]
+attrs = "*"
+dl-constants = {path = "../dl_constants"}
+dl-type-transformer = {path = "../dl_type_transformer"}
+dynamic-enum = {path = "../dynamic_enum"}
+marshmallow = "*"
+marshmallow-oneofschema = "*"
+msgpack = "*"
+python = ">=3.10, <3.13"
+
+[tool.poetry.group.tests.dependencies]
+dl-testing = {path = "../dl_testing"}
+flaky = "*"
+pytest = "*"
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_untyped_defs = true
+exclude = ["dl_model_tools_tests/"]
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+ignore_errors = true
+module = "dl_model_tools.contrib.enum_field"
+
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = ["msgpack.*"]
+
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = ["msgpack.*"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+minversion = "6.0"
+testpaths = []
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]
+
+[datalens.pytest.unit]
+labels = ["no_compose"]
+root_dir = "dl_model_tools_tests/"
+skip_compose = "true"
+target_path = "unit"

@@ -1,0 +1,7 @@
+node_modules
+*-lock.json
+/log
+/schema
+/*.zip
+dev.conf
+.vscode

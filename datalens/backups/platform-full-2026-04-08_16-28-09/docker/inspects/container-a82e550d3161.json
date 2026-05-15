@@ -1,0 +1,317 @@
+﻿[
+    {
+        "Id": "a82e550d3161bcb3a3191cebbda593d6739e1a2d8e4a89f9e31476093733aca2",
+        "Created": "2026-03-19T20:17:30.439023392Z",
+        "Path": "/etc/temporal/init-temporal.sh",
+        "Args": [],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 800,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-04-07T09:33:32.762369887Z",
+            "FinishedAt": "2026-04-07T09:31:05.559021737Z",
+            "Health": {
+                "Status": "healthy",
+                "FailingStreak": 0,
+                "Log": [
+                    {
+                        "Start": "2026-04-08T13:28:22.886456035Z",
+                        "End": "2026-04-08T13:28:23.004891315Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-04-08T13:28:33.005852308Z",
+                        "End": "2026-04-08T13:28:33.115431108Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-04-08T13:28:43.116599391Z",
+                        "End": "2026-04-08T13:28:43.230489547Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-04-08T13:28:50.502499057Z",
+                        "End": "2026-04-08T13:28:50.668079658Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    },
+                    {
+                        "Start": "2026-04-08T13:29:00.668625344Z",
+                        "End": "2026-04-08T13:29:00.778380621Z",
+                        "ExitCode": 0,
+                        "Output": ""
+                    }
+                ]
+            }
+        },
+        "Image": "sha256:64820b925c63499de4df7ec55cbe7dbf9c786a8e8966db131d963f4c5f50c6ad",
+        "ResolvConfPath": "/var/lib/docker/containers/a82e550d3161bcb3a3191cebbda593d6739e1a2d8e4a89f9e31476093733aca2/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/a82e550d3161bcb3a3191cebbda593d6739e1a2d8e4a89f9e31476093733aca2/hostname",
+        "HostsPath": "/var/lib/docker/containers/a82e550d3161bcb3a3191cebbda593d6739e1a2d8e4a89f9e31476093733aca2/hosts",
+        "LogPath": "/var/lib/docker/containers/a82e550d3161bcb3a3191cebbda593d6739e1a2d8e4a89f9e31476093733aca2/a82e550d3161bcb3a3191cebbda593d6739e1a2d8e4a89f9e31476093733aca2-json.log",
+        "Name": "/datalens-temporal-prod",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "3",
+                    "max-size": "5m"
+                }
+            },
+            "NetworkMode": "datalens_default",
+            "PortBindings": {
+                "7233/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "7233"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "a82e550d3161",
+            "Domainname": "",
+            "User": "temporal",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "6933/tcp": {},
+                "6934/tcp": {},
+                "6935/tcp": {},
+                "6939/tcp": {},
+                "7233/tcp": {},
+                "7234/tcp": {},
+                "7235/tcp": {},
+                "7239/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "TEMPORAL_AUTH_ENABLED=false",
+                "TEMPORAL_AUTH_PRIVATE_KEY=-----BEGIN RSA PRIVATE KEY-----\\nMIIEowIBAAKCAQEAqHLHK4aK5RGhTqbk5SYUeNtJDdP2wNR7e45Q+fKAdnR51rxC\\nXIJdg11d4UkkkzwmwblFEzCQt0dFHrnsHNso3YU3bM4xPsxKRdJ4L4+nH7fcj4lH\\nKpl1PosNBi/py7dtJLGOFktEhZ4YvtB9Fqq6o/kF0hPhuTm1mzyoYAN4Aisch3ZY\\nw8WjPFYZPUqLqi+OEUyuYU8j36I7uxybpw55pSvnCHCtxuxSuX1er14fCplX8yik\\nnc2ePY7dOwTM9iS1aMcWoobQOuyda3Vp2opznassgcnXkgAj+1e1vosDahc98nXb\\nExyMRDzJglLUmF+wb1/jaNClK48bX+CihRxOKQIDAQABAoIBADk06cE1axxKdX7R\\nnTDZUuCMkG3ay5VHVDxs48FPAyO3gN1ViDAEsh936PcmsP4z0nG+KuBOgQdNdALw\\nX2iZYXKB2IXiLMVH+f1mchys67QQ7B3vIDUucqvv61drlDn0LGPmzPtzSm0aeQrs\\noV6+Uq53Vuu2htUx7SQwYHpjEzGgx03WDwwPze7rf/jsVZAILpW3z2Na/514rOtO\\n7Kd5c4U+3YDcfQuQyp4PTW4h6VQm/TBalvR26bYKdcdB5UR0s1tply0zUxPmA/Rm\\nseJpKhfnUipKvQMPdaEvEGVJO3GeHiCc2ssULWXDPc/cpg4V66w3zP939NRsWaG9\\n47H6fJECgYEA2qvCkj30yl7LbjgW1O/eYUH9BXQrialYLGx8sO275cocV+dGfDLg\\na2PHzYUWDhEXYM/sBCR19p/agcG9TPDkHTSheuNoDxIz8Q8BuCB9C5FA51flL6vd\\neyKcdnq0KlL0qSGMAD3twuGDh2p54dWcUM3lUPhcq6FCfnsE5TZY6t0CgYEAxTQ3\\nq5VqCtVQEQy4hZNW+fjdBKoT9cM4TsZ9IqFrkkt/+JVBLP0G8bYYz+pB6E2GsFPP\\n89EdnRecu/qQxfXLQ8oKpBOP4o7tVMTEgQatmbmPuzxycABmiVLf65tfrcxvRKCS\\nH9hzHVPyn6BQOZfZeL/id5Q5ioqkayKhLYLdfb0CgYEAgmQfLqMBH9csyPlrK+go\\nm6gEn0bpWzn+mObL55irDVfaVNRU5GRWC9NA5h0wzIyGezUgkEvJh5lEa1FCdunB\\nrGSg0a1edHYvQNPo+4lr5wTjRc/UmvuJow49bCy41/AFcgDOAarr5uQgURQ9v1tn\\nzYso7YJbiAAtrUvf3Gnu1YUCgYAW0U7rtJMbg8kK3/ztv7mdnNT9+CvtENSQENlj\\ny2el+sRo3+Q1r2VBTH+cdw9/MJE4D8qM/JI/nf7NpVVhAmqtglAu4fCRF1aQq1/N\\nSheGJPljgcAAA5vZodQ077pnYrMxLp8ZvjK7nv4AyEzgDRjlptYuXeE2jYout0gM\\n+wpjxQKBgAkaphyQPD0hsv9Q3+CRXzmFX9XL3NEcQtNUv/h5Iq3DgctgGkG0qeJP\\ns4qhnarh6IFQZf53j35AUuIp45A6C26xkvS0NoTi/J9Q4xNkgl4aaPQ6h/t9aqIH\\nGofbNqb4LSXato4Kxh4BEGCv6X6kbi//xGCQ2JMkZgt1bOmM6r+e\\n-----END RSA PRIVATE KEY-----",
+                "NAMESPACES=meta-manager",
+                "POSTGRES_USER=pg-user",
+                "POSTGRES_PORT=5432",
+                "POSTGRES_PASSWORD=postgres",
+                "POSTGRES_TLS_CA_FILE=",
+                "POSTGRES_TLS_DISABLE_HOST_VERIFICATION=true",
+                "POSTGRES_TLS_ENABLED=false",
+                "POSTGRES_DB=pg-temporal-db",
+                "POSTGRES_DB_VISIBILITY=pg-temporal-visibility-db",
+                "TEMPORAL_AUTH_PUBLIC_KEY=-----BEGIN PUBLIC KEY-----\\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqHLHK4aK5RGhTqbk5SYU\\neNtJDdP2wNR7e45Q+fKAdnR51rxCXIJdg11d4UkkkzwmwblFEzCQt0dFHrnsHNso\\n3YU3bM4xPsxKRdJ4L4+nH7fcj4lHKpl1PosNBi/py7dtJLGOFktEhZ4YvtB9Fqq6\\no/kF0hPhuTm1mzyoYAN4Aisch3ZYw8WjPFYZPUqLqi+OEUyuYU8j36I7uxybpw55\\npSvnCHCtxuxSuX1er14fCplX8yiknc2ePY7dOwTM9iS1aMcWoobQOuyda3Vp2opz\\nnassgcnXkgAj+1e1vosDahc98nXbExyMRDzJglLUmF+wb1/jaNClK48bX+CihRxO\\nKQIDAQAB\\n-----END PUBLIC KEY-----",
+                "POSTGRES_HOST=postgres",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "TEMPORAL_HOME=/etc/temporal",
+                "TEMPORAL_SHA=ed81e7c8a77866c9c5f3ef3b34cbb3c8b8c6fc2",
+                "TCTL_SHA=d31f5204538c534d72aeddeb2a08722dda0c8b5",
+                "TEMPORAL_PORT=7233",
+                "DB=postgres12",
+                "NUM_HISTORY_SHARDS=512",
+                "DEFAULT_NAMESPACE_RETENTION=24h",
+                "SKIP_NAMESPACES_CREATION=false",
+                "POSTGRES_CONNECT_ATTRIBUTES="
+            ],
+            "Cmd": null,
+            "Healthcheck": {
+                "Test": [
+                    "CMD",
+                    "/etc/temporal/healthcheck.sh"
+                ],
+                "Interval": 10000000000,
+                "Timeout": 5000000000,
+                "StartPeriod": 3000000000,
+                "Retries": 6
+            },
+            "Image": "ghcr.io/datalens-tech/datalens-temporal:1.27.2",
+            "Volumes": null,
+            "WorkingDir": "/etc/temporal",
+            "Entrypoint": [
+                "/etc/temporal/init-temporal.sh"
+            ],
+            "Labels": {
+                "com.docker.compose.config-hash": "fe38f2fa371aed5026806e96b89594e30b3e4b87850456351a8d20b0a898b298",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "postgres:service_healthy:false",
+                "com.docker.compose.image": "sha256:64820b925c63499de4df7ec55cbe7dbf9c786a8e8966db131d963f4c5f50c6ad",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "datalens",
+                "com.docker.compose.project.config_files": "D:\\YDLOS\\datalens\\docker-compose.yaml,D:\\YDLOS\\datalens\\docker-compose.demo.yaml",
+                "com.docker.compose.project.working_dir": "D:\\YDLOS\\datalens",
+                "com.docker.compose.replace": "datalens-temporal-prod",
+                "com.docker.compose.service": "temporal",
+                "com.docker.compose.version": "5.1.0",
+                "org.opencontainers.image.created": "2025-02-20T23:39:46.492Z",
+                "org.opencontainers.image.description": "Workflow as Code (TM) to build and operate resilient applications",
+                "org.opencontainers.image.licenses": "MIT",
+                "org.opencontainers.image.revision": "8306e2dbba922ed718c6da576c263f11e50e950f",
+                "org.opencontainers.image.source": "https://github.com/temporalio/temporal",
+                "org.opencontainers.image.title": "server",
+                "org.opencontainers.image.url": "https://github.com/temporalio/temporal",
+                "org.opencontainers.image.version": "1.15.11"
+            },
+            "StopTimeout": 1
+        },
+        "NetworkSettings": {
+            "SandboxID": "fd6c213e62d6e54dc5087dc2622c96073112595bcc995127f4a08c0d8b47fc5d",
+            "SandboxKey": "/var/run/docker/netns/fd6c213e62d6",
+            "Ports": {
+                "7233/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "7233"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "7233"
+                    }
+                ]
+            },
+            "Networks": {
+                "datalens_default": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "datalens-temporal-prod",
+                        "temporal"
+                    ],
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "e89f59f24bbc4bad570dee90f3a149228b7f73d788439d2002f2b5e06dc808e2",
+                    "EndpointID": "2ea97e39beb7c725c5203f0593e6354b2fd1ecd89c6403dfe0cbade041ad2b34",
+                    "Gateway": "172.19.0.1",
+                    "IPAddress": "172.19.0.4",
+                    "MacAddress": "82:e5:47:d1:a5:24",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "datalens-temporal-prod",
+                        "temporal",
+                        "a82e550d3161"
+                    ]
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:12185ea3268c772bfe9e7b7d73f0a433c32cbc7b83e37c83e27aaaf76198c78a",
+            "size": 5599,
+            "platform": {
+                "architecture": "amd64",
+                "os": "linux"
+            }
+        }
+    }
+]

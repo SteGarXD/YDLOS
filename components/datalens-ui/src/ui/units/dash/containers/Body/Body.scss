@@ -1,0 +1,211 @@
+@use '../../../../styles/variables' as vars;
+
+$contentPadding: 24px;
+$contentMobilePadding: 16px;
+$actionPanelDefaultBottom: 20px;
+
+.dash-body {
+    --dashkit-grid-item-edit-opacity: 0.99; // Chrome z-index opacity leaking
+    --dashkit-overlay-color: var(--g-color-base-float);
+    --dashkit-overlay-border-color: var(--g-color-base-float);
+    --dashkit-overlay-opacity: 0.5;
+
+    --_--dash-background: var(
+        --dl-color-dashboard-background,
+        var(--g-color-base-generic-ultralight)
+    );
+
+    --dash-current-background: var(--_--dash-background);
+
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    overflow: clip;
+    text-size-adjust: none;
+    $bodyClass: &;
+
+    &_split-pane {
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    // redefining the style of the internal header at the dashboard level by design so that it looks the same with the headers
+    & .yc-select-control__label {
+        font-weight: 500;
+    }
+
+    &__export-button {
+        position: fixed;
+        right: 24px;
+    }
+    .dashkit {
+        margin-block-start: var(--g-spacing-4);
+    }
+
+    &__content-container_no-title .dashkit,
+    &__content-container_no-title-with-tabs .dashkit {
+        margin-block-start: 0;
+    }
+
+    &__content {
+        width: 100%;
+        transition: width 0.1s;
+        padding: 20px #{$contentPadding} 48px;
+        background-color: var(--dash-current-background);
+
+        &_with-table-of-content:not(&_mobile) {
+            width: calc(100% - 250px);
+        }
+
+        &_condensed {
+            --dashkit-grid-item-border-radius: 0px;
+            --dl-dk-charts-border-radius: 0px;
+            --dl-dk-controls-border-radius: 0px;
+        }
+
+        &_mobile {
+            padding: 8px #{$contentMobilePadding} 18px;
+        }
+
+        &_aside {
+            padding: 0 #{$contentPadding} 48px;
+        }
+
+        &_with-edit-panel {
+            margin-bottom: 124px;
+            padding-bottom: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        &_with-edit-panel > .dashkit,
+        &_with-edit-panel > .dashkit > .react-grid-layout {
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        &_with-footer #{$bodyClass}__edit-panel {
+            bottom: $actionPanelDefaultBottom + vars.$footerHeight;
+        }
+
+        & #{$bodyClass}__edit-panel {
+            left: calc(50vw + #{vars.$sideMenuCompactWidth} / 2);
+        }
+
+        & #{$bodyClass}__edit-panel_aside-opened {
+            left: calc(50vw + #{vars.$sideMenuFullWidth} / 2);
+        }
+    }
+
+    &__content-wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        overflow: clip;
+        text-size-adjust: none;
+
+        &_mobile {
+            overflow: hidden;
+        }
+
+        & {
+            border-right: var(--dl-dash-select-container-border-right-width) solid
+                var(--dl-dash-select-container-border-color);
+            border-left: var(--dl-dash-select-container-border-left-width) solid
+                var(--dl-dash-select-container-border-color);
+            border-bottom: var(--dl-dash-select-container-border-bottom-width) solid
+                var(--dl-dash-select-container-border-color);
+            border-top: var(--dl-dash-select-container-border-top-width) solid
+                var(--dl-dash-select-container-border-color);
+        }
+    }
+
+    &_split-pane &__content-wrapper {
+        overflow-y: unset;
+    }
+
+    &__content-container {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        overflow: clip;
+        text-size-adjust: none;
+        background-color: var(--dash-current-background);
+
+        &_mobile {
+            overflow: hidden;
+        }
+
+        &_no-title #{$bodyClass}__content_aside {
+            padding-top: 7px;
+        }
+
+        &_no-title-with-tabs #{$bodyClass}__content_aside {
+            padding-top: 2px;
+        }
+    }
+
+    &_split-pane &__content-container {
+        overflow-y: unset;
+    }
+
+    &__entry-name {
+        font-size: var(--g-text-header-2-font-size);
+        line-height: var(--g-text-header-2-line-height);
+        font-weight: 500;
+        background-color: var(--_--dash-background);
+        padding: 16px 0 4px;
+    }
+
+    &__tabs {
+        margin-block-end: 22px;
+    }
+
+    &__fixed-header {
+        margin-block: var(--g-spacing-4);
+
+        &_no-content {
+            margin-block: 0;
+        }
+    }
+
+    &__entry-name + &__fixed-header_no-content {
+        // when no tabs and no visible main fixed-header content,
+        // this margin is used as a spacing between dash title and content
+        margin-block-start: var(--g-spacing-4);
+    }
+
+    & #{$bodyClass}__edit-panel {
+        z-index: 10;
+    }
+
+    .edit-panel-item {
+        width: 108px;
+    }
+
+    &__fixed-header-settings-switcher {
+        width: inherit;
+    }
+
+    &__content-wrapper_mode_edit &__sticky-control-btn {
+        --sticky-control-border-radius: var(--g-border-radius-m);
+        --sticky-control-border-top-left-radius: var(--sticky-control-border-radius);
+        --sticky-control-border-bottom-left-radius: var(--sticky-control-border-radius);
+
+        --g-button-border-radius: var(--sticky-control-border-top-left-radius, 0) 0 0
+            var(--sticky-control-border-bottom-left-radius, 0);
+
+        &_last {
+            --sticky-control-border-top-left-radius: 0;
+        }
+
+        &_first {
+            --sticky-control-border-bottom-left-radius: 0;
+        }
+    }
+}

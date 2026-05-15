@@ -1,0 +1,10 @@
+﻿NAMES                        IMAGE                                            STATUS
+datalens-data-api-prod       akrasnov87/datalens-data-api:0.2396.0            Up 28 hours
+datalens-control-api-prod    akrasnov87/datalens-control-api:0.2396.0         Up 28 hours
+datalens-meta-manager-prod   akrasnov87/datalens-meta-manager:0.50.0          Up 28 hours
+datalens-ui-api-prod         akrasnov87/datalens-ui:0.3498.0                  Up 28 hours
+datalens-temporal-prod       ghcr.io/datalens-tech/datalens-temporal:1.27.2   Up 28 hours (healthy)
+datalens-us-prod             akrasnov87/datalens-us:0.413.0                   Up 28 hours
+datalens-auth-prod           akrasnov87/datalens-auth:0.2.6                   Up 28 hours
+datalens-postgres-prod       akrasnov87/datalens-postgres:16                  Up 28 hours (healthy)
+datalens-ui-prod             akrasnov87/datalens-ui:0.3498.0                  Exited (137) 13 days ago

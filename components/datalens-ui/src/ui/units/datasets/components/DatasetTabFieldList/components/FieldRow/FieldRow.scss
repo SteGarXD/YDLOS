@@ -1,0 +1,41 @@
+.dataset-tab-field-list-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--g-color-line-generic);
+    padding-right: 5px;
+    cursor: pointer;
+
+    &__control-item {
+        display: flex;
+        flex: 0 0 24px;
+        margin-left: auto;
+        opacity: 0;
+    }
+
+    &:hover {
+        .dataset-tab-field-list-row__control-item {
+            opacity: 1;
+        }
+    }
+
+    &_header {
+        padding: 0;
+        cursor: default;
+    }
+
+    &_invalid * {
+        color: var(--g-color-text-danger);
+        font-style: italic;
+    }
+
+    &__row-content {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+
+        &_header {
+            font-weight: 500;
+        }
+    }
+}

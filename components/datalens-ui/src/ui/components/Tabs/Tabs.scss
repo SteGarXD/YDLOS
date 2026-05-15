@@ -1,0 +1,72 @@
+@use '~@gravity-ui/uikit/styles/mixins' as *;
+// Resizing only for dashboard tabs.
+// Widget tabs is used as is (approved by designers)
+// Custom Tabs module is used for dashboard tabs only (but gc-adaptive-tabs class - is a part of common module classes)
+
+$adaptiveTabsClass: '.gc-adaptive-tabs';
+
+.dl-tabs {
+    $class: &;
+
+    &_size_l {
+        @include text-body-2();
+    }
+
+    &_size_xl {
+        @include text-subheader-3();
+    }
+
+    #{$adaptiveTabsClass} {
+        overflow: hidden;
+        font-weight: 400;
+
+        &__tab {
+            padding: 0;
+        }
+
+        &__tab-container {
+            margin: 0;
+            line-height: 0;
+
+            &_switcher-tab {
+                height: var(--gc-tabs-height);
+                padding: var(--gc-tabs-border-width) 1px 0;
+            }
+        }
+    }
+
+    &__tab {
+        width: 100%;
+
+        // Users often use emojis in tab titles,
+        // so we have to set min-width for correct  ellipsis
+        min-width: 40px;
+
+        display: inline-block;
+        border-bottom: var(--gc-tabs-border-width) solid transparent;
+        height: calc(#{var(--gc-tabs-height)} - 2px);
+        padding: var(--gc-tabs-border-width) 1px 0;
+        box-sizing: content-box;
+        overflow: hidden;
+
+        &_active {
+            border-bottom-color: var(--gc-tabs-color-border-active);
+            color: var(--gc-tabs-color-text-active);
+        }
+    }
+
+    &_opacity {
+        #{$class}__tab:not(#{$class}__tab_active) {
+            opacity: 0.7;
+        }
+    }
+
+    &_opacity:not(#{$class}_mobile) {
+        #{$class}__tab:not(#{$class}__tab_active) {
+            &:hover,
+            &:focus {
+                opacity: 1;
+            }
+        }
+    }
+}

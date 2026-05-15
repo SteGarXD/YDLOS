@@ -1,0 +1,101 @@
+.tree-cell {
+    --tree-toggle-size: 11px;
+    --tree-sign-size: 7px;
+
+    display: inline-flex;
+    align-items: flex-start;
+    box-sizing: border-box;
+    max-width: 100%;
+    min-width: 0;
+    gap: 6px;
+
+    /* Квадрат: платформенное позиционирование, как в baseline — без ручных микросдвигов линий. */
+    &__btn {
+        flex-shrink: 0;
+        margin: 0;
+        padding: 0;
+        line-height: 0;
+        position: relative;
+        cursor: pointer;
+        box-sizing: border-box;
+        appearance: none;
+        -webkit-appearance: none;
+        font: inherit;
+
+        width: var(--tree-toggle-size);
+        height: var(--tree-toggle-size);
+        min-width: var(--tree-toggle-size);
+        min-height: var(--tree-toggle-size);
+        border: 1px solid #000;
+        border-radius: 2px;
+        background-color: #fff;
+
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transform: translateY(2px);
+
+        &:hover {
+            background-color: #fff;
+        }
+
+        &:focus-visible {
+            outline: 1px solid var(--g-color-line-focus, #5282ff);
+            outline-offset: 1px;
+        }
+    }
+
+    &__sign {
+        display: block;
+        width: var(--tree-sign-size);
+        height: var(--tree-sign-size);
+        position: relative;
+        pointer-events: none;
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            background: #000;
+            /* Центрирование через transform стабильнее субпиксельной сетки, чем фиксированные left/top */
+            shape-rendering: crispEdges;
+        }
+
+        /* Общая горизонталь минуса и «перекладина» плюса */
+        &::before {
+            left: 50%;
+            top: 50%;
+            width: var(--tree-sign-size);
+            height: 1px;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Вертикаль плюса */
+        &::after {
+            left: 50%;
+            top: 50%;
+            width: 1px;
+            height: var(--tree-sign-size);
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    &__sign_opened {
+        &::after {
+            display: none;
+        }
+    }
+
+    /* Размер задаётся inline с td (flightFont в flat-table); наследуем */
+    &__value {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: inherit;
+        line-height: inherit;
+        font-weight: 600;
+    }
+}
+

@@ -1,0 +1,9 @@
+.dl-entry-context-menu-base {
+    &__item {
+        color: var(--g-color-text-complementary);
+
+        &:not(&_danger):hover {
+            color: var(--g-color-text-primary);
+        }
+    }
+}

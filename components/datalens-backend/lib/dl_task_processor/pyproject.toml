@@ -1,0 +1,58 @@
+[tool.poetry]
+authors = ["DataLens Team <datalens-opensource@yandex-team.ru>"]
+description = ""
+license = "Apache 2.0"
+name = "dl-task-processor"
+packages = [{include = "dl_task_processor"}]
+readme = "README.rst"
+version = "0.0.0"
+
+[tool.poetry.dependencies]
+aiohttp = "*"
+arq = "*"
+attrs = "*"
+dl-app-tools = {path = "../dl_app_tools"}
+dl-configs = {path = "../dl_configs"}
+dl-utils = {path = "../dl_utils"}
+python = ">=3.10, <3.13"
+redis = "*"
+
+[tool.poetry.group.tests.dependencies]
+dl-api-commons = {path = "../dl_api_commons"}
+dl-testing = {path = "../dl_testing"}
+pytest = "*"
+pytest-asyncio = "*"
+statcommons = {path = "../statcommons"}
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_untyped_defs = true
+exclude = [
+  "dl_task_processor_tests/",
+]
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+asyncio_mode = "auto"
+minversion = "6.0"
+testpaths = []
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]
+
+[datalens.pytest.db]
+root_dir = "dl_task_processor_tests/"
+target_path = "db"
+
+[datalens.pytest.unit]
+labels = ["no_compose"]
+root_dir = "dl_task_processor_tests/"
+skip_compose = "true"
+target_path = "unit"

@@ -1,0 +1,46 @@
+.control-select-acceptable {
+    &__header {
+        display: grid;
+        grid-template-columns: 70% auto;
+        grid-column-gap: 10px;
+        align-items: center;
+    }
+
+    &__items {
+        margin-top: 10px;
+        overflow: auto;
+        min-height: 20px;
+
+        &_empty {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--g-color-text-secondary);
+        }
+    }
+
+    &__list-item {
+        padding-left: 10px;
+    }
+
+    &__item {
+        display: grid;
+        grid-template-columns: 94% auto;
+        align-items: center;
+        padding: 5px 0 5px 5px;
+        min-height: 34px;
+        width: 100%;
+
+        &:not(:last-child) {
+            margin-bottom: 5px;
+        }
+    }
+
+    &__remove {
+        display: none;
+        cursor: pointer;
+    }
+
+    &__item:hover &__remove {
+        display: block;
+    }
+}
