@@ -7,7 +7,8 @@ FROM ${DATALENS_AUTH_BASE_IMAGE}
 LABEL desc="datalens-auth YDL-OS: /demo/refresh + datalens-auth routes"
 
 USER root
-RUN apt-get update && \
+RUN rm -f /etc/apt/sources.list.d/nodesource.list /etc/apt/sources.list.d/nodesource*.list && \
+    apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -y upgrade && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
