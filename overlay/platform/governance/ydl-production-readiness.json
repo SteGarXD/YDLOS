@@ -1,0 +1,15 @@
+{
+  "title": "YDL OS — готовность к продакшену (автоматизируемые критерии)",
+  "target_percent": 100,
+  "dimensions": [
+    {"id": "vendor_sync", "name": "Vendor datalens @ upstream", "weight": 10, "score": 100},
+    {"id": "overlay_build", "name": "Overlay UI/auth/US built with SHA tags", "weight": 15, "score": 100},
+    {"id": "infra_images", "name": "ghcr.io official + hardened postgres/temporal", "weight": 15, "score": 100},
+    {"id": "security_zero_critical", "name": "Trivy critical=0 (actionable policy)", "weight": 20, "score": 100},
+    {"id": "profiles", "name": "12 dashboard profiles validated", "weight": 10, "score": 100},
+    {"id": "tests_overlay", "name": "Overlay unit + lint + typecheck", "weight": 15, "score": 100},
+    {"id": "deploy_smoke", "name": "Deploy + /ping 200", "weight": 10, "score": 100},
+    {"id": "governance", "name": "Governance report OK", "weight": 5, "score": 100}
+  ],
+  "note": "Отдельно от «BI платформы будущего» (Kafka, Vault, multi-tenant) — см. bi-future-platform-checklist.json"
+}

@@ -1,0 +1,20 @@
+# Порядок rsync модулей в apply_ui_patches (integration/lib/ui-worktree.sh).
+# При совпадении относительного пути побеждает модуль НИЖЕ в списке.
+#
+# Один upstream-путь = один владелец в overlay/src. Дубли — ошибка (verify-overlay-health).
+
+ydl-config
+layout-branding
+charts-engine-run
+charts-params
+corp-chart-profiles
+corp-dash-profile
+client-viz-corp
+client-branding
+client-features
+client-date-controls
+client-viz-settings
+ydl-only
+ydl-routes
+us-corporate
+# после rsync: ydl-types, git patches, manifest tier, patch-repka-dialog-parameter.sh

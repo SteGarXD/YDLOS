@@ -1,0 +1,11 @@
+# DEPRECATED — use vendor + overlay/platform/compose/*.yaml via integration/compose.sh
+#
+# Canonical stack:
+#   vendor/datalens/docker-compose.yaml
+#   compose/docker-compose.ydl-platform.yaml
+#   compose/docker-compose.edge-production.yaml
+#   compose/docker-compose.official-images.yaml
+#   compose/docker-compose.ydl-built-images.yaml
+#
+# Legacy full stack (akrasnov87 pins) preserved for rollback:
+#   compose/docker-compose.legacy-akrasnov.yaml

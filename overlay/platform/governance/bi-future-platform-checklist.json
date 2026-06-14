@@ -1,0 +1,163 @@
+{
+  "title": "YDL OS → полноценная BI-платформа будущего",
+  "target_maturity": 95,
+  "dimensions": [
+    {
+      "id": "core_bi",
+      "name": "Ядро BI (дашборды, чарты, коннекторы)",
+      "weight": 12,
+      "current_score": 88,
+      "gaps": [
+        "US overlay rebased to vendor us 1.39.0; legacy rollback via YDL_LEGACY_AUTH=1",
+        "Нет единого semantic layer / metrics store поверх DataLens"
+      ]
+    },
+    {
+      "id": "data_governance",
+      "name": "Data governance & catalog",
+      "weight": 8,
+      "current_score": 35,
+      "gaps": [
+        "Нет корпоративного data catalog (lineage, glossary, ownership)",
+        "Нет автоматической классификации PII/чувствительных полей"
+      ]
+    },
+    {
+      "id": "self_service",
+      "name": "Self-service analytics",
+      "weight": 8,
+      "current_score": 75,
+      "gaps": [
+        "Ограниченный NLQ / AI copilot для бизнес-пользователей",
+        "Нет sandbox workspace для ad-hoc без риска prod"
+      ]
+    },
+    {
+      "id": "security_zero_trust",
+      "name": "Безопасность (zero-trust, secrets, CVE)",
+      "weight": 12,
+      "current_score": 62,
+      "gaps": [
+        "35 critical CVE в runtime-образах (trivy, ignore-unfixed)",
+        "Нет Vault/KMS для секретов вместо .env",
+        "Нет WAF / rate-limit / mTLS между сервисами",
+        "SSO/OIDC есть в UI, но не обязательный enterprise IdP gate"
+      ]
+    },
+    {
+      "id": "identity_rbac",
+      "name": "IAM / RBAC / row-level security",
+      "weight": 10,
+      "current_score": 70,
+      "gaps": [
+        "Профили дашбордов задают reader/editor/admin, но нет централизованного ABAC",
+        "Row-level security зависит от коннекторов, не унифицирована в платформе"
+      ]
+    },
+    {
+      "id": "observability",
+      "name": "Observability & SLO",
+      "weight": 7,
+      "current_score": 55,
+      "gaps": [
+        "Нет Prometheus/Grafana дашбордов по всем сервисам",
+        "Нет distributed tracing (OpenTelemetry) end-to-end",
+        "Autopilot есть, но нет paging/on-call интеграции"
+      ]
+    },
+    {
+      "id": "ha_dr",
+      "name": "HA / DR / multi-AZ",
+      "weight": 8,
+      "current_score": 40,
+      "gaps": [
+        "Single-node compose, нет Kubernetes/helm production",
+        "Postgres без репликации и DR drill",
+        "RTO/RPO не формализованы"
+      ]
+    },
+    {
+      "id": "realtime_stream",
+      "name": "Real-time & streaming analytics",
+      "weight": 6,
+      "current_score": 25,
+      "gaps": [
+        "Нет Kafka/Flink/материализованных витрин для live-дашбордов",
+        "Temporal только для meta-manager workflows"
+      ]
+    },
+    {
+      "id": "ml_embedded",
+      "name": "ML / forecasting в BI",
+      "weight": 6,
+      "current_score": 20,
+      "gaps": [
+        "Нет встроенного AutoML / прогнозов в UI",
+        "Нет feature store для аналитиков"
+      ]
+    },
+    {
+      "id": "api_embedding",
+      "name": "API & embedding (headless BI)",
+      "weight": 5,
+      "current_score": 50,
+      "gaps": [
+        "DataLens API есть, но нет публичного YDL SDK/embedding SDK для порталов",
+        "Нет API rate quotas per tenant"
+      ]
+    },
+    {
+      "id": "multi_tenant",
+      "name": "Multi-tenant SaaS",
+      "weight": 7,
+      "current_score": 30,
+      "gaps": [
+        "Одна инсталляция на организацию, нет tenant isolation в US/DB",
+        "Нет billing/usage metering"
+      ]
+    },
+    {
+      "id": "compliance",
+      "name": "Compliance (audit, GDPR, retention)",
+      "weight": 7,
+      "current_score": 45,
+      "gaps": [
+        "Нет immutable audit log всех изменений дашбордов/доступа",
+        "Нет data retention policies automation",
+        "Нет DPIA / compliance pack"
+      ]
+    },
+    {
+      "id": "quality_engineering",
+      "name": "Quality engineering & test coverage",
+      "weight": 6,
+      "current_score": 58,
+      "gaps": [
+        "Overlay: unit-тесты есть; полный UI eslint/jest upstream не в gate",
+        "US jest unit/int не в CI gate без npm ci",
+        "Reader E2E Playwright не в обязательном CI",
+        "Нет chaos/load тестов"
+      ]
+    },
+    {
+      "id": "data_products",
+      "name": "Data products & marketplace",
+      "weight": 5,
+      "current_score": 15,
+      "gaps": [
+        "Нет каталога опубликованных data products с SLA",
+        "Нет подписок на датасеты между командами"
+      ]
+    },
+    {
+      "id": "cost_finops",
+      "name": "FinOps / cost governance",
+      "weight": 5,
+      "current_score": 20,
+      "gaps": [
+        "Нет учёта стоимости запросов к DWH per dashboard/team",
+        "Нет query cost caps"
+      ]
+    }
+  ]
+}

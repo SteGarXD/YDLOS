@@ -1,0 +1,45 @@
+# Upstream datalens-tech workflow: pushes `release` tag to datalens-tech/datalens-ui.
+# Disabled for SteGarXD/YDLOS — requires secrets.GH_TOKEN with write access to datalens-tech org.
+name: Update git tags
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  skipped-for-ydl-os:
+    name: skipped (fork — not datalens-tech/datalens)
+    if: github.repository != 'datalens-tech/datalens'
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "YDLOS fork: upstream git-tag sync is intentionally disabled."
+          echo "Official UI tags are consumed via vendor submodule + ghcr.io image pins."
+
+  upstream-only:
+    name: git
+    if: github.repository == 'datalens-tech/datalens'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          fetch-depth: 2
+      - name: get version config
+        run: |
+          VERSION_CONFIG=$(cat ./versions-config.json)
+          UI_VERSION=$(echo "${VERSION_CONFIG}" | jq -r '.uiVersion')
+          echo "UI_VERSION=$UI_VERSION" >> "$GITHUB_ENV"
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          fetch-depth: 2
+          repository: datalens-tech/datalens-ui
+          path: ./datalens-ui
+          ref: v${{ env.UI_VERSION }}
+          token: ${{ secrets.GH_TOKEN }}
+      - name: update release tag
+        working-directory: ./datalens-ui
+        run: |
+          git tag -f release v${{ env.UI_VERSION }}
+          git push origin release --force

@@ -1,0 +1,2 @@
+# Deprecated alias — use docker-compose.ydl-official-auth.yaml (included by default).
+# Kept for docs referencing USE_OFFICIAL_AUTH_STAGING=1.

@@ -1,0 +1,8 @@
+{
+  "name": "@ydl-os/datalens-extensions",
+  "version": "0.3831.0",
+  "private": true,
+  "description": "YDLOS extensions shaped for datalens-tech upstream PRs",
+  "main": "src/features/registry.ts",
+  "types": "src/features/registry.ts"
+}

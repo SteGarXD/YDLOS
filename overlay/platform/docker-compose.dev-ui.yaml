@@ -1,0 +1,64 @@
+# Dev-local override (все dev-start / dev-prod-start / ydl-os скрипты).
+# Бэкенд как в prod (те же сервисы и данные), но UI на хосте — правки в src/ сразу в браузере (HMR).
+#
+# compose:
+#   -f docker-compose.yaml
+#   -f docker-compose.production.yaml
+#   -f docker-compose.dev-ui.yaml
+#
+# Хост (127.0.0.1): http://127.0.0.1/ → nginx:80→8080 → UI :8080 (npm run dev)
+#   US :8030  AUTH :8088  control-api :8010  data-api :8020
+#   Postgres :5432  ui-api :3040  meta-manager :3050  temporal :7233
+
+services:
+  ui:
+    profiles:
+      - docker-bundled-ui
+
+  nginx:
+    volumes:
+      - ./nginx/nginx-edge-proxy-dev.conf:/etc/nginx/nginx.conf:ro
+      - ./assets:${YDL_COMPOSE_DIR}-assets:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on: !reset []
+
+  postgres:
+    ports:
+      - "127.0.0.1:5432:5432"
+
+  temporal:
+    ports:
+      - "127.0.0.1:7233:7233"
+
+  us:
+    ports:
+      - "127.0.0.1:8030:8080"
+
+  control-api:
+    ports:
+      - "127.0.0.1:8010:8080"
+
+  data-api:
+    ports:
+      - "127.0.0.1:8020:8080"
+
+  # Native datalens-auth (US_AUTH_ENABLED=false, OIDC portal)
+  auth:
+    ports:
+      - "127.0.0.1:8088:8080"
+
+  # Legacy RPC auth — only when US_AUTH_ENABLED=true in .env
+  us-auth:
+    profiles:
+      - legacy-us-auth
+    ports:
+      - "127.0.0.1:8088:80"
+
+  ui-api:
+    ports:
+      - "127.0.0.1:3040:8080"
+
+  meta-manager:
+    ports:
+      - "127.0.0.1:3050:8080"

@@ -1,0 +1,24 @@
+# Optional: up to 4 OIDC providers (akrasnov87 parity). Include via YDL_COMPOSE_EXTRA or merge in .env.
+# Usage: export YDL_COMPOSE_EXTRA="-f compose/docker-compose.ydl-oidc-multi.yaml"
+
+services:
+  ui:
+    environment:
+      OIDC_2: ${OIDC_2:-false}
+      OIDC_2_ISSUER: ${OIDC_2_ISSUER:-}
+      OIDC_2_BASE_URL: ${OIDC_2_BASE_URL:-}
+      OIDC_2_CLIENT_ID: ${OIDC_2_CLIENT_ID:-}
+      OIDC_2_SECRET: ${OIDC_2_SECRET:-}
+      OIDC_2_NAME: ${OIDC_2_NAME:-OIDC 2}
+      OIDC_3: ${OIDC_3:-false}
+      OIDC_3_ISSUER: ${OIDC_3_ISSUER:-}
+      OIDC_3_BASE_URL: ${OIDC_3_BASE_URL:-}
+      OIDC_3_CLIENT_ID: ${OIDC_3_CLIENT_ID:-}
+      OIDC_3_SECRET: ${OIDC_3_SECRET:-}
+      OIDC_3_NAME: ${OIDC_3_NAME:-OIDC 3}
+      OIDC_4: ${OIDC_4:-false}
+      OIDC_4_ISSUER: ${OIDC_4_ISSUER:-}
+      OIDC_4_BASE_URL: ${OIDC_4_BASE_URL:-}
+      OIDC_4_CLIENT_ID: ${OIDC_4_CLIENT_ID:-}
+      OIDC_4_SECRET: ${OIDC_4_SECRET:-}
+      OIDC_4_NAME: ${OIDC_4_NAME:-OIDC 4}

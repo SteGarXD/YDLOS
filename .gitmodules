@@ -1,0 +1,4 @@
+[submodule "vendor/datalens"]
+	path = vendor/datalens
+	url = https://github.com/datalens-tech/datalens.git
+	branch = main

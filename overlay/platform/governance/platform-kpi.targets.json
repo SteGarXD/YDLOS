@@ -1,0 +1,31 @@
+{
+  "slo": {
+    "maxUpstreamLagCommits": 5,
+    "maxCriticalVulnerabilities": 0,
+    "maxProfileDriftIncidentsPerWeek": 0,
+    "maxAutopilotFailedRunsPerWeek": 1,
+    "minReaderGatePassRatePercent": 95
+  },
+  "quality": {
+    "requiredProfileCoveragePercent": 100,
+    "requiredBlockingScenarioCount": 4,
+    "requiredExtractedProfileCount": 12
+  },
+  "governanceCadence": {
+    "daily": [
+      "upstream sync status",
+      "security regression delta",
+      "autopilot incidents"
+    ],
+    "weekly": [
+      "reader journey pass rate",
+      "profile drift review",
+      "rollback drills"
+    ],
+    "monthly": [
+      "SLO audit",
+      "threat model refresh",
+      "platform architecture review"
+    ]
+  }
+}

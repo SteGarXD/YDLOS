@@ -1,0 +1,24 @@
+diff --git a/src/ui/components/Widgets/Chart/ChartWidget.tsx b/src/ui/components/Widgets/Chart/ChartWidget.tsx
+index 5158cd1..4287dc2 100644
+--- a/src/ui/components/Widgets/Chart/ChartWidget.tsx
++++ b/src/ui/components/Widgets/Chart/ChartWidget.tsx
+@@ -135,14 +135,16 @@ export const ChartWidget = (props: ChartWidgetProps) => {
+     );
+ 
+     const initialData: DataProps = React.useMemo(
+-        () =>
+-            getDataProviderData({
++        () => ({
++            ...getDataProviderData({
+                 id: chartId,
+                 config,
+                 params: chartkitParams,
+                 workbookId,
+             }),
+-        [chartId, chartkitParams, config, hasChartTabChanged, workbookId],
++            corpChartRuntime: (currentTab as {corpChartRuntime?: unknown}).corpChartRuntime,
++        }),
++        [chartId, chartkitParams, config, currentTab, hasChartTabChanged, workbookId],
+     );
+ 
+     const savedForFetchProps = React.useMemo(() => pick(props, influencingProps), [props]);

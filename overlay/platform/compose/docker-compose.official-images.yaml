@@ -1,0 +1,25 @@
+# Official datalens-tech images for infrastructure (from vendor versions-config.json).
+# Custom UI / auth / US stay on overlay builds (docker-compose.ydl-built-images.yaml).
+# Run: bash integration/sync-official-image-pins.sh before deploy.
+
+services:
+  postgres:
+    image: ${YDL_POSTGRES_IMAGE:-${OFFICIAL_POSTGRES_IMAGE:-ghcr.io/datalens-tech/datalens-postgres:16}}
+
+  temporal:
+    image: ${YDL_TEMPORAL_IMAGE:-${OFFICIAL_TEMPORAL_IMAGE:-ghcr.io/datalens-tech/datalens-temporal:1.27.2}}
+
+  control-api:
+    image: ${OFFICIAL_CONTROL_API_IMAGE:-ghcr.io/datalens-tech/datalens-control-api:0.2457.0}
+
+  data-api:
+    image: ${OFFICIAL_DATA_API_IMAGE:-ghcr.io/datalens-tech/datalens-data-api:0.2457.0}
+
+  meta-manager:
+    image: ${OFFICIAL_META_MANAGER_IMAGE:-ghcr.io/datalens-tech/datalens-meta-manager:0.52.0}
+
+  auth:
+    image: ${OFFICIAL_AUTH_IMAGE:-ghcr.io/datalens-tech/datalens-auth:0.27.0}
+
+  us:
+    image: ${OFFICIAL_US_IMAGE:-ghcr.io/datalens-tech/datalens-us:1.39.0}

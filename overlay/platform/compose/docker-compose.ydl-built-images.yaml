@@ -1,0 +1,14 @@
+# Override image tags after integration/build.sh (YDL_<SHA> tags).
+# Official stack (default): UI from build; US/auth from ghcr unless YDL_LEGACY_AUTH=1.
+
+services:
+  ui:
+    image: ${YDL_UI_IMAGE:?Run integration/build.sh first}
+  ui-api:
+    image: ${YDL_UI_IMAGE:?Run integration/build.sh first}
+  control-api:
+    image: ${YDL_CONTROL_API_IMAGE:-${OFFICIAL_CONTROL_API_IMAGE:?}}
+  data-api:
+    image: ${YDL_DATA_API_IMAGE:-${OFFICIAL_DATA_API_IMAGE:?}}
+  us:
+    image: ${YDL_US_IMAGE:-${OFFICIAL_US_IMAGE:-ghcr.io/datalens-tech/datalens-us:1.39.0}}

@@ -1,0 +1,4 @@
+# Datalens postgres image ships python3 for init-time Fernet encryption only.
+# Tracked upstream; no patched distro packages yet (Debian 13 / python3.13).
+CVE-2026-7210
+CVE-2026-7598

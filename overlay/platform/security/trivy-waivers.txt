@@ -1,0 +1,6 @@
+# Documented waivers — upstream/no patch in current release line (review monthly).
+# Postgres init image (python3.13 distro CVEs)
+CVE-2026-7210
+CVE-2026-7598
+# datalens-ui npm transitive (sanitize-html) — fix in next npm bump
+CVE-2026-44990

@@ -1,0 +1,315 @@
+--- a/src/ui/libs/DatalensChartkit/ChartKit/modules/graph/config/config.js	2026-05-29 21:10:22.761192323 +0300
++++ b/src/ui/libs/DatalensChartkit/ChartKit/modules/graph/config/config.js	2026-05-29 21:10:22.761192323 +0300
+@@ -936,6 +936,301 @@
+     }
+ }
+ 
++function isFlightThresholdSeriesName(name) {
++    const n = String(name || '')
++        .toLowerCase()
++        .replace(/\s+/g, ' ')
++        .trim();
++    return (
++        n === 'y' ||
++        /(^|\s)y(\s|$)/.test(n) ||
++        n.includes('пкз') ||
++        n.includes('load') ||
++        n.includes('%') ||
++        ((/(^|\s)60(\s|%|$)/.test(n) || /(^|\s)61(\s|%|$)/.test(n)) && n.includes('заг')) ||
++        (/(^|\s)80(\s|%|$)/.test(n) && n.includes('заг')) ||
++        (/(^|\s)100(\s|%|$)/.test(n) && n.includes('заг'))
++    );
++}
++
++function getFlightThresholdValueFromName(name) {
++    const n = String(name || '')
++        .toLowerCase()
++        .replace(/\s+/g, ' ')
++        .trim();
++    if (/(^|\s)100(\s|%|$)/.test(n)) {
++        return 100;
++    }
++    if (/(^|\s)80(\s|%|$)/.test(n)) {
++        return 80;
++    }
++    if (/(^|\s)61(\s|%|$)/.test(n)) {
++        return 61;
++    }
++    if (/(^|\s)60(\s|%|$)/.test(n)) {
++        return 60;
++    }
++    return null;
++}
++
++function enforceFlightThresholdGeometry(params) {
++    const yAxisFirst = Array.isArray(params?.yAxis) ? params.yAxis[0] : params?.yAxis;
++    if (
++        yAxisFirst &&
++        Array.isArray(yAxisFirst.tickPositions) &&
++        yAxisFirst.tickPositions.length > 0
++    ) {
++        return;
++    }
++
++    const ZERO_X_TICK_LEN = 1.82;
++    const ZERO_X_LABEL_DX = -7;
++    const ZERO_X_LABEL_DY = 6;
++
++    const series = Array.isArray(params?.series) ? params.series : [];
++    const thresholdSeries = series.filter((s) => isFlightThresholdSeriesName(s?.name || s?.legendTitle));
++    if (!thresholdSeries.length) {
++        return;
++    }
++
++    // Keep threshold series native so shared tooltip/hover remains intact.
++
++    const factualSeries = series.filter((s) => !thresholdSeries.includes(s));
++    /*
++     * Линии Y / ВСЕГО на y=0: маркер при hover обрезается clip у plot area (низ графика).
++     * Tooltip видит точку, halo нет — отключаем clip у фактических серий.
++     */
++    factualSeries.forEach((s) => {
++        s.clip = false;
++        s.marker = {
++            ...(s.marker || {}),
++            enabled: false,
++            states: {
++                ...((s.marker && s.marker.states) || {}),
++                hover: {
++                    enabled: true,
++                    radius: 4,
++                    lineWidth: 1,
++                },
++            },
++        };
++    });
++    let factualMax = 0;
++    factualSeries.forEach((s) => {
++        const data = Array.isArray(s?.data) ? s.data : [];
++        data.forEach((p) => {
++            const y = Array.isArray(p) ? Number(p[1]) : Number(p?.y);
++            if (Number.isFinite(y)) {
++                factualMax = Math.max(factualMax, y);
++            }
++        });
++    });
++
++    const boundedMax = 120;
++    const tickPositions = Array.from({length: Math.floor(boundedMax / 10) + 1}, (_, i) => i * 10);
++
++    const yAxes = Array.isArray(params.yAxis) ? params.yAxis : [params.yAxis || {}];
++    yAxes.forEach((axis) => {
++        axis.min = 0;
++        axis.max = boundedMax;
++        axis.tickInterval = 10;
++        axis.tickAmount = tickPositions.length;
++        axis.tickPositions = tickPositions;
++        axis.startOnTick = false;
++        axis.endOnTick = false;
++        axis.ceiling = boundedMax <= 100 ? 100 : boundedMax;
++        axis.softMax = boundedMax <= 100 ? 100 : boundedMax;
++        axis.maxPadding = 0;
++        axis.tickLength = 8;
++        axis.labels = {
++            ...(axis.labels || {}),
++            y: 3,
++        };
++        const plotLines = Array.isArray(axis.plotLines) ? axis.plotLines : [];
++        if (plotLines.length) {
++            axis.plotLines = plotLines.map((line) => {
++                const val = Number(line?.value);
++                const isThreshold = [60, 61, 80, 100].some(
++                    (mark) => Number.isFinite(val) && Math.abs(val - mark) < 0.0001,
++                );
++                if (!isThreshold) {
++                    return line;
++                }
++                return {
++                    ...line,
++                    width: 1,
++                    crisp: true,
++                    dashStyle: 'Solid',
++                    zIndex: Math.max(10, Number(line?.zIndex) || 0),
++                };
++            });
++        }
++    });
++    params.yAxis = Array.isArray(params.yAxis) ? yAxes : yAxes[0];
++
++    const xAxes = Array.isArray(params.xAxis) ? params.xAxis : [params.xAxis || {}];
++    xAxes.forEach((axis) => {
++        axis.tickLength = 5;
++        const prevFormatter = axis?.labels?.formatter;
++        axis.labels = {
++            ...(axis.labels || {}),
++            formatter: function () {
++                if (typeof prevFormatter === 'function') {
++                    return prevFormatter.call(this);
++                }
++                return Highcharts.Axis.prototype.defaultLabelFormatter.call(this);
++            },
++        };
++    });
++    params.xAxis = Array.isArray(params.xAxis) ? xAxes : xAxes[0];
++
++    const prevLoad = params?.chart?.events?.load;
++    const prevRender = params?.chart?.events?.render;
++    params.chart = {
++        ...(params.chart || {}),
++        alignTicks: false,
++        events: {
++            ...((params.chart && params.chart.events) || {}),
++            load: function () {
++                if (typeof prevLoad === 'function') {
++                    prevLoad.apply(this, arguments);
++                }
++                const yAxis = Array.isArray(this.yAxis) ? this.yAxis[0] : null;
++                if (!yAxis) {
++                    return;
++                }
++                const targetMax = 120;
++                const targetTicks = Array.from(
++                    {length: Math.floor(targetMax / 10) + 1},
++                    (_, i) => i * 10,
++                );
++                yAxis.update(
++                    {
++                        min: 0,
++                        max: targetMax,
++                        tickInterval: 10,
++                        tickAmount: targetTicks.length,
++                        tickPositions: targetTicks,
++                        startOnTick: false,
++                        endOnTick: false,
++                        ceiling: targetMax,
++                        softMax: targetMax,
++                        maxPadding: 0,
++                    },
++                    false,
++                );
++                yAxis.setExtremes(0, targetMax, false, false);
++                this.redraw(false);
++            },
++            render: function () {
++                if (typeof prevRender === 'function') {
++                    prevRender.apply(this, arguments);
++                }
++                const yAxis = Array.isArray(this.yAxis) ? this.yAxis[0] : null;
++                if (yAxis) {
++                    const targetMax = 120;
++                    const targetTicks = Array.from(
++                        {length: Math.floor(targetMax / 10) + 1},
++                        (_, i) => i * 10,
++                    );
++                    const currentMax = Number(yAxis.max);
++                    if (!Number.isFinite(currentMax) || Math.abs(currentMax - targetMax) > 0.0001) {
++                        yAxis.update(
++                            {
++                                min: 0,
++                                max: targetMax,
++                                tickInterval: 10,
++                                tickAmount: targetTicks.length,
++                                tickPositions: targetTicks,
++                                startOnTick: false,
++                                endOnTick: false,
++                                ceiling: targetMax,
++                                softMax: targetMax,
++                                maxPadding: 0,
++                            },
++                            false,
++                        );
++                        yAxis.setExtremes(0, targetMax, false, false);
++                        this.redraw(false);
++                    }
++                }
++                const oldNodes = Array.isArray(this.__ydlosFlightOverlayNodes)
++                    ? this.__ydlosFlightOverlayNodes
++                    : [];
++                oldNodes.forEach((node) => node && node.destroy && node.destroy());
++                this.__ydlosFlightOverlayNodes = [];
++
++                const xAxis = Array.isArray(this.xAxis) ? this.xAxis[0] : null;
++                if (!xAxis || typeof xAxis.toPixels !== 'function') {
++                    return;
++                }
++                const rightX = xAxis.left + xAxis.len;
++                const ticks = xAxis.ticks ? Object.entries(xAxis.ticks) : [];
++                let zeroX = null;
++                ticks.forEach(([key, tick]) => {
++                    const byKey = Number.isFinite(Number(key)) && Math.abs(Number(key)) < 1e-8;
++                    const byText =
++                        String(
++                            (tick && tick.label && (tick.label.textStr || tick.label.element?.textContent)) || '',
++                        ).trim() === '0';
++                    const tickPx =
++                        tick && typeof tick.pos === 'number' ? xAxis.toPixels(tick.pos, false) : Number.NaN;
++                    const byRightEdge = Number.isFinite(tickPx) && Math.abs(tickPx - rightX) < 1.25;
++                    if (byKey || byText || byRightEdge) {
++                        if (tick && tick.mark && tick.mark.attr) {
++                            tick.mark.attr({opacity: 0});
++                        }
++                        if (tick && tick.label && tick.label.element) {
++                            tick.label.element.style.opacity = '0';
++                        }
++                        if (zeroX === null && Number.isFinite(tickPx)) {
++                            zeroX = tickPx;
++                        }
++                    }
++                });
++                const x = Number.isFinite(zeroX) ? zeroX : xAxis.toPixels(0, false);
++                if (!Number.isFinite(x)) {
++                    return;
++                }
++                const y = xAxis.top + xAxis.height;
++                const tickNode = this.renderer
++                    .path(['M', x, y, 'L', x, y + ZERO_X_TICK_LEN])
++                    .attr({stroke: xAxis.options?.tickColor || '#333333', 'stroke-width': 1, zIndex: 8})
++                    .add();
++                const labelNode = this.renderer
++                    .text('0', x + ZERO_X_LABEL_DX, y + ZERO_X_LABEL_DY)
++                    .css({fontSize: '11px', fontWeight: '400', color: '#333333'})
++                    .attr({zIndex: 9})
++                    .add();
++                this.__ydlosFlightOverlayNodes.push(tickNode, labelNode);
++
++                // Subpixel nudge: threshold guides visually align with Y grid/ticks like in reference.
++                const chartSeries = Array.isArray(this.series) ? this.series : [];
++                chartSeries.forEach((series) => {
++                    const n = String(series?.name || series?.userOptions?.name || '')
++                        .toLowerCase()
++                        .replace(/\s+/g, ' ')
++                        .trim();
++                    const isThreshold =
++                        (((/(^|\s)60(\s|%|$)/.test(n) || /(^|\s)61(\s|%|$)/.test(n)) &&
++                            n.includes('заг')) ||
++                            (/(^|\s)80(\s|%|$)/.test(n) && n.includes('заг')) ||
++                            (/(^|\s)100(\s|%|$)/.test(n) && n.includes('заг')));
++                    if (!isThreshold) {
++                        return;
++                    }
++                    if (series?.graph?.attr) {
++                        series.graph.attr({translateY: 0});
++                    }
++                });
++
++                // Keep threshold guides native Highcharts series (no overlay redraw).
++            },
++        },
++    };
++
++}
++
+ // TODO: refactor
+ function findXVal(xAxisVal, categoriesMs) {
+     let xVal, min, max, leftDiff, rightDiff;
+@@ -1985,6 +2280,10 @@
+         return mergeArrayWithObject(a, b);
+     });
+ 
++    // Final client-side guard: keep flight threshold chart geometry stable
++    // even when previous merge layers overwrite server-prepared axis settings.
++    enforceFlightThresholdGeometry(params);
++
+     // https://github.com/highcharts/highcharts/issues/5671
+     // http://jsfiddle.net/yo12kv0b/
+     if (params.plotOptions.area && params.plotOptions.area.stacking === 'normal') {

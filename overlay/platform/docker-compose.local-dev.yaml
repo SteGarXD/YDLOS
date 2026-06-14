@@ -1,0 +1,12 @@
+# Подключать третьим файлом при локальной разработке UI (`npm run dev` в components/datalens-ui).
+# Сервис `ui` не стартует по умолчанию (профиль docker-bundled-ui), чтобы не занимать порт 8080 образа UI при dev на хосте.
+#
+# Пример:
+#   docker compose -f docker-compose.yaml -f docker-compose.demo.yaml -f docker-compose.local-dev.yaml --env-file .env up -d
+#
+# Запустить и контейнер UI (редко нужно):
+#   docker compose ... --profile docker-bundled-ui up -d
+services:
+  ui:
+    profiles:
+      - docker-bundled-ui

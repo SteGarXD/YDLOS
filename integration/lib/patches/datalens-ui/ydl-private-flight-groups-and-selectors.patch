@@ -1,0 +1,152 @@
+diff --git a/src/ui/components/DashKit/plugins/Control/Control.tsx b/src/ui/components/DashKit/plugins/Control/Control.tsx
+index f7c6b1d..06b664c 100644
+--- a/src/ui/components/DashKit/plugins/Control/Control.tsx
++++ b/src/ui/components/DashKit/plugins/Control/Control.tsx
+@@ -9,6 +9,7 @@ import {I18n} from 'i18n';
+ import debounce from 'lodash/debounce';
+ import isEqual from 'lodash/isEqual';
+ import pick from 'lodash/pick';
++import {useSelector} from 'react-redux';
+ import type {
+     DashTab,
+     DashTabItemControlDataset,
+@@ -29,6 +30,7 @@ import type {ChartWidgetWithWrapRefProps} from 'ui/components/Widgets/Chart/type
+ import {DL} from 'ui/constants/common';
+ import type {ChartInitialParams} from 'ui/libs/DatalensChartkit/components/ChartKitBase/ChartKitBase';
+ import type {ChartKitWrapperOnLoadProps} from 'ui/libs/DatalensChartkit/components/ChartKitBase/types';
++import {selectFlightGroupsDatasetRefreshNonce} from 'ui/units/dash/store/selectors/dashTypedSelectors';
+ import {ExtendedDashKitContext} from 'ui/units/dash/utils/context';
+ 
+ import {chartsDataProvider} from '../../../../libs/DatalensChartkit';
+@@ -89,6 +91,8 @@ export interface PluginControlProps
+     settings: SettingsProps & {
+         dependentSelectors?: boolean;
+     };
++    /** Синхронизация списков селекторов после редактора групп */
++    flightGroupsDatasetRefreshNonce?: number;
+ }
+ 
+ export interface PluginControl extends Plugin<PluginControlProps> {
+@@ -170,6 +174,18 @@ class Control extends React.PureComponent<PluginControlProps, PluginControlState
+             this.clearSilentLoaderTimer();
+         }
+ 
++        const prevNonce = prevProps.flightGroupsDatasetRefreshNonce ?? 0;
++        const nextNonce = this.props.flightGroupsDatasetRefreshNonce ?? 0;
++        if (prevNonce !== nextNonce && this.state.isInit) {
++            this.setState({
++                status: LOAD_STATUS.PENDING,
++                silentLoading: true,
++            });
++            this.clearSilentLoaderTimer();
++            this.init();
++            return;
++        }
++
+         // autoHeight triggers from ChartSelector wrapper for external selectors
+         if (
+             this.rootNode.current &&
+@@ -854,6 +870,19 @@ class Control extends React.PureComponent<PluginControlProps, PluginControlState
+     }
+ }
+ 
++const ControlWithFlightGroupsRefresh = React.forwardRef<Control, PluginControlProps>(
++    function ControlWithFlightGroupsRefresh(props, ref) {
++        const flightGroupsDatasetRefreshNonce = useSelector(selectFlightGroupsDatasetRefreshNonce);
++        return (
++            <Control
++                {...props}
++                flightGroupsDatasetRefreshNonce={flightGroupsDatasetRefreshNonce}
++                ref={ref}
++            />
++        );
++    },
++);
++
+ const plugin: PluginControl = {
+     type: DashTabItemType.Control,
+     defaultLayout: DEFAULT_CONTROL_LAYOUT,
+@@ -871,7 +900,7 @@ const plugin: PluginControl = {
+         const workbookId = props.context.workbookId;
+ 
+         return (
+-            <Control
++            <ControlWithFlightGroupsRefresh
+                 {...props}
+                 workbookId={workbookId}
+                 getDistincts={plugin.getDistincts}
+diff --git a/src/ui/components/DashKit/plugins/GroupControl/GroupControl.tsx b/src/ui/components/DashKit/plugins/GroupControl/GroupControl.tsx
+index 4c2f0be..6a18e84 100644
+--- a/src/ui/components/DashKit/plugins/GroupControl/GroupControl.tsx
++++ b/src/ui/components/DashKit/plugins/GroupControl/GroupControl.tsx
+@@ -8,6 +8,7 @@ import block from 'bem-cn-lite';
+ import {I18n} from 'i18n';
+ import debounce from 'lodash/debounce';
+ import isEqual from 'lodash/isEqual';
++import {useSelector} from 'react-redux';
+ import type {
+     DashTabAliases,
+     DashTabConnection,
+@@ -17,6 +18,7 @@ import type {
+ } from 'shared';
+ import {ControlQA, DashTabItemType} from 'shared';
+ import {DL} from 'ui/constants/common';
++import {selectFlightGroupsDatasetRefreshNonce} from 'ui/units/dash/store/selectors/dashTypedSelectors';
+ import {CHARTKIT_SCROLLABLE_NODE_CLASSNAME} from 'ui/libs/DatalensChartkit/ChartKit/helpers/constants';
+ import {ControlButton} from 'ui/libs/DatalensChartkit/components/Control/Items/Items';
+ import {
+@@ -59,6 +61,7 @@ type OwnProps = ControlSettings &
+         settings: SettingsProps & {
+             dependentSelectors?: boolean;
+         };
++        flightGroupsDatasetRefreshNonce?: number;
+     };
+ 
+ type PluginGroupControlProps = OwnProps;
+@@ -157,6 +160,17 @@ class GroupControl extends React.PureComponent<PluginGroupControlProps, PluginGr
+     }
+ 
+     componentDidUpdate(prevProps: Readonly<PluginGroupControlProps>) {
++        if (
++            prevProps.flightGroupsDatasetRefreshNonce !== this.props.flightGroupsDatasetRefreshNonce
++        ) {
++            this.setState({
++                status: LOAD_STATUS.PENDING,
++                needReload: true,
++                silentLoading: true,
++            });
++            return;
++        }
++
+         if (this.rootNode.current) {
+             if (this.props.data.autoHeight) {
+                 // if the "Autoheight" flag is set
+@@ -965,6 +979,19 @@ class GroupControl extends React.PureComponent<PluginGroupControlProps, PluginGr
+     }
+ }
+ 
++const GroupControlWithFlightGroupsRefresh = React.forwardRef<GroupControl, PluginGroupControlProps>(
++    function GroupControlWithFlightGroupsRefresh(props, ref) {
++        const flightGroupsDatasetRefreshNonce = useSelector(selectFlightGroupsDatasetRefreshNonce);
++        return (
++            <GroupControl
++                {...props}
++                flightGroupsDatasetRefreshNonce={flightGroupsDatasetRefreshNonce}
++                ref={ref}
++            />
++        );
++    },
++);
++
+ const plugin: PluginGroupControl = {
+     type: DashTabItemType.GroupControl,
+     defaultLayout: DEFAULT_CONTROL_LAYOUT,
+@@ -980,7 +1007,7 @@ const plugin: PluginGroupControl = {
+         const workbookId = props.context.workbookId;
+ 
+         return (
+-            <GroupControl
++            <GroupControlWithFlightGroupsRefresh
+                 {...props}
+                 getDistincts={plugin.getDistincts}
+                 workbookId={workbookId}

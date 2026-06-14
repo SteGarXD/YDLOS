@@ -1,0 +1,34 @@
+# AUTH_MODES
+
+Режимы аутентификации и требования безопасности для YDL OS.
+
+## 1. Базовый production-режим форка
+
+Используется связка `us-auth` + внутренние токены (`x-rpc-authorization`), при этом UI может работать с `AUTH_POLICY: disabled` для текущего кастомного потока.
+
+| Переменная | Сервис | Значение | Смысл |
+|------------|--------|----------|--------|
+| `US_AUTH_ENABLED` | `us`, `meta-manager` | **`false`** | Не включать JWT `appAuth` в United Storage (облачный сценарий Yandex). |
+| `UI_AUTH_ENABLED` | `ui` (и dev UI `.env`) | **`true`** | Показывать форму входа и auth gateway. |
+| `AUTH_POLICY` | `ui` | **`disabled`** | Без облачного OIDC-policy в UI. |
+
+Не задавайте одну глобальную `AUTH_ENABLED=true` в `.env` — она попадёт и в US, и сломает коллекции (401 после входа).
+
+## 2. Что это означает для безопасности
+
+Если наружу открыт доступ без дополнительного периметра, риск высокий. Обязательны компенсирующие меры:
+
+- доступ через VPN или IP allowlist;
+- firewall: наружу только edge-порт;
+- ротация `US_MASTER_TOKEN`, `AUTH_MASTER_TOKEN`, `POSTGRES_PASSWORD`;
+- контроль прав доступа к `.env`;
+- централизованный мониторинг ошибок входа.
+
+## 3. Проверка auth-смоука
+
+```bash
+curl -s -o /dev/null -w "%{http_code}\n" -X POST \
+  http://127.0.0.1/gateway/auth/auth/refreshTokens
+```
+
+Ожидаемо: `401` без cookie.

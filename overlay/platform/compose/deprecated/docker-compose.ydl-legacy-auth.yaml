@@ -1,0 +1,50 @@
+# Legacy akrasnov87 RPC auth (us-auth). Enable: YDL_LEGACY_AUTH=1
+# Use only for rollback on existing pg-us-db until user migration completes.
+
+services:
+  auth:
+    profiles: ["ydl-upstream-auth-off"]
+
+  us-auth:
+    profiles: !reset []
+    container_name: datalens-auth-${APP_ENV:-prod}
+    image: ${YDL_AUTH_IMAGE:-ghcr.io/datalens-tech/datalens-auth:0.27.0}
+    environment:
+      APP_ENV: demo
+      NODE_VPATH: /demo/
+      CONNECT_STR: "postgres://${POSTGRES_USER:-pg-user}:${POSTGRES_PASSWORD:-postgres}@${POSTGRES_HOST:-postgres}:${POSTGRES_PORT:-5432}/${POSTGRES_DB_US:-pg-us-db}${POSTGRES_ARGS:-}"
+      PROJECT_ID: ${PROJECT_ID:-datalens-demo}
+      BUDIBASE_URI: ${BUDIBASE_URI:-}
+      IGNORE_SCHEMA: ${IGNORE_SCHEMA:-}
+      NODE_THREAD: 2
+      AUTH_KEY_MODE: ${AUTH_KEY_MODE:-false}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      default:
+        aliases:
+          - auth
+
+  postgres:
+    environment:
+      INIT_DB_AUTH: ${INIT_DB_AUTH:-0}
+
+  us:
+    image: ${YDL_US_IMAGE:-ghcr.io/datalens-tech/datalens-us:0.413.0}
+    environment:
+      AUTH_ENDPOINT: http://us-auth:80
+      NODE_RPC_URL: ${NODE_RPC_URL:-http://us-auth/demo/rpc}
+      USE_AUTH_DATA: ${USE_AUTH_DATA:-0}
+
+  ui-api:
+    environment:
+      AUTH_POLICY: ${AUTH_POLICY_LEGACY:-redirect}
+
+  ui:
+    environment:
+      AUTH_ENDPOINT: ${AUTH_ENDPOINT:-http://us-auth:80}
+
+  meta-manager:
+    environment:
+      NODE_RPC_URL: ${NODE_RPC_URL:-http://us-auth/demo/rpc}

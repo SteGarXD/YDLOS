@@ -1,0 +1,95 @@
+# YDL OS platform overrides (env, volume, edge). Images: official-images + ydl-built.
+# Base stack: vendor/datalens/docker-compose.yaml
+# Auth mode: official (default) or legacy (YDL_LEGACY_AUTH=1) via compose-files.sh
+
+services:
+  postgres:
+    container_name: datalens-postgres-${APP_ENV:-prod}
+    environment:
+      INIT_DB_AUTH: ${INIT_DB_AUTH:-1}
+
+  temporal:
+    container_name: datalens-temporal-${APP_ENV:-prod}
+
+  control-api:
+    container_name: datalens-control-api-${APP_ENV:-prod}
+    environment:
+      CONNECTOR_AVAILABILITY_VISIBLE: clickhouse,postgres,chyt,ydb,mysql,greenplum,mssql,oracle,trino,appmetrica_api,metrika_api
+      # Align with UI DATA_FETCHING_TIMEOUT_MS (300s); default DL is 90s and kills MSSQL pivot runs.
+      COMMON_TIMEOUT_SEC: ${COMMON_TIMEOUT_SEC:-300}
+
+  data-api:
+    container_name: datalens-data-api-${APP_ENV:-prod}
+    environment:
+      COMMON_TIMEOUT_SEC: ${COMMON_TIMEOUT_SEC:-300}
+
+  us:
+    container_name: datalens-us-${APP_ENV:-prod}
+    environment:
+      APP_ENV: prod
+      SQL_DEBUG: ${SQL_DEBUG:-false}
+      SKIP_MIGRATION: ${SKIP_MIGRATION:-0}
+
+  ui-api:
+    container_name: datalens-ui-api-${APP_ENV:-prod}
+    environment:
+      PUPPETEER_CACHE_DIR: /opt/app/.cache/puppeteer
+      HOME: /opt/app
+      XDG_CONFIG_HOME: /tmp/.puppeteer-config
+      SERVICE_NAME: ${SERVICE_NAME:-YDLOS BI}
+      ENABLE_LEGACY_PD_RBAC: ${ENABLE_LEGACY_PD_RBAC:-0}
+      YDL_USE_OFFICIAL_ADMIN: ${YDL_USE_OFFICIAL_ADMIN:-1}
+      YDL_OFFICIAL_STACK: "1"
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_USER: ${POSTGRES_USER:-pg-user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB_US: ${POSTGRES_DB_US:-pg-us-db}
+      POSTGRES_DB_AUTH: ${POSTGRES_DB_AUTH:-pg-auth-db}
+      POSTGRES_ARGS: ${POSTGRES_ARGS:-}
+      DATA_FETCHING_TIMEOUT_MS: ${DATA_FETCHING_TIMEOUT_MS:-300000}
+      DATA_SINGLE_FETCHING_TIMEOUT_MS: ${DATA_SINGLE_FETCHING_TIMEOUT_MS:-120000}
+
+  meta-manager:
+    container_name: datalens-meta-manager-${APP_ENV:-prod}
+
+  ui:
+    container_name: datalens-ui-${APP_ENV:-prod}
+    environment:
+      PUPPETEER_CACHE_DIR: /opt/app/.cache/puppeteer
+      HOME: /opt/app
+      XDG_CONFIG_HOME: /tmp/.puppeteer-config
+      SERVICE_NAME: ${SERVICE_NAME:-YDLOS BI}
+      ENABLE_LEGACY_PD_RBAC: ${ENABLE_LEGACY_PD_RBAC:-0}
+      YDL_USE_OFFICIAL_ADMIN: ${YDL_USE_OFFICIAL_ADMIN:-1}
+      YDL_OFFICIAL_STACK: "1"
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_USER: ${POSTGRES_USER:-pg-user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB_US: ${POSTGRES_DB_US:-pg-us-db}
+      POSTGRES_DB_AUTH: ${POSTGRES_DB_AUTH:-pg-auth-db}
+      POSTGRES_ARGS: ${POSTGRES_ARGS:-}
+      AUTH_SIGNUP_DISABLED: ${AUTH_SIGNUP_DISABLED:-true}
+      FLAT_TABLE_ROWS_LIMIT: 10000000
+      DATA_FETCHING_TIMEOUT_MS: ${DATA_FETCHING_TIMEOUT_MS:-300000}
+      DATA_SINGLE_FETCHING_TIMEOUT_MS: ${DATA_SINGLE_FETCHING_TIMEOUT_MS:-120000}
+      UNITED_STORAGE_CONFIG_LOADED_TIMEOUT: 10000
+      EXPORT_DASH_EXCEL: ${EXPORT_DASH_EXCEL:-true}
+      EXPORT_WORKBOOK_ENABLED: ${EXPORT_WORKBOOK_ENABLED:-true}
+      FLIGHT_GROUPS_EDITOR_DATASET_IDS: ${FLIGHT_GROUPS_EDITOR_DATASET_IDS:-}
+      FLIGHT_GROUPS_MSSQL_CONNECTION_STRING: ${FLIGHT_GROUPS_MSSQL_CONNECTION_STRING:-}
+      YDL_FEATURES_ALL_BI: ${YDL_FEATURES_ALL_BI:-1}
+      OIDC: ${OIDC:-false}
+      OIDC_ISSUER: ${OIDC_ISSUER:-}
+      OIDC_ISSUER_INTERNAL: ${OIDC_ISSUER_INTERNAL:-}
+      OIDC_BASE_URL: ${OIDC_BASE_URL:-}
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:-}
+      OIDC_SECRET: ${OIDC_SECRET:-}
+      OIDC_NAME: ${OIDC_NAME:-OIDC}
+    ports: !reset []
+
+volumes:
+  db-postgres:
+    name: datalens-volume-${APP_ENV:-prod}
+    external: true

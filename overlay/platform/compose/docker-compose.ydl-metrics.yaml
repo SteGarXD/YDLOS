@@ -1,0 +1,19 @@
+# Prometheus scrape hints (self-hosted). Requires prometheus on host network or sidecar.
+# UI/US expose /metrics when METRICS_ENABLED=1 (vendor-supported where available).
+
+services:
+  ui:
+    environment:
+      METRICS_ENABLED: ${METRICS_ENABLED:-1}
+  ui-api:
+    environment:
+      METRICS_ENABLED: ${METRICS_ENABLED:-1}
+  us:
+    environment:
+      METRICS_ENABLED: ${METRICS_ENABLED:-1}
+  control-api:
+    environment:
+      METRICS_ENABLED: ${METRICS_ENABLED:-1}
+  data-api:
+    environment:
+      METRICS_ENABLED: ${METRICS_ENABLED:-1}

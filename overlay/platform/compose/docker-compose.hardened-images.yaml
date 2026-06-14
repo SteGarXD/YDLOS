@@ -1,0 +1,33 @@
+# Hardened / upstream-aligned images (vendor v2.9.0) + YDL-built UI/auth/US tags from .ydl-built-images.env
+services:
+  postgres:
+    image: ${POSTGRES_IMAGE:-ghcr.io/datalens-tech/datalens-postgres:16}
+
+  temporal:
+    image: ${TEMPORAL_IMAGE:-ghcr.io/datalens-tech/datalens-temporal:1.27.2}
+
+  control-api:
+    image: ${CONTROL_API_IMAGE:-ghcr.io/datalens-tech/datalens-control-api:0.2457.0}
+
+  data-api:
+    image: ${DATA_API_IMAGE:-ghcr.io/datalens-tech/datalens-data-api:0.2457.0}
+
+  meta-manager:
+    image: ${META_MANAGER_IMAGE:-ghcr.io/datalens-tech/datalens-meta-manager:0.52.0}
+
+  us:
+    image: ${US_IMAGE:-akrasnov87/datalens-us:0.413.0-ydl-os}
+    environment:
+      US_AUTH_MODE: ${US_AUTH_MODE:-rpc}
+
+  us-auth:
+    image: ${AUTH_IMAGE:-akrasnov87/datalens-auth:0.2.6}
+
+  ui:
+    image: ${UI_IMAGE:-akrasnov87/datalens-ui:0.3498.0}
+
+  ui-api:
+    image: ${UI_IMAGE:-akrasnov87/datalens-ui:0.3498.0}
+
+  nginx:
+    image: ${NGINX_IMAGE:-quay.io/nginx/nginx-unprivileged:stable-alpine}

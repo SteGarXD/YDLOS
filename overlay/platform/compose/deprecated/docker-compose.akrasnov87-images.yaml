@@ -1,0 +1,34 @@
+# DEPRECATED — production uses official-images + ydl-built (integration/compose.sh).
+# Legacy fork akrasnov87/datalens ~2.7.0 — rollback only.
+#
+# YDL OS overlay: custom images (fork lineage akrasnov87 + YDL builds).
+# Base stack MUST come from vendor/datalens (official datalens-tech/datalens).
+# Do not edit vendor/datalens — only this file and other overlay/compose/* files.
+
+services:
+  postgres:
+    image: akrasnov87/datalens-postgres:16
+
+  control-api:
+    image: akrasnov87/datalens-control-api:0.2396.0
+
+  data-api:
+    image: akrasnov87/datalens-data-api:0.2396.0
+
+  us:
+    image: akrasnov87/datalens-us:0.413.0-ydl-os
+    environment:
+      # Fork akrasnov87: RPC/us-auth, not JWT-only US auth from upstream.
+      US_AUTH_MODE: ${US_AUTH_MODE:-rpc}
+
+  ui:
+    image: akrasnov87/datalens-ui:0.3498.0
+
+  ui-api:
+    image: akrasnov87/datalens-ui:0.3498.0
+
+  meta-manager:
+    image: akrasnov87/datalens-meta-manager:0.50.0
+
+  us-auth:
+    image: akrasnov87/datalens-auth:0.2.6

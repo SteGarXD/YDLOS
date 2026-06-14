@@ -1,0 +1,39 @@
+name: YDL OS Quality Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  quality:
+    name: lint + overlay tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Ensure vendor submodule (datalens-tech/datalens)
+        run: git submodule sync --recursive && git submodule update --init --recursive
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Install Python deps (profile validate)
+        run: pip install psycopg2-binary
+
+      # Fast gate on GitHub (Python + pins); full npm lint runs on prod via release-full.
+      # Governance ATTENTION is non-blocking here — avoids false "run failed" mail on push.
+      - name: Run YDL quality gate
+        run: bash integration/run-platform-quality-gate.sh

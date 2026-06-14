@@ -1,0 +1,55 @@
+# Runtime security hardening (no-new-privileges, cap drop, read-only rootfs where safe).
+# Apply after vendor + official-images + ydl-built-images.
+
+x-ydl-harden: &ydl_harden
+  security_opt:
+    - no-new-privileges:true
+  cap_drop:
+    - ALL
+
+services:
+  control-api:
+    <<: *ydl_harden
+    cap_add:
+      - NET_BIND_SERVICE
+
+  data-api:
+    <<: *ydl_harden
+    cap_add:
+      - NET_BIND_SERVICE
+
+  us:
+    <<: *ydl_harden
+    cap_add:
+      - NET_BIND_SERVICE
+
+  ui:
+    <<: *ydl_harden
+    cap_add:
+      - NET_BIND_SERVICE
+      - CHOWN
+      - SETUID
+      - SETGID
+
+  ui-api:
+    <<: *ydl_harden
+    cap_add:
+      - NET_BIND_SERVICE
+
+  us-auth:
+    <<: *ydl_harden
+    cap_add:
+      - NET_BIND_SERVICE
+
+  meta-manager:
+    <<: *ydl_harden
+    cap_add:
+      - NET_BIND_SERVICE
+
+  nginx:
+    <<: *ydl_harden
+    cap_add:
+      - NET_BIND_SERVICE
+      - CHOWN
+      - SETUID
+      - SETGID

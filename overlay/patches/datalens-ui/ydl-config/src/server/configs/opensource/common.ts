@@ -1,0 +1,234 @@
+import type {AppConfig} from '@gravity-ui/nodekit';
+
+import type {AppEnvironment} from '../../../shared';
+import {
+    AppInstallation,
+    CSP_HEADER,
+    CSP_REPORT_TO_HEADER,
+    DL_CONTEXT_HEADER,
+    Language,
+    PALETTE_ID,
+    isTrueArg,
+} from '../../../shared';
+import {UserRole} from '../../../shared/components/auth/constants/role';
+import {resolveSource} from '../../../shared/endpoints/sources';
+import type {SourceConfig} from '../../components/charts-engine/types';
+import {getEnvCert} from '../../utils/env-utils';
+import controlDashChartTemplate from '../shared/control-dash-chart-template';
+import datalensChartTemplate from '../shared/datalens-chart-template';
+import qlChartTemplate from '../shared/ql-chart-template';
+
+export default {
+    // DATALENS MODE
+    serviceName: process.env.SERVICE_NAME || 'DataLens',
+    faviconUrl: '/favicorn.64x64.svg',
+
+    expressCookieSecret: process.env.COOKIE_SECRET,
+
+    appAuthPolicy: 'redirect',
+    runResponseWhitelist: [
+        'sourceId',
+        'sourceType',
+        'body',
+        'status',
+        'latency',
+        'size',
+        'data',
+        'datasetId',
+        'code',
+        'details',
+    ],
+
+    regionalEnvConfig: {
+        defaultLang: Language.Ru,
+        allowLanguages: [Language.Ru, Language.En],
+    },
+
+    appLangQueryParamName: '_lang',
+
+    expressBodyParserRawConfig: {
+        type: 'multipart/form-data',
+        limit: '21mb',
+    },
+    usMasterToken: process.env.US_MASTER_TOKEN || 'fake-us-master-token',
+    usDynamicMasterTokenPrivateKey: getEnvCert(process.env.US_DYNAMIC_MASTER_TOKEN_PRIVATE_KEY),
+
+    // CHARTS MODE
+
+    allowBodyConfig: true,
+
+    chartTemplates: {
+        ql: qlChartTemplate,
+        datalens: datalensChartTemplate,
+        control_dash: controlDashChartTemplate,
+    },
+
+    getSourcesByEnv: (env: AppEnvironment): Record<string, SourceConfig> => {
+        const sources = resolveSource(AppInstallation.Opensource, env);
+
+        return {
+            bi: {
+                dataEndpoint: sources.bi,
+                passedCredentials: {},
+                description: {
+                    title: {
+                        ru: 'DataLens BI',
+                        en: 'DataLens BI',
+                    },
+                },
+            },
+            bi_connections: {
+                dataEndpoint: sources.bi_connections,
+                passedCredentials: {},
+                description: {
+                    title: {
+                        ru: 'DataLens BI Connections',
+                        en: 'DataLens BI Connections',
+                    },
+                },
+            },
+            bi_datasets: {
+                dataEndpoint: sources.bi_datasets,
+                passedCredentials: {},
+                description: {
+                    title: {
+                        ru: 'DataLens BI Datasets',
+                        en: 'DataLens BI Datasets',
+                    },
+                },
+            },
+            bi_datasets_embed: {
+                dataEndpoint: sources.bi_datasets_embed,
+                passedCredentials: {},
+                description: {
+                    title: {
+                        ru: 'DataLens BI Datasets Embed',
+                        en: 'DataLens BI Datasets Embed',
+                    },
+                },
+            },
+            bi_connections_embed: {
+                dataEndpoint: sources.bi_connections_embed,
+                passedCredentials: {},
+                description: {
+                    title: {
+                        ru: 'DataLens BI Connections Embed',
+                        en: 'DataLens BI Connections Embed',
+                    },
+                },
+            },
+            us_color_palettes: {
+                description: {
+                    title: {
+                        ru: 'US color palettes',
+                        en: 'US color palettes',
+                    },
+                },
+                dataEndpoint: `${process.env.US_ENDPOINT || sources.us}/v1/color-palettes`,
+                passedCredentials: {},
+            },
+        };
+    },
+
+    redis: null,
+
+    iamResources: {
+        collection: {
+            roles: {
+                admin: 'datalens.collections.admin',
+                editor: 'datalens.collections.editor',
+                viewer: 'datalens.collections.viewer',
+                limitedViewer: 'datalens.collections.limitedViewer',
+                entryBindingCreator: 'datalens.collections.entryBindingCreator',
+                limitedEntryBindingCreator: 'datalens.collections.limitedEntryBindingCreator',
+            },
+        },
+        workbook: {
+            roles: {
+                admin: 'datalens.workbooks.admin',
+                editor: 'datalens.workbooks.editor',
+                viewer: 'datalens.workbooks.viewer',
+                limitedViewer: 'datalens.workbooks.limitedViewer',
+            },
+        },
+        sharedEntry: {
+            roles: {
+                admin: 'datalens.sharedEntries.admin',
+                editor: 'datalens.sharedEntries.editor',
+                viewer: 'datalens.sharedEntries.viewer',
+                limitedViewer: 'datalens.sharedEntries.limitedViewer',
+                entryBindingCreator: 'datalens.sharedEntries.entryBindingCreator',
+                limitedEntryBindingCreator: 'datalens.sharedEntries.limitedEntryBindingCreator',
+            },
+        },
+    },
+
+    orderedAuthRoles: [UserRole.Admin, UserRole.Editor, UserRole.Viewer],
+
+    chartsEngineConfig: {
+        secrets: {},
+        enableTelemetry: true,
+        usEndpointPostfix: '',
+        dataFetcherProxiedHeaders: [DL_CONTEXT_HEADER],
+    },
+
+    chartkitSettings: {
+        highcharts: {
+            enabled: isTrueArg(process.env.HC),
+            external: true,
+            domain: process.env.HC_ENDPOINT || 'code.highcharts.com',
+            protocol: process.env.HC_PROTOCOL || 'https',
+            modules: process.env.HC_MODULES
+                ? process.env.HC_MODULES.split(',').map((m) => m.trim())
+                : [
+                      'exporting',
+                      'export-data',
+                      'stock',
+                      'solid-gauge',
+                      'funnel',
+                      'histogram-bellcurve',
+                      'sankey',
+                      'heatmap',
+                      'treemap',
+                      'variwide',
+                      'streamgraph',
+                      'drilldown',
+                      'parallel-coordinates',
+                      'pattern-fill',
+                      'wordcloud',
+                      'xrange',
+                      'networkgraph',
+                      'timeline',
+                      'bullet',
+                      'annotations',
+                      'series-label',
+                      'venn',
+                  ],
+            version: '8.2.2',
+        },
+        yandexMap: {
+            enabled: isTrueArg(process.env.YANDEX_MAP_ENABLED),
+            token: process.env.YANDEX_MAP_TOKEN,
+        },
+    },
+    defaultColorPaletteId: PALETTE_ID.DEFAULT_20,
+
+    appSensitiveKeys: [CSP_HEADER, CSP_REPORT_TO_HEADER],
+    appSensitiveHeaders: [CSP_HEADER, CSP_REPORT_TO_HEADER],
+
+    // auth
+    isAuthEnabled: isTrueArg(process.env.AUTH_ENABLED),
+    authTokenPublicKey: getEnvCert(process.env.AUTH_TOKEN_PUBLIC_KEY),
+    authManageLocalUsersDisabled: isTrueArg(process.env.AUTH_MANAGE_LOCAL_USERS_DISABLED),
+    authSignupDisabled: isTrueArg(process.env.AUTH_SIGNUP_DISABLED),
+    authCookieName: process.env.AUTH_COOKIE_NAME,
+
+    apiPrefix: '/api',
+    // charts-engine data-fetcher: без этого ctx.config.fetchingTimeout → DEFAULT 100s и pivot/MSSQL обрывается.
+    fetchingTimeout: process.env.DATA_FETCHING_TIMEOUT_MS
+        ? parseInt(process.env.DATA_FETCHING_TIMEOUT_MS, 10)
+        : 300_000,
+    singleFetchingTimeout: process.env.DATA_SINGLE_FETCHING_TIMEOUT_MS
+        ? parseInt(process.env.DATA_SINGLE_FETCHING_TIMEOUT_MS, 10)
+        : 120_000,
+} satisfies Partial<AppConfig>;

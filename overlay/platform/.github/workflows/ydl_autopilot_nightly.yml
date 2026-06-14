@@ -1,0 +1,29 @@
+name: YDL Autopilot Nightly
+
+on:
+  schedule:
+    - cron: "15 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  autopilot-nightly:
+    name: Sync -> Profile Gates -> Security -> Deploy
+    runs-on:
+      - self-hosted
+      - linux
+      - cloud
+      - datalens-opensource
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run autopilot pipeline
+        working-directory: ./overlay/platform
+        run: bash scripts/ydl-os/autopilot-sync-build-smoke-deploy.sh
+        env:
+          AUTO_PUSH: "1"
+          FORCE_REDEPLOY: "0"
+          PROFILE_GATE: "1"
+          SECURITY_GATE: "1"
+          READER_GATE: "0"
+          FAIL_ON_REGRESSION: "1"

@@ -1,0 +1,28 @@
+name: Platform Governance Report
+
+on:
+  schedule:
+    - cron: "45 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  governance-report:
+    name: Generate KPI governance report
+    runs-on:
+      - self-hosted
+      - linux
+      - cloud
+      - datalens-opensource
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate report
+        working-directory: .
+        run: python3 scripts/ydl-os/platform-governance-report.py --repo-root "${GITHUB_WORKSPACE}"
+
+      - name: Upload governance reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: governance-reports
+          path: ./overlay/platform/reports/governance/

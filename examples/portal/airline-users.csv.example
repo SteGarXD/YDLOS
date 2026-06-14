@@ -1,0 +1,4 @@
+airline_id,user_login
+airline_a,viewer.a@example.com
+airline_a,viewer.b@example.com
+airline_b,viewer.c@example.com

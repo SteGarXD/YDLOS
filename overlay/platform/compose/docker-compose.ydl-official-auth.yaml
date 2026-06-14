@@ -1,0 +1,39 @@
+# Default YDL auth: official datalens-tech auth + US 1.39 (vendor 2.9.0).
+# Rollback: YDL_LEGACY_AUTH=1 → docker-compose.ydl-legacy-auth.yaml
+# Does NOT remove Postgres volumes.
+
+services:
+  auth:
+    profiles: !reset []
+    ports:
+      - "127.0.0.1:8081:8080"
+
+  us-auth:
+    profiles: ["ydl-legacy-us-auth-off"]
+
+  postgres:
+    environment:
+      INIT_DB_AUTH: ${INIT_DB_AUTH:-1}
+
+  us:
+    image: ${YDL_US_IMAGE:-${OFFICIAL_US_IMAGE:-ghcr.io/datalens-tech/datalens-us:1.39.0}}
+    environment:
+      AUTH_ENDPOINT: http://auth:8080
+      USE_AUTH_DATA: !reset null
+      NODE_RPC_URL: !reset null
+      AUTH_ENABLED: ${AUTH_ENABLED:-true}
+      SKIP_MIGRATION: ${SKIP_MIGRATION:-0}
+
+  ui-api:
+    environment:
+      AUTH_POLICY: cookie
+      AUTH_ENDPOINT: http://auth:8080
+
+  ui:
+    environment:
+      AUTH_ENDPOINT: http://auth:8080
+      AUTH_POLICY: cookie
+
+  meta-manager:
+    environment:
+      NODE_RPC_URL: !reset null

@@ -1,0 +1,32 @@
+# YDLOS: максимум OSS/BI возможностей через official env (L1). Подключать вместе с ydl-platform.
+services:
+  ui:
+    environment:
+      EXPORT_WORKBOOK_ENABLED: ${EXPORT_WORKBOOK_ENABLED:-true}
+      EXPORT_DASH_EXCEL: ${EXPORT_DASH_EXCEL:-true}
+      YANDEX_MAP_ENABLED: ${YANDEX_MAP_ENABLED:-1}
+      YANDEX_MAP_TOKEN: ${YANDEX_MAP_TOKEN:-}
+      HC: ${HC:-0}
+      HC_ENDPOINT: ${HC_ENDPOINT:-}
+      HC_PROTOCOL: ${HC_PROTOCOL:-https}
+      FLAT_TABLE_ROWS_LIMIT: ${FLAT_TABLE_ROWS_LIMIT:-10000000}
+      DATA_FETCHING_TIMEOUT_MS: ${DATA_FETCHING_TIMEOUT_MS:-300000}
+      DATA_SINGLE_FETCHING_TIMEOUT_MS: ${DATA_SINGLE_FETCHING_TIMEOUT_MS:-120000}
+      UNITED_STORAGE_CONFIG_LOADED_TIMEOUT: ${UNITED_STORAGE_CONFIG_LOADED_TIMEOUT:-10000}
+      YDL_FEATURES_ALL_BI: "1"
+      # OIDC multi — см. docker-compose.ydl-oidc-multi.yaml
+
+  ui-api:
+    environment:
+      EXPORT_WORKBOOK_ENABLED: ${EXPORT_WORKBOOK_ENABLED:-true}
+      EXPORT_DASH_EXCEL: ${EXPORT_DASH_EXCEL:-true}
+      FLAT_TABLE_ROWS_LIMIT: ${FLAT_TABLE_ROWS_LIMIT:-10000000}
+
+  control-api:
+    environment:
+      CONNECTOR_AVAILABILITY_VISIBLE: clickhouse,postgres,chyt,ydb,mysql,greenplum,mssql,oracle,trino,appmetrica_api,metrika_api
+
+  postgres:
+    environment:
+      INIT_DEMO_DATA: ${INIT_DEMO_DATA:-0}
+      INIT_DB_DEMO: ${INIT_DB_DEMO:-0}

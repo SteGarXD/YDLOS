@@ -1,0 +1,41 @@
+name: Reader Journey Gate
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  reader-journey-gate:
+    name: Reader journey blocking checks
+    runs-on:
+      - self-hosted
+      - linux
+      - cloud
+      - datalens-opensource
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: ./overlay/components/datalens-ui
+        run: npm ci
+
+      - name: Install playwright chromium
+        working-directory: ./overlay/components/datalens-ui
+        run: npm run test:install:chromium
+
+      - name: Run reader journey gate
+        working-directory: ./overlay/components/datalens-ui
+        run: bash tests/scripts/run-reader-journey-gate.sh
+        env:
+          E2E_RETRY_TIMES: 2
+          E2E_TEST_TIMEOUT: 90000
+          E2E_ACTION_TIMEOUT: 10000
+          E2E_EXPECT_TIMEOUT: 10000
+          E2E_MAX_FAILURES: 10
+          E2E_MAX_WORKERS: 4

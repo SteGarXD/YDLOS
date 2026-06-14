@@ -1,0 +1,43 @@
+{
+  "generated_utc": "2026-05-21T13:28:33Z",
+  "source_report": "overlay/platform/reports/security/trivy-images-20260521-131946Z-summary.txt",
+  "policy": "ignore-unfixed + ignore-status-fixed + trivy-waivers.txt",
+  "images": {
+    "akrasnov87/datalens-auth:0.27.0-ydl-4e9b1e11b619": {
+      "high": 0,
+      "critical": 0
+    },
+    "akrasnov87/datalens-ui:0.3831.0-ydl-4e9b1e11b619": {
+      "high": 6,
+      "critical": 0
+    },
+    "akrasnov87/datalens-us:0.413.0-ydl-4e9b1e11b619": {
+      "high": 0,
+      "critical": 0
+    },
+    "ghcr.io/datalens-tech/datalens-control-api:0.2457.0": {
+      "high": 0,
+      "critical": 0
+    },
+    "ghcr.io/datalens-tech/datalens-data-api:0.2457.0": {
+      "high": 0,
+      "critical": 0
+    },
+    "ghcr.io/datalens-tech/datalens-meta-manager:0.52.0": {
+      "high": 0,
+      "critical": 0
+    },
+    "quay.io/nginx/nginx-unprivileged:stable-alpine": {
+      "high": 0,
+      "critical": 0
+    },
+    "ydl/datalens-postgres:16-hardened-4e9b1e11b619": {
+      "high": 27,
+      "critical": 0
+    },
+    "ydl/datalens-temporal:1.28.1-hardened-4e9b1e11b619": {
+      "high": 0,
+      "critical": 0
+    }
+  }
+}

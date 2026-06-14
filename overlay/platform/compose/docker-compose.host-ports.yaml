@@ -1,0 +1,23 @@
+# Dev/ops: expose service ports on host (not in official vendor compose).
+services:
+  postgres:
+    ports:
+      - "127.0.0.1:5432:5432"
+  us:
+    ports:
+      - "127.0.0.1:8030:8080"
+  us-auth:
+    ports:
+      - "127.0.0.1:8088:8080"
+  control-api:
+    ports:
+      - "127.0.0.1:8010:8080"
+  data-api:
+    ports:
+      - "127.0.0.1:8020:8080"
+  ui-api:
+    ports:
+      - "127.0.0.1:3040:8080"
+  meta-manager:
+    ports:
+      - "127.0.0.1:3050:8080"
